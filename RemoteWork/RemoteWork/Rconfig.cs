@@ -18,7 +18,8 @@ namespace RemoteWork
         public Rconfig()
         {
             InitializeComponent();
-            LoadData();
+            Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<RconfigContext, RemoteWork.Access.Migrations.Configuration>()); 
+            //LoadData();
         }
 
         public async void LoadData()
@@ -26,6 +27,11 @@ namespace RemoteWork
             var query = await (from c in context.Favorites
                         select c).ToListAsync();
             dataGridView1.DataSource = query;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadData();
         }
 
     }
