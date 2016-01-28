@@ -16,3 +16,4 @@ E:\Repository\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.xml
 E:\Repository\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServer.xml
 E:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.dll
 E:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.csprojResolveAssemblyReference.cache

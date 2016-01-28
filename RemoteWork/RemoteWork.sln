@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork.Access", "Remote
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWorkUtil", "RemoteWorkUtil\RemoteWorkUtil.csproj", "{80A53B1F-4C9D-4D26-ADDD-7E97457C2CC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork.Expect", "RemoteWork.Expect\RemoteWork.Expect.csproj", "{B53A97A9-F841-4A42-AF2D-0C24424802AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{80A53B1F-4C9D-4D26-ADDD-7E97457C2CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80A53B1F-4C9D-4D26-ADDD-7E97457C2CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80A53B1F-4C9D-4D26-ADDD-7E97457C2CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
