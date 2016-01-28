@@ -12,13 +12,12 @@ namespace RemoteWork.Data
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string CredentialName { get; set; }
         [Required]
         public string Username { get; set; }
         public string Domain { get; set; }
         [Required]
         public string Password { get; set; }
 
-        //public ICollection<Favorite> Favorites { get; set; }
     }
 }
