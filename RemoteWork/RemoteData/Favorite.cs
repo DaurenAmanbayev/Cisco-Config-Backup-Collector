@@ -15,14 +15,16 @@ namespace RemoteWork.Data
         }
         [Key]
         public int Id { get; set; }
-
-        [Required, MaxLength(256)]
-        public string Name { get; set; }
+        [Required, MaxLength(100)]
+        public string Hostname { get; set; }
         [Required, MaxLength(50)]
-        public string Address { get; set; }
+        public string Address { get; set; }        
         public int Port { get; set; }
-        public string Protocol {get; set;}
+        [Required]
+        public virtual Protocol Protocol {get; set;}
+        public virtual Location Location { get; set; }
         public DateTime? Date { get; set; }
+        [Required]
         public virtual Credential Credential { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
     }
