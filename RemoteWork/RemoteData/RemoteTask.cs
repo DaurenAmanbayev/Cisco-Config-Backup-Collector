@@ -21,8 +21,9 @@ namespace RemoteWork.Data
         [MaxLength(256)]
         public string Description { get; set; }
         public DateTime? Date { get; set; }
+        [Required]
         public virtual ICollection<Command> Commands { get; set; }
-
+        [Required]
         public virtual ICollection<Favorite> Favorites { get; set; }
     }
 }
