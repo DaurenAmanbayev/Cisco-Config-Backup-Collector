@@ -17,3 +17,13 @@ E:\Repository\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServ
 E:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.dll
 E:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.pdb
 E:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.csprojResolveAssemblyReference.cache
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\RemoteWork.Data.dll.config
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\RemoteWork.Data.dll
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\RemoteWork.Data.pdb
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.dll
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServer.dll
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.xml
+Z:\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServer.xml
+Z:\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.csprojResolveAssemblyReference.cache
+Z:\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.dll
+Z:\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.pdb

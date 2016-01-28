@@ -25,3 +25,15 @@ E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlSe
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.dll
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.dll
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.dll
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
+Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
+Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
+Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
+Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb

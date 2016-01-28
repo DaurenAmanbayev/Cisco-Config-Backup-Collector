@@ -13,8 +13,9 @@ namespace RemoteWorkUtil
     {
         static void Main(string[] args)
         {
-            //Database.SetInitializer(new Init());
-           // Test();
+            Database.SetInitializer(new Init());
+           // FirstInsert();
+           // SecondInsert();
             using (RconfigContext ctx = new RconfigContext())
             {
                 Console.WriteLine(ctx.Categories.Count());
@@ -26,6 +27,16 @@ namespace RemoteWorkUtil
                 foreach (Protocol prot in ctx.Protocols)
                 {
                     Console.WriteLine("Protocol Name: {0} DefPort: {1}", prot.Name, prot.DefaultPort);
+                }
+                
+                foreach (Location loc in ctx.Locations)
+                {
+                    
+                    Console.WriteLine("LOC: {0}", loc.LocationName);
+                }
+                foreach (Favorite fav in ctx.Favorites)
+                {
+                    Console.WriteLine("Fav:{0}, Address: {1}", fav.Hostname, fav.Address);
                 }
             }
             Console.WriteLine("CHECKED");
@@ -95,6 +106,17 @@ namespace RemoteWorkUtil
                     Password = "toor"
                 });
 
+                context.SaveChanges();
+            }
+        }
+        static void SecondInsert()
+        {
+            using (RconfigContext context = new RconfigContext())
+            {
+                context.Locations.Add(new Location
+                {
+                    LocationName="Syslocation"
+                });
                 context.SaveChanges();
             }
         }
