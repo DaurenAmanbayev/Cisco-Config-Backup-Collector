@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork", "RemoteWork\RemoteWork.csproj", "{84974140-29B8-4346-92C2-F29638BB83EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork.Data", "RemoteData\RemoteWork.Data.csproj", "{8A2522FB-F15F-4151-A6CF-8FF011F94386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork.Access", "RemoteAccess\RemoteWork.Access.csproj", "{42A60EF7-327D-4C2C-A2A0-4571F2FDCF28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84974140-29B8-4346-92C2-F29638BB83EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84974140-29B8-4346-92C2-F29638BB83EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84974140-29B8-4346-92C2-F29638BB83EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84974140-29B8-4346-92C2-F29638BB83EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A2522FB-F15F-4151-A6CF-8FF011F94386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A2522FB-F15F-4151-A6CF-8FF011F94386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A2522FB-F15F-4151-A6CF-8FF011F94386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A2522FB-F15F-4151-A6CF-8FF011F94386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A60EF7-327D-4C2C-A2A0-4571F2FDCF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A60EF7-327D-4C2C-A2A0-4571F2FDCF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A60EF7-327D-4C2C-A2A0-4571F2FDCF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A60EF7-327D-4C2C-A2A0-4571F2FDCF28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

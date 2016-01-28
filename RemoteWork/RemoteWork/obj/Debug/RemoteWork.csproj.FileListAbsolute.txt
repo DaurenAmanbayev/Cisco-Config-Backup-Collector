@@ -1,0 +1,34 @@
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.exe.config
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\obj\Debug\RemoteWork.csprojResolveAssemblyReference.cache
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Properties.Resources.resources
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Rconfig.resources
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\obj\Debug\RemoteWork.csproj.GenerateResource.Cache
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.exe
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.pdb
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\EntityFramework.dll
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Data.dll
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Data.pdb
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\EntityFramework.xml
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\obj\Debug\RemoteWork.exe
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\obj\Debug\RemoteWork.pdb
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Access.dll
+c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Access.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.exe.config
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.exe
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.exe
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\EntityFramework.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\EntityFramework.SqlServer.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Access.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Data.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Access.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Data.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\EntityFramework.xml
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\EntityFramework.SqlServer.xml
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.csprojResolveAssemblyReference.cache
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Properties.Resources.resources
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Rconfig.resources
+E:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.csproj.GenerateResource.Cache
