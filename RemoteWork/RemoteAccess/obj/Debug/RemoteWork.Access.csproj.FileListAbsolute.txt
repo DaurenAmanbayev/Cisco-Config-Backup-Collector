@@ -23,8 +23,5 @@ E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.InitialCreate.resources
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.idchange.resources
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
 E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb

@@ -1,0 +1,14 @@
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWorkUtil.exe.config
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWorkUtil.exe
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWorkUtil.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.xml
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.xml
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.csprojResolveAssemblyReference.cache
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.exe
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Access.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Data.dll
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Access.pdb
+E:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Data.pdb
