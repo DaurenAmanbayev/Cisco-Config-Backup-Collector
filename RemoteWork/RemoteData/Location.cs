@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Data
 {
-    public class Group
+    public class Location
     {
-        public Group()
+        public Location()
         {
             Favorites = new HashSet<Favorite>();
         }
         [Key]
         public int Id { get; set; }
-        [Required, MaxLength(256)]
-        public string Name { get; set; }
-
+        public string LocationName { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
     }
 }
