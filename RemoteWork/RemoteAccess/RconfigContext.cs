@@ -21,11 +21,11 @@ namespace RemoteWork.Access
             //modelBuilder.Configurations.Add(new FavoriteConfig());//custom configuration
         }
         public DbSet<Favorite> Favorites { get; set; }
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Credential> Credentials { get; set; }
         public DbSet<Config> Configs { get; set; }
         public DbSet<RemoteTask> RemoteTasks { get; set; }
-        
+        public DbSet<Protocol> Protocols { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Command> Commands { get; set; }
     
