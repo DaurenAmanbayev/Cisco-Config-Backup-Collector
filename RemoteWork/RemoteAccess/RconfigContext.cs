@@ -25,6 +25,7 @@ namespace RemoteWork.Access
         public DbSet<Credential> Credentials { get; set; }
         public DbSet<Config> Configs { get; set; }
         public DbSet<RemoteTask> RemoteTasks { get; set; }
+        
         public DbSet<Report> Reports { get; set; }
         public DbSet<Command> Commands { get; set; }
     
