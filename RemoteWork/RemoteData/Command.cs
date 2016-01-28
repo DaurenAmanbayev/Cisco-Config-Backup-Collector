@@ -9,10 +9,15 @@ namespace RemoteWork.Data
 {
     public class Command
     {
+        public Command()
+        {
+            Categories = new HashSet<Category>();
+        }
         [Key]
         public int Id { get; set; }
-        [Required, MaxLength(50)]
-        public string Name { get; set; }       
-        
+        [Required, MaxLength(256)]
+        public string Name { get; set; }    
+        [Required]
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }
