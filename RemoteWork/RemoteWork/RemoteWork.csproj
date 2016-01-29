@@ -57,6 +57,48 @@
     <Compile Include="Favorite Edit.Designer.cs">
       <DependentUpon>Favorite Edit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management.Designer.cs">
+      <DependentUpon>Management.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Category Edit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Category Edit.Designer.cs">
+      <DependentUpon>Category Edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Category Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Category Manager.Designer.cs">
+      <DependentUpon>Category Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Command Edit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Command Edit.Designer.cs">
+      <DependentUpon>Command Edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Command Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Command Manager.Designer.cs">
+      <DependentUpon>Command Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Location Edit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Location Edit.Designer.cs">
+      <DependentUpon>Location Edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Location Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Location Manager.Designer.cs">
+      <DependentUpon>Location Manager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rconfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +110,27 @@
     <Compile Include="WindowsMode.cs" />
     <EmbeddedResource Include="Favorite Edit.resx">
       <DependentUpon>Favorite Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management.resx">
+      <DependentUpon>Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Category Edit.resx">
+      <DependentUpon>Category Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Category Manager.resx">
+      <DependentUpon>Category Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Command Edit.resx">
+      <DependentUpon>Command Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Command Manager.resx">
+      <DependentUpon>Command Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Location Edit.resx">
+      <DependentUpon>Location Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Location Manager.resx">
+      <DependentUpon>Location Manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

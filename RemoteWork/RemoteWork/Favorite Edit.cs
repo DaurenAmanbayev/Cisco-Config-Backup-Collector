@@ -15,7 +15,7 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 
 namespace RemoteWork
-{
+{   
     enum FavoriteInputValidate
     {
        HostnameEmpty,
@@ -29,12 +29,25 @@ namespace RemoteWork
         WindowsMode mode = WindowsMode.ADD;
         RconfigContext context = new RconfigContext();
         IPAddress address;
+        Favorite prevFavorite;
+        string prevFavName;
         public Favorite_Edit()
         {
             InitializeComponent();
             StartConfiguration();
             LoadData();
         }
+
+        public Favorite_Edit(string favName)
+        {
+            InitializeComponent();
+            StartConfiguration();           
+            prevFavName = favName;
+            mode = WindowsMode.EDIT;
+            LoadData();
+        }
+
+        //начальные настройки формы
         private void StartConfiguration()
         {
             textBoxHostname.MaxLength = 100;
@@ -42,6 +55,7 @@ namespace RemoteWork
             numericUpDownPort.Minimum = 22;
             numericUpDownPort.Maximum = 65535;
         }
+        //подгружаем данные
         private async void LoadData()
         {
             var queryCredentials = await (from c in context.Credentials
@@ -59,9 +73,55 @@ namespace RemoteWork
             var queryLocations = await (from c in context.Locations
                                         select c.LocationName).ToListAsync();
             comboBoxLocation.DataSource = queryLocations;
-
+            //если режим редактирования, подгрузить данные избранного
+            if (mode == WindowsMode.EDIT)
+                LoadPrevData();
         }
+        //подгружаем предыдущие данные для редактирования
+        private void LoadPrevData()
+        {
+            var queryPrevFavorite= (from c in context.Favorites
+                                   where c.Hostname==prevFavName
+                                   select c).FirstOrDefault();
+            //если избранное было найдено подгружаем данные
+            if (queryPrevFavorite != null)
+            {
+                //сохраняем наше избранное 
+                prevFavorite = queryPrevFavorite;
 
+                //редактируем данные формы
+                textBoxHostname.Text = prevFavName;
+                textBoxAddress.Text = queryPrevFavorite.Address;
+                numericUpDownPort.Value = queryPrevFavorite.Port;
+
+                //проверить
+                var credential = queryPrevFavorite.Credential.CredentialName;
+                var location = queryPrevFavorite.Location.LocationName;
+                var protocol = queryPrevFavorite.Protocol.Name;
+                var category = queryPrevFavorite.Category.CategoryName;
+                //comboBoxCredential.SelectedValue = queryPrevFavorite.Credential.CredentialName;
+                //comboBoxLocation.SelectedValue = queryPrevFavorite.Location.LocationName;
+                //comboBoxProtocol.SelectedValue = queryPrevFavorite.Protocol.Name;
+
+                comboBoxCredential.SelectedItem = credential;
+                comboBoxLocation.SelectedItem = location;
+                comboBoxProtocol.SelectedItem = protocol;
+               // MessageBox.Show(queryPrevFavorite.Protocol.Name + queryPrevFavorite.Credential.CredentialName);
+
+               // comboBoxCategory.SelectedItem = category;
+                comboBoxCategory.SelectedItem = category;
+                //var queryPrevFavCategory = (from c in context.Categories                                           
+                //                            select c).FirstOrDefault();//||||
+                //если была найдена категория подгружаем данные
+                //if (queryPrevFavCategory != null)
+                //    comboBoxCategory.SelectedValue = queryPrevFavCategory.CategoryName;
+            }
+            else
+            {
+                //если в базе данных не удалось обнаружить избранное с указанным именем, то оставляем форму без изменений
+                mode = WindowsMode.ADD;
+            }
+        }
         //проверка введенных данных
         private bool ValidateInput()
         {
@@ -72,8 +132,9 @@ namespace RemoteWork
             }
             else
             {
+
                 //если хост не уникальный вернуть ошибку
-                if (!IsUniqueHostname())
+                if (!IsUniqueHostname() && mode==WindowsMode.ADD)
                     return false;
             }
             if (string.IsNullOrWhiteSpace(textBoxAddress.Text))
@@ -93,6 +154,7 @@ namespace RemoteWork
             
             return true;
         }
+        //проверка на уникальность хоста
         private bool IsUniqueHostname()
         {
             bool uniqueHostname = true;          
@@ -108,49 +170,134 @@ namespace RemoteWork
             });
             return uniqueHostname;
         }
+        //добавляем избранное в базу
+        private void FavoriteAdd()
+        {
+            Favorite fav = new Favorite();           
+            fav.Hostname = textBoxHostname.Text.Trim();
+            fav.Address = textBoxAddress.Text.Trim();
+            fav.Port = (int)numericUpDownPort.Value;
+            fav.Date = DateTime.UtcNow;
+            //данные по местоположению
+            string location = comboBoxLocation.SelectedValue.ToString();
+            var queryLocation = (from c in context.Locations
+                                 where c.LocationName == location
+                                 select c).FirstOrDefault();
+            if (queryLocation != null)
+                fav.Location = queryLocation;
+            //данные безопасности
+            string credential = comboBoxCredential.SelectedValue.ToString();
+            var queryCredential = (from c in context.Credentials
+                                   where c.CredentialName == credential
+                                   select c).FirstOrDefault();
+            if (queryCredential != null)
+                fav.Credential = queryCredential;
+            //данные протокола
+            string protocol = comboBoxProtocol.SelectedValue.ToString();
+            var queryProtocol = (from c in context.Protocols
+                                 where c.Name == protocol
+                                 select c).FirstOrDefault();
+            fav.Protocol = queryProtocol;
+            //данные категории
 
+            string category = comboBoxCategory.SelectedValue.ToString();
+            var queryCategory = (from c in context.Categories
+                                 where c.CategoryName == category
+                                 select c).FirstOrDefault();
+            fav.Category = queryCategory;//**замена ниже
+            //if (queryCategory != null)
+            //    queryCategory.Favorites.Add(fav);
+            //добавляем избранное в базу данных
+
+            context.Favorites.Add(fav);
+            context.SaveChanges();//???
+            prevFavorite = fav;//для возврата данных в главную форму
+        }
+        //изменяем избранное из базы
+        private void FavoriteEdit()
+        {
+            //запрашиваем предыдущую категорию избранного
+            //var queryPrevCategory = (from c in context.Categories
+            //                         where c.Favorites.Contains(prevFavorite)
+            //                         select c).FirstOrDefault();
+            //if (queryPrevCategory != null)
+            //{
+            //    if (queryPrevCategory.CategoryName != comboBoxCategory.SelectedValue.ToString())
+            //    {
+            //        queryPrevCategory.Favorites.Remove(prevFavorite);//удаляем из категории
+
+            //        //добавляем в измененную категорию
+            //        string category = comboBoxCategory.SelectedValue.ToString();
+            //        var queryCategory = (from c in context.Categories
+            //                             where c.CategoryName == category
+            //                             select c).FirstOrDefault();
+            //        if (queryCategory != null)
+            //            queryCategory.Favorites.Add(prevFavorite);
+            //    }               
+            //}
+            //else
+            //{
+            //    string category = comboBoxCategory.SelectedValue.ToString();
+            //    var queryCategory = (from c in context.Categories
+            //                         where c.CategoryName == category
+            //                         select c).FirstOrDefault();
+            //    if (queryCategory != null)
+            //        queryCategory.Favorites.Add(prevFavorite);
+            //}
+
+            string category = comboBoxCategory.SelectedValue.ToString();
+            var queryCategory = (from c in context.Categories
+                                 where c.CategoryName == category
+                                 select c).FirstOrDefault();
+            prevFavorite.Category = queryCategory;
+
+
+            prevFavorite.Hostname = textBoxHostname.Text.Trim();
+            prevFavorite.Address = textBoxAddress.Text.Trim();
+            prevFavorite.Port = (int)numericUpDownPort.Value;
+            prevFavorite.Date = DateTime.UtcNow;
+
+            //данные по местоположению
+            string location = comboBoxLocation.SelectedValue.ToString();
+            var queryLocation = (from c in context.Locations
+                                 where c.LocationName == location
+                                 select c).FirstOrDefault();
+            if (queryLocation != null)
+                prevFavorite.Location = queryLocation;
+            //данные безопасности
+            string credential = comboBoxCredential.SelectedValue.ToString();
+            var queryCredential = (from c in context.Credentials
+                                   where c.CredentialName == credential
+                                   select c).FirstOrDefault();
+            if (queryCredential != null)
+                prevFavorite.Credential = queryCredential;
+            //данные протокола
+            string protocol = comboBoxProtocol.SelectedValue.ToString();
+            var queryProtocol = (from c in context.Protocols
+                                 where c.Name == protocol
+                                 select c).FirstOrDefault();
+            //проверка
+            prevFavorite.Protocol = queryProtocol;
+            //сохраняем изменения
+            context.Entry(prevFavorite).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
+        //возврат данных о добавленном/редактированном избранном
+        public Favorite GetLastFavorite()
+        {
+            return prevFavorite;
+        }
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (ValidateInput())
             {
                 try
                 {
-                    Favorite fav = new Favorite();
-                    fav.Hostname = textBoxHostname.Text.Trim();
-                    fav.Address = textBoxAddress.Text.Trim();
-                    fav.Port = (int)numericUpDownPort.Value;
-                    fav.Date = DateTime.UtcNow;
-                    //данные по местоположению
-                    string location = comboBoxLocation.SelectedValue.ToString();
-                    var queryLocation = (from c in context.Locations
-                                         where c.LocationName == location
-                                         select c).FirstOrDefault();
-                    if (queryLocation != null)
-                        fav.Location = queryLocation;
-                    //данные безопасности
-                    string credential = comboBoxCredential.SelectedValue.ToString();
-                    var queryCredential = (from c in context.Credentials
-                                           where c.CredentialName == credential
-                                           select c).FirstOrDefault();
-                    if (queryCredential != null)
-                        fav.Credential = queryCredential;
-                    //данные протокола
-                    string protocol = comboBoxProtocol.SelectedValue.ToString();
-                    var queryProtocol = (from c in context.Protocols
-                                         where c.Name == protocol
-                                         select c).FirstOrDefault();
-                    fav.Protocol = queryProtocol;
-                    //данные категории
-                    string category = comboBoxCategory.SelectedValue.ToString();
-                    var queryCategory = (from c in context.Categories
-                                         where c.CategoryName == category
-                                         select c).FirstOrDefault();
-                    if (queryCategory != null)
-                        queryCategory.Favorites.Add(fav);
-                    //добавляем избранное в базу данных
-
-                    context.Favorites.Add(fav);
-                    context.SaveChanges();//???
+                    switch (mode)
+                    {
+                        case WindowsMode.ADD: FavoriteAdd(); break;
+                        case WindowsMode.EDIT: FavoriteEdit(); break;
+                    }                  
 
                     this.DialogResult = DialogResult.OK;
                 }
