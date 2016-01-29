@@ -48,6 +48,10 @@
   <ItemGroup>
     <Compile Include="Configuration\FavoriteConfig.cs" />
     <Compile Include="Init.cs" />
+    <Compile Include="Migrations\201601290433111_third.cs" />
+    <Compile Include="Migrations\201601290433111_third.Designer.cs">
+      <DependentUpon>201601290433111_third.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RconfigContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +65,11 @@
       <Project>{8a2522fb-f15f-4151-a6cf-8ff011f94386}</Project>
       <Name>RemoteWork.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201601290433111_third.resx">
+      <DependentUpon>201601290433111_third.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
