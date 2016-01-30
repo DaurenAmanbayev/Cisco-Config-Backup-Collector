@@ -16,8 +16,8 @@ namespace RemoteWork.Data
         [Key]
         public int Id { get; set; }
         [Required, MaxLength(256)]
-        public string Name { get; set; }    
-        [Required]
+        public string Name { get; set; }   
+      
         public virtual ICollection<Category> Categories { get; set; }
     }
 }

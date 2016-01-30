@@ -26,3 +26,17 @@ Z:\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Access.pdb
 Z:\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Data.pdb
 Z:\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.xml
 Z:\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.xml
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWorkUtil.exe.config
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.exe
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.pdb
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWorkUtil.exe
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWorkUtil.pdb
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Access.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Data.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Access.pdb
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Data.pdb
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.xml
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.xml
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.csprojResolveAssemblyReference.cache

@@ -12,6 +12,7 @@ namespace RemoteWork.Data
         public Category()
         {
             Favorites = new HashSet<Favorite>();
+            Commands = new HashSet<Command>();
         }
         [Key]
         public int Id { get; set; }
@@ -19,5 +20,6 @@ namespace RemoteWork.Data
         public string CategoryName { get; set; }
 
         public virtual ICollection<Favorite> Favorites { get; set; }
+        public virtual ICollection<Command> Commands { get; set; }
     }
 }

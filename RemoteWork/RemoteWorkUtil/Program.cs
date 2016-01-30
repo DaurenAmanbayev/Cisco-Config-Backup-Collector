@@ -14,8 +14,8 @@ namespace RemoteWorkUtil
         static void Main(string[] args)
         {
             Database.SetInitializer(new Init());
-           // FirstInsert();
-           // SecondInsert();
+         //  FirstInsert();
+           //SecondInsert();
             using (RconfigContext ctx = new RconfigContext())
             {
                 Console.WriteLine(ctx.Categories.Count());
