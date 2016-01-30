@@ -54,25 +54,28 @@
             this.editCategoryToolStripMenuItem,
             this.deleteCategoryToolStripMenuItem});
             this.contextMenuStripCategory.Name = "contextMenuStripCategory";
-            this.contextMenuStripCategory.Size = new System.Drawing.Size(159, 70);
+            this.contextMenuStripCategory.Size = new System.Drawing.Size(159, 92);
             // 
             // addCategoryToolStripMenuItem
             // 
             this.addCategoryToolStripMenuItem.Name = "addCategoryToolStripMenuItem";
             this.addCategoryToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.addCategoryToolStripMenuItem.Text = "Add Category";
+            this.addCategoryToolStripMenuItem.Click += new System.EventHandler(this.addCategoryToolStripMenuItem_Click);
             // 
             // editCategoryToolStripMenuItem
             // 
             this.editCategoryToolStripMenuItem.Name = "editCategoryToolStripMenuItem";
             this.editCategoryToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.editCategoryToolStripMenuItem.Text = "Edit Category";
+            this.editCategoryToolStripMenuItem.Click += new System.EventHandler(this.editCategoryToolStripMenuItem_Click);
             // 
             // deleteCategoryToolStripMenuItem
             // 
             this.deleteCategoryToolStripMenuItem.Name = "deleteCategoryToolStripMenuItem";
             this.deleteCategoryToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.deleteCategoryToolStripMenuItem.Text = "Delete Category";
+            this.deleteCategoryToolStripMenuItem.Click += new System.EventHandler(this.deleteCategoryToolStripMenuItem_Click);
             // 
             // Category_Manager
             // 

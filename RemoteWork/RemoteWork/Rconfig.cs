@@ -36,7 +36,7 @@ namespace RemoteWork
             favoriteDeleteToolStripMenuItem.Visible = false;
         }
         //подгрузка данных для отображения
-        public async void LoadData()
+        private async void LoadData()
         {
             var queryCategory = await (from c in context.Categories
                                        select c).ToListAsync();
@@ -53,12 +53,14 @@ namespace RemoteWork
                 treeViewFavorites.Nodes.Add(node);
             }
             LoadChildData();
+           
         }
         //подгружаем дочерние данные избранные
-        public void LoadChildData()
+        private void LoadChildData()
         {
             foreach (TreeNode node in treeViewFavorites.Nodes)
             {
+                node.Nodes.Clear();
                 string nodeGroup = node.Text;
                 var queryGroup = (from category in context.Categories
                                   where category.CategoryName == nodeGroup
@@ -74,23 +76,30 @@ namespace RemoteWork
                     }
                 }
             }
+            treeViewFavorites.Refresh();
+            //не срабатывает при добавлении устройства, при удалении срабатывает
         }
 
+        //дочерние данные после добавления
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Favorite_Edit frm = new Favorite_Edit();
             DialogResult result = frm.ShowDialog();
             if (result == DialogResult.OK)
             {
-               // treeViewFavorites.Nodes.Clear();
-               // LoadData();
+                // treeViewFavorites.Nodes.Clear();
+                //LoadData();
+                LoadChildData();
             }
         }
 
+        #region TREEVIEW DATA
         private void treeViewFavorites_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (treeViewFavorites.SelectedNode.Level == 0)
             {
+                string category = treeViewFavorites.SelectedNode.Name.ToString();
+                LoadCategoryData(category);
                 //контекстное меню категории
                 addCategoryToolStripMenuItem.Visible = true;             
                 editCategoryToolStripMenuItem.Visible = true;
@@ -102,6 +111,9 @@ namespace RemoteWork
             }
             else if (treeViewFavorites.SelectedNode.Level == 1)
             {
+                //вызываем дополнительную информацию по устройству
+                string fav = treeViewFavorites.SelectedNode.Name.ToString();
+                LoadFavoriteData(fav);
                 //контекстное меню категории
                 addCategoryToolStripMenuItem.Visible = false;
                 editCategoryToolStripMenuItem.Visible = false;
@@ -112,6 +124,45 @@ namespace RemoteWork
                 favoriteDeleteToolStripMenuItem.Visible = true;
             }
         }
+        //подгрузка данных при выборе избранного или категории
+        private void LoadFavoriteData(string favorite)
+        {
+            var queryFavorite=(from c in context.Favorites
+                              where c.Hostname==favorite
+                              select c).FirstOrDefault();
+            if (queryFavorite != null)
+            {
+                listViewDetails.Items.Clear();
+                var item = new ListViewItem(new[] { queryFavorite.Hostname,
+                    queryFavorite.Address,
+                    queryFavorite.Port.ToString(),
+                    queryFavorite.Protocol.Name,
+                    queryFavorite.Location.LocationName });
+                listViewDetails.Items.Add(item);
+            }
+        }
+
+        private void LoadCategoryData(string category)
+        {
+            var queryCategory=(from c in context.Categories
+                              where c.CategoryName==category
+                              select c).FirstOrDefault();
+
+            if (queryCategory != null)
+            {
+                listViewDetails.Items.Clear();
+                foreach (Favorite fav in queryCategory.Favorites)
+                {
+                    var item = new ListViewItem(new[] { fav.Hostname,
+                    fav.Address,
+                    fav.Port.ToString(),
+                    fav.Protocol.Name,
+                    fav.Location.LocationName });
+                    listViewDetails.Items.Add(item);
+                }
+            }
+        }
+        #endregion
 
         #region FAVORITE 
         private void favoriteAddToolStripMenuItem_Click(object sender, EventArgs e)
@@ -191,7 +242,47 @@ namespace RemoteWork
  
             }
         }
-     
 
+        private void tabControlFavInfo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControlFavInfo.SelectedIndex == 1 && treeViewFavorites.SelectedNode != null)
+            {
+                //подгружаем конфигурационные данные избранного
+                if ( treeViewFavorites.SelectedNode.Level == 1)
+                {
+                    string fav = treeViewFavorites.SelectedNode.Name.ToString();
+                    NotifyInfo(fav);
+                    var queryFavorite = (from c in context.Favorites
+                                         where c.Hostname == fav
+                                         select c).FirstOrDefault();
+                    if (queryFavorite != null)
+                    {
+                        listViewConfig.Items.Clear();
+                        foreach (Config config in queryFavorite.Configs)
+                        {
+                            var item = new ListViewItem(new[] { config.Id.ToString(), config.Date.ToString() });
+                            listViewDetails.Items.Add(item);
+                        }
+                    }
+                }
+                //если была выбрана категория просим выбрать избранное
+                else if (treeViewFavorites.SelectedNode.Level == 0)
+                {
+                    NotifyInfo("Please select favorite to view configuration!");
+                }
+            }
+           
+        }
+        //Уведомления
+        private void NotifyInfo(string info)
+        {
+            MessageBox.Show(info, "information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void reportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Analytics.Analytic frm = new Analytics.Analytic();
+            frm.ShowDialog();
+        }
     }
 }

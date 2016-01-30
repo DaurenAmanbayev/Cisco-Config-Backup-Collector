@@ -28,21 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBoxAvailable = new System.Windows.Forms.ListBox();
+            this.contextMenuStripAvailable = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAllToCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBoxCurrent = new System.Windows.Forms.ListBox();
+            this.contextMenuStripCurrent = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeFromCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAllFromCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.contextMenuStripAvailable.SuspendLayout();
+            this.contextMenuStripCurrent.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -72,53 +81,88 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.listBoxAvailable);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.listBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.listBoxCurrent);
             this.splitContainer1.Size = new System.Drawing.Size(333, 294);
             this.splitContainer1.SplitterDistance = 148;
             this.splitContainer1.TabIndex = 0;
             // 
-            // listBox1
+            // listBoxAvailable
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(148, 294);
-            this.listBox1.TabIndex = 0;
+            this.listBoxAvailable.ContextMenuStrip = this.contextMenuStripAvailable;
+            this.listBoxAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAvailable.FormattingEnabled = true;
+            this.listBoxAvailable.Location = new System.Drawing.Point(0, 0);
+            this.listBoxAvailable.Name = "listBoxAvailable";
+            this.listBoxAvailable.Size = new System.Drawing.Size(148, 294);
+            this.listBoxAvailable.TabIndex = 0;
             // 
-            // listBox2
+            // contextMenuStripAvailable
             // 
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(0, 0);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(181, 294);
-            this.listBox2.TabIndex = 0;
+            this.contextMenuStripAvailable.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToCurrentToolStripMenuItem,
+            this.addAllToCurrentToolStripMenuItem});
+            this.contextMenuStripAvailable.Name = "contextMenuStripAvailable";
+            this.contextMenuStripAvailable.Size = new System.Drawing.Size(171, 48);
+            // 
+            // addToCurrentToolStripMenuItem
+            // 
+            this.addToCurrentToolStripMenuItem.Name = "addToCurrentToolStripMenuItem";
+            this.addToCurrentToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.addToCurrentToolStripMenuItem.Text = "Add to Current";
+            this.addToCurrentToolStripMenuItem.Click += new System.EventHandler(this.addToCurrentToolStripMenuItem_Click);
+            // 
+            // addAllToCurrentToolStripMenuItem
+            // 
+            this.addAllToCurrentToolStripMenuItem.Name = "addAllToCurrentToolStripMenuItem";
+            this.addAllToCurrentToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.addAllToCurrentToolStripMenuItem.Text = "Add All to Current";
+            this.addAllToCurrentToolStripMenuItem.Click += new System.EventHandler(this.addAllToCurrentToolStripMenuItem_Click);
+            // 
+            // listBoxCurrent
+            // 
+            this.listBoxCurrent.ContextMenuStrip = this.contextMenuStripCurrent;
+            this.listBoxCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxCurrent.FormattingEnabled = true;
+            this.listBoxCurrent.Location = new System.Drawing.Point(0, 0);
+            this.listBoxCurrent.Name = "listBoxCurrent";
+            this.listBoxCurrent.Size = new System.Drawing.Size(181, 294);
+            this.listBoxCurrent.TabIndex = 0;
+            // 
+            // contextMenuStripCurrent
+            // 
+            this.contextMenuStripCurrent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeFromCurrentToolStripMenuItem,
+            this.removeAllFromCurrentToolStripMenuItem});
+            this.contextMenuStripCurrent.Name = "contextMenuStripCurrent";
+            this.contextMenuStripCurrent.Size = new System.Drawing.Size(207, 70);
+            // 
+            // removeFromCurrentToolStripMenuItem
+            // 
+            this.removeFromCurrentToolStripMenuItem.Name = "removeFromCurrentToolStripMenuItem";
+            this.removeFromCurrentToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.removeFromCurrentToolStripMenuItem.Text = "Remove from Current";
+            this.removeFromCurrentToolStripMenuItem.Click += new System.EventHandler(this.removeFromCurrentToolStripMenuItem_Click);
+            // 
+            // removeAllFromCurrentToolStripMenuItem
+            // 
+            this.removeAllFromCurrentToolStripMenuItem.Name = "removeAllFromCurrentToolStripMenuItem";
+            this.removeAllFromCurrentToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.removeAllFromCurrentToolStripMenuItem.Text = "Remove All from Current";
+            this.removeAllFromCurrentToolStripMenuItem.Click += new System.EventHandler(this.removeAllFromCurrentToolStripMenuItem_Click);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.label1);
-            this.flowLayoutPanel1.Controls.Add(this.textBox1);
+            this.flowLayoutPanel1.Controls.Add(this.textBoxName);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(333, 44);
             this.flowLayoutPanel1.TabIndex = 1;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.button1);
-            this.flowLayoutPanel2.Controls.Add(this.button2);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 353);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(333, 44);
-            this.flowLayoutPanel2.TabIndex = 2;
             // 
             // label1
             // 
@@ -127,33 +171,46 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.label1.Text = "Name";
             // 
-            // textBox1
+            // textBoxName
             // 
-            this.textBox1.Location = new System.Drawing.Point(44, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(280, 31);
-            this.textBox1.TabIndex = 1;
+            this.textBoxName.Location = new System.Drawing.Point(44, 3);
+            this.textBoxName.Multiline = true;
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(280, 31);
+            this.textBoxName.TabIndex = 1;
             // 
-            // button1
+            // flowLayoutPanel2
             // 
-            this.button1.Location = new System.Drawing.Point(255, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.flowLayoutPanel2.Controls.Add(this.buttonCancel);
+            this.flowLayoutPanel2.Controls.Add(this.buttonOK);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 353);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(333, 44);
+            this.flowLayoutPanel2.TabIndex = 2;
             // 
-            // button2
+            // buttonCancel
             // 
-            this.button2.Location = new System.Drawing.Point(174, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 34);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonCancel.Location = new System.Drawing.Point(255, 3);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 34);
+            this.buttonCancel.TabIndex = 0;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Location = new System.Drawing.Point(174, 3);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 34);
+            this.buttonOK.TabIndex = 1;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // Command_Edit
             // 
@@ -169,6 +226,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.contextMenuStripAvailable.ResumeLayout(false);
+            this.contextMenuStripCurrent.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -180,14 +239,19 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox listBoxAvailable;
+        private System.Windows.Forms.ListBox listBoxCurrent;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-
+        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripAvailable;
+        private System.Windows.Forms.ToolStripMenuItem addToCurrentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addAllToCurrentToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripCurrent;
+        private System.Windows.Forms.ToolStripMenuItem removeFromCurrentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeAllFromCurrentToolStripMenuItem;
     }
 }

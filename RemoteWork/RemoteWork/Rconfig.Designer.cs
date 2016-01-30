@@ -35,6 +35,9 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -42,18 +45,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewFavorites = new System.Windows.Forms.TreeView();
-            this.tabControlFavInfo = new System.Windows.Forms.TabControl();
-            this.tabPageFavDetails = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderPort = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabPageConfigs = new System.Windows.Forms.TabPage();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripNodes = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,20 +52,30 @@
             this.favoriteAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.securityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControlFavInfo = new System.Windows.Forms.TabControl();
+            this.tabPageFavDetails = new System.Windows.Forms.TabPage();
+            this.listViewDetails = new System.Windows.Forms.ListView();
+            this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderPort = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPageConfigs = new System.Windows.Forms.TabPage();
+            this.listViewConfig = new System.Windows.Forms.ListView();
+            this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.contextMenuStripNodes.SuspendLayout();
             this.tabControlFavInfo.SuspendLayout();
             this.tabPageFavDetails.SuspendLayout();
             this.tabPageConfigs.SuspendLayout();
-            this.contextMenuStripNodes.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -101,29 +102,51 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Text = "Add Favorite";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem.Text = "Edit Favorite";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managementToolStripMenuItem,
-            this.securityToolStripMenuItem,
             this.tasksToolStripMenuItem,
             this.reportsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
+            // managementToolStripMenuItem
+            // 
+            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.managementToolStripMenuItem.Text = "Management";
+            this.managementToolStripMenuItem.Click += new System.EventHandler(this.managementToolStripMenuItem_Click);
+            // 
+            // tasksToolStripMenuItem
+            // 
+            this.tasksToolStripMenuItem.Name = "tasksToolStripMenuItem";
+            this.tasksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tasksToolStripMenuItem.Text = "Tasks";
+            // 
+            // reportsToolStripMenuItem
+            // 
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reportsToolStripMenuItem.Text = "Reports";
+            this.reportsToolStripMenuItem.Click += new System.EventHandler(this.reportsToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem1,
+            this.helpToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
@@ -192,102 +215,6 @@
             this.treeViewFavorites.TabIndex = 0;
             this.treeViewFavorites.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFavorites_AfterSelect);
             // 
-            // tabControlFavInfo
-            // 
-            this.tabControlFavInfo.Controls.Add(this.tabPageFavDetails);
-            this.tabControlFavInfo.Controls.Add(this.tabPageConfigs);
-            this.tabControlFavInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlFavInfo.Location = new System.Drawing.Point(0, 0);
-            this.tabControlFavInfo.Name = "tabControlFavInfo";
-            this.tabControlFavInfo.SelectedIndex = 0;
-            this.tabControlFavInfo.Size = new System.Drawing.Size(406, 380);
-            this.tabControlFavInfo.TabIndex = 0;
-            // 
-            // tabPageFavDetails
-            // 
-            this.tabPageFavDetails.Controls.Add(this.listView1);
-            this.tabPageFavDetails.Location = new System.Drawing.Point(4, 22);
-            this.tabPageFavDetails.Name = "tabPageFavDetails";
-            this.tabPageFavDetails.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFavDetails.Size = new System.Drawing.Size(398, 354);
-            this.tabPageFavDetails.TabIndex = 0;
-            this.tabPageFavDetails.Text = "Favorite Details";
-            this.tabPageFavDetails.UseVisualStyleBackColor = true;
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderHostname,
-            this.columnHeaderAddress,
-            this.columnHeaderPort,
-            this.columnHeaderProtocol,
-            this.columnHeaderLocation});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Location = new System.Drawing.Point(3, 3);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(392, 348);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderHostname
-            // 
-            this.columnHeaderHostname.Text = "Hostname";
-            this.columnHeaderHostname.Width = 80;
-            // 
-            // columnHeaderAddress
-            // 
-            this.columnHeaderAddress.Text = "IP Address";
-            this.columnHeaderAddress.Width = 80;
-            // 
-            // columnHeaderPort
-            // 
-            this.columnHeaderPort.Text = "Port";
-            // 
-            // columnHeaderProtocol
-            // 
-            this.columnHeaderProtocol.Text = "Protocol";
-            this.columnHeaderProtocol.Width = 80;
-            // 
-            // columnHeaderLocation
-            // 
-            this.columnHeaderLocation.Text = "Location";
-            this.columnHeaderLocation.Width = 80;
-            // 
-            // tabPageConfigs
-            // 
-            this.tabPageConfigs.Controls.Add(this.listView2);
-            this.tabPageConfigs.Location = new System.Drawing.Point(4, 22);
-            this.tabPageConfigs.Name = "tabPageConfigs";
-            this.tabPageConfigs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConfigs.Size = new System.Drawing.Size(398, 354);
-            this.tabPageConfigs.TabIndex = 1;
-            this.tabPageConfigs.Text = "Configurations";
-            this.tabPageConfigs.UseVisualStyleBackColor = true;
-            // 
-            // listView2
-            // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderId,
-            this.columnHeaderDate});
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Location = new System.Drawing.Point(3, 3);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(392, 348);
-            this.listView2.TabIndex = 0;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderId
-            // 
-            this.columnHeaderId.Text = "Configuration ID";
-            this.columnHeaderId.Width = 100;
-            // 
-            // columnHeaderDate
-            // 
-            this.columnHeaderDate.Text = "Date";
-            this.columnHeaderDate.Width = 80;
-            // 
             // contextMenuStripNodes
             // 
             this.contextMenuStripNodes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -339,30 +266,114 @@
             this.favoriteDeleteToolStripMenuItem.Text = "Favorite Delete";
             this.favoriteDeleteToolStripMenuItem.Click += new System.EventHandler(this.favoriteDeleteToolStripMenuItem_Click);
             // 
-            // managementToolStripMenuItem
+            // tabControlFavInfo
             // 
-            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.managementToolStripMenuItem.Text = "Management";
-            this.managementToolStripMenuItem.Click += new System.EventHandler(this.managementToolStripMenuItem_Click);
+            this.tabControlFavInfo.Controls.Add(this.tabPageFavDetails);
+            this.tabControlFavInfo.Controls.Add(this.tabPageConfigs);
+            this.tabControlFavInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlFavInfo.Location = new System.Drawing.Point(0, 0);
+            this.tabControlFavInfo.Name = "tabControlFavInfo";
+            this.tabControlFavInfo.SelectedIndex = 0;
+            this.tabControlFavInfo.Size = new System.Drawing.Size(406, 380);
+            this.tabControlFavInfo.TabIndex = 0;
+            this.tabControlFavInfo.SelectedIndexChanged += new System.EventHandler(this.tabControlFavInfo_SelectedIndexChanged);
             // 
-            // securityToolStripMenuItem
+            // tabPageFavDetails
             // 
-            this.securityToolStripMenuItem.Name = "securityToolStripMenuItem";
-            this.securityToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.securityToolStripMenuItem.Text = "Security";
+            this.tabPageFavDetails.Controls.Add(this.listViewDetails);
+            this.tabPageFavDetails.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFavDetails.Name = "tabPageFavDetails";
+            this.tabPageFavDetails.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFavDetails.Size = new System.Drawing.Size(398, 354);
+            this.tabPageFavDetails.TabIndex = 0;
+            this.tabPageFavDetails.Text = "Favorite Details";
+            this.tabPageFavDetails.UseVisualStyleBackColor = true;
             // 
-            // tasksToolStripMenuItem
+            // listViewDetails
             // 
-            this.tasksToolStripMenuItem.Name = "tasksToolStripMenuItem";
-            this.tasksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.tasksToolStripMenuItem.Text = "Tasks";
+            this.listViewDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderHostname,
+            this.columnHeaderAddress,
+            this.columnHeaderPort,
+            this.columnHeaderProtocol,
+            this.columnHeaderLocation});
+            this.listViewDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewDetails.Location = new System.Drawing.Point(3, 3);
+            this.listViewDetails.Name = "listViewDetails";
+            this.listViewDetails.Size = new System.Drawing.Size(392, 348);
+            this.listViewDetails.TabIndex = 0;
+            this.listViewDetails.UseCompatibleStateImageBehavior = false;
+            this.listViewDetails.View = System.Windows.Forms.View.Details;
             // 
-            // reportsToolStripMenuItem
+            // columnHeaderHostname
             // 
-            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.reportsToolStripMenuItem.Text = "Reports";
+            this.columnHeaderHostname.Text = "Hostname";
+            this.columnHeaderHostname.Width = 80;
+            // 
+            // columnHeaderAddress
+            // 
+            this.columnHeaderAddress.Text = "IP Address";
+            this.columnHeaderAddress.Width = 80;
+            // 
+            // columnHeaderPort
+            // 
+            this.columnHeaderPort.Text = "Port";
+            // 
+            // columnHeaderProtocol
+            // 
+            this.columnHeaderProtocol.Text = "Protocol";
+            this.columnHeaderProtocol.Width = 80;
+            // 
+            // columnHeaderLocation
+            // 
+            this.columnHeaderLocation.Text = "Location";
+            this.columnHeaderLocation.Width = 80;
+            // 
+            // tabPageConfigs
+            // 
+            this.tabPageConfigs.Controls.Add(this.listViewConfig);
+            this.tabPageConfigs.Location = new System.Drawing.Point(4, 22);
+            this.tabPageConfigs.Name = "tabPageConfigs";
+            this.tabPageConfigs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageConfigs.Size = new System.Drawing.Size(398, 354);
+            this.tabPageConfigs.TabIndex = 1;
+            this.tabPageConfigs.Text = "Configurations";
+            this.tabPageConfigs.UseVisualStyleBackColor = true;
+            // 
+            // listViewConfig
+            // 
+            this.listViewConfig.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderId,
+            this.columnHeaderDate});
+            this.listViewConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewConfig.Location = new System.Drawing.Point(3, 3);
+            this.listViewConfig.Name = "listViewConfig";
+            this.listViewConfig.Size = new System.Drawing.Size(392, 348);
+            this.listViewConfig.TabIndex = 0;
+            this.listViewConfig.UseCompatibleStateImageBehavior = false;
+            this.listViewConfig.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderId
+            // 
+            this.columnHeaderId.Text = "Configuration ID";
+            this.columnHeaderId.Width = 100;
+            // 
+            // columnHeaderDate
+            // 
+            this.columnHeaderDate.Text = "Date";
+            this.columnHeaderDate.Width = 80;
+            // 
+            // aboutToolStripMenuItem1
+            // 
+            this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem1.Text = "About";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // Rconfig
             // 
@@ -384,10 +395,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.contextMenuStripNodes.ResumeLayout(false);
             this.tabControlFavInfo.ResumeLayout(false);
             this.tabPageFavDetails.ResumeLayout(false);
             this.tabPageConfigs.ResumeLayout(false);
-            this.contextMenuStripNodes.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -408,13 +419,13 @@
         private System.Windows.Forms.TabPage tabPageFavDetails;
         private System.Windows.Forms.TabPage tabPageConfigs;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewDetails;
         private System.Windows.Forms.ColumnHeader columnHeaderHostname;
         private System.Windows.Forms.ColumnHeader columnHeaderAddress;
         private System.Windows.Forms.ColumnHeader columnHeaderPort;
         private System.Windows.Forms.ColumnHeader columnHeaderProtocol;
         private System.Windows.Forms.ColumnHeader columnHeaderLocation;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ListView listViewConfig;
         private System.Windows.Forms.ColumnHeader columnHeaderId;
         private System.Windows.Forms.ColumnHeader columnHeaderDate;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
@@ -427,10 +438,10 @@
         private System.Windows.Forms.ToolStripMenuItem favoriteEditToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem favoriteDeleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem securityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tasksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
-
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

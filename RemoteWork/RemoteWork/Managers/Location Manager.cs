@@ -34,23 +34,41 @@ namespace RemoteWork.Managers
             DialogResult result = frm.ShowDialog();
             if (result == DialogResult.OK)
             {
- 
+                LoadData();
             }
         }
 
         private void editLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Location_Edit frm = new Location_Edit();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
+            if (listBoxLocations.SelectedItem != null)
             {
-
+                string location = listBoxLocations.SelectedItem.ToString();
+                Location_Edit frm = new Location_Edit(location);
+                DialogResult result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    LoadData();
+                }
             }
+            
         }
 
         private void deleteLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (listBoxLocations.SelectedItem != null)
+            {
+                string location = listBoxLocations.SelectedItem.ToString();
 
+                var queryLocation=(from c in context.Locations
+                                  where c.LocationName==location
+                                  select c).FirstOrDefault();
+                if (queryLocation != null)
+                {
+                    context.Locations.Remove(queryLocation);
+                    context.SaveChanges();
+                    LoadData();
+                }
+            }
         }
     }
 }
