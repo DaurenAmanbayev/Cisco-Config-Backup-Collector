@@ -24,6 +24,7 @@ namespace RemoteWork.Data
         public virtual Protocol Protocol {get; set;}
         public virtual Location Location { get; set; }
         public DateTime? Date { get; set; }
+        public virtual Category Category { get; set; }
         [Required]
         public virtual Credential Credential { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
