@@ -10,9 +10,10 @@ using System.Windows.Forms;
 using RemoteWork.Access;
 using System.Data.Entity;
 using RemoteWork.Data;
+using RemoteWork.Expect;
 
 namespace RemoteWork
-{
+{   
     public partial class Rconfig : Form
     {
         RconfigContext context = new RconfigContext();
@@ -24,6 +25,7 @@ namespace RemoteWork
             LoadData();
         }
 
+        #region CUSTOM METHODS
         private void StartConfiguration()
         {
             //контекстное меню категории
@@ -80,18 +82,59 @@ namespace RemoteWork
             //не срабатывает при добавлении устройства, при удалении срабатывает
         }
 
-        //дочерние данные после добавления
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        //Уведомления
+        private void NotifyInfo(string info)
         {
-            Favorite_Edit frm = new Favorite_Edit();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
+            MessageBox.Show(info, "information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+
+        #region EXPECT
+        private void LoadConfiguration(RemoteTask task)
+        {
+            foreach (Favorite fav in task.Favorites)
             {
-                // treeViewFavorites.Nodes.Clear();
-                //LoadData();
-                LoadChildData();
+                ConnectionData data = new ConnectionData();
+                data.address = fav.Address;
+                data.port = fav.Port;
+                data.username = fav.Credential.Username;
+                data.password = fav.Credential.Password;
+
+                string protocol = fav.Protocol.Name;
+                List<string> commands = new List<string>();
+                //проходим по списку команд, выявляем соответствие используемой команды и категории избранного
+                foreach (Command command in task.Commands)
+                {
+                    foreach (Category category in command.Categories)
+                    {
+                        if (fav.Category.CategoryName == category.CategoryName)
+                        {
+                            commands.Add(command.Name);
+                        }
+                    }
+                }
+
             }
         }
+        private void Connection(ConnectionData data, string protocol, List<string> commands)
+        {
+            Expect.Expect expect;
+            switch (protocol)
+            {
+                case "Telnet": expect = new TelnetExpect(data); break;
+                case "SSH": expect = new SshExpect(data); break;
+                //по умолчанию для сетевых устройств протокол Telnet
+                default: expect = new TelnetExpect(data); break;
+            }
+            if (expect != null)
+            {
+                expect.ExecuteCommands(commands);
+                List<string> result = expect.GetResult();
+                bool success = expect.isSuccess;
+                string error = expect.GetError();
+            }
+        }
+        #endregion
 
         #region TREEVIEW DATA
         private void treeViewFavorites_AfterSelect(object sender, TreeViewEventArgs e)
@@ -233,16 +276,7 @@ namespace RemoteWork
         }
         #endregion
 
-        private void managementToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Management frm = new Management();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
- 
-            }
-        }
-
+        #region TABCONTROL
         private void tabControlFavInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControlFavInfo.SelectedIndex == 1 && treeViewFavorites.SelectedNode != null)
@@ -273,10 +307,20 @@ namespace RemoteWork
             }
            
         }
-        //Уведомления
-        private void NotifyInfo(string info)
+
+        #endregion
+
+
+
+        #region TOOLSTRIP MENU
+        private void managementToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(info, "information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Management frm = new Management();
+            DialogResult result = frm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+
+            }
         }
 
         private void reportsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -284,5 +328,104 @@ namespace RemoteWork
             Analytics.Analytic frm = new Analytics.Analytic();
             frm.ShowDialog();
         }
+
+        //дочерние данные после добавления
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Favorite_Edit frm = new Favorite_Edit();
+            DialogResult result = frm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                // treeViewFavorites.Nodes.Clear();
+                //LoadData();
+                LoadChildData();
+            }
+        }
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteFavoriteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewFavorites.SelectedNode != null)
+            {
+                string favName = treeViewFavorites.SelectedNode.Text;
+                //  MessageBox.Show(favName);
+                var queryFavorite = (from c in context.Favorites
+                                     where c.Hostname == favName
+                                     select c).Single();
+                if (queryFavorite != null)
+                {
+                    context.Favorites.Remove(queryFavorite);
+                    context.SaveChanges();
+                }
+                treeViewFavorites.SelectedNode.Remove();
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void tasksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            NotifyInfo("About Info");
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NotifyInfo("Help Info!");
+        }
+        #endregion
+
+        #region TOOLSTRIP BUTTONS
+        private void toolStripButtonAddFav_Click(object sender, EventArgs e)
+        {
+            /**/
+        }
+
+        private void toolStripButtonEditFav_Click(object sender, EventArgs e)
+        {
+            /**/
+        }
+
+        private void toolStripButtonDelFav_Click(object sender, EventArgs e)
+        {
+            if (treeViewFavorites.SelectedNode != null)
+            {
+                string favName = treeViewFavorites.SelectedNode.Text;
+                //  MessageBox.Show(favName);
+                var queryFavorite = (from c in context.Favorites
+                                     where c.Hostname == favName
+                                     select c).Single();
+                if (queryFavorite != null)
+                {
+                    context.Favorites.Remove(queryFavorite);
+                    context.SaveChanges();
+                }
+                treeViewFavorites.SelectedNode.Remove();
+            }
+        }
+
+        private void toolStripButtonReport_Click(object sender, EventArgs e)
+        {
+            Analytics.Analytic frm = new Analytics.Analytic();
+            frm.ShowDialog();
+        }
+
+        private void toolStripButtonLoadConfig_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+       
     }
 }
