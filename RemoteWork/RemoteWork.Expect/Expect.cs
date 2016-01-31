@@ -27,5 +27,9 @@ namespace RemoteWork.Expect
         {
             return string.Join("** ", listError.ToArray());
         }
+        public bool isSuccess
+        {
+            get { return success; }
+        }
     }
 }
