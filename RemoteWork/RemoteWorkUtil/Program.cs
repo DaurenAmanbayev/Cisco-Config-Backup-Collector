@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RemoteWork.Access;
 using RemoteWork.Data;
 using System.Data.Entity;
+using RemoteWork.Expect;
 
 namespace RemoteWorkUtil
 {
@@ -13,9 +14,33 @@ namespace RemoteWorkUtil
     {
         static void Main(string[] args)
         {
+            ConnectionData data = new ConnectionData();
+            data.address = "192.168.234.130";
+            data.password = "Zx_998877Kad";
+            data.port = 22;
+            data.username = "root";
+            SshExpect ssh = new SshExpect(data);
+            ssh.ExecuteCommand("ls -la");
+            if (ssh.isSuccess)
+            {
+                Console.WriteLine(ssh.GetResult());
+
+            }
+            else
+            {
+                Console.WriteLine(ssh.GetError());
+                
+            }
+            Console.ReadKey();
+
+
+        }
+
+        private void Test()
+        {
             Database.SetInitializer(new Init());
-         //  FirstInsert();
-           //SecondInsert();
+            //  FirstInsert();
+            //SecondInsert();
             using (RconfigContext ctx = new RconfigContext())
             {
                 Console.WriteLine(ctx.Categories.Count());
@@ -28,10 +53,10 @@ namespace RemoteWorkUtil
                 {
                     Console.WriteLine("Protocol Name: {0} DefPort: {1}", prot.Name, prot.DefaultPort);
                 }
-                
+
                 foreach (Location loc in ctx.Locations)
                 {
-                    
+
                     Console.WriteLine("LOC: {0}", loc.LocationName);
                 }
                 foreach (Favorite fav in ctx.Favorites)
@@ -42,7 +67,6 @@ namespace RemoteWorkUtil
             Console.WriteLine("CHECKED");
             Console.ReadKey();
         }
-
         static void FirstInsert()
         {
             using (RconfigContext context = new RconfigContext())

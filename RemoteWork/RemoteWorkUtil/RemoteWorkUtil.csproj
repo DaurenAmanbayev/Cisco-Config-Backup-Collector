@@ -66,6 +66,10 @@
       <Project>{8a2522fb-f15f-4151-a6cf-8ff011f94386}</Project>
       <Name>RemoteWork.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemoteWork.Expect\RemoteWork.Expect.csproj">
+      <Project>{b53a97a9-f841-4a42-af2d-0c24424802aa}</Project>
+      <Name>RemoteWork.Expect</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
