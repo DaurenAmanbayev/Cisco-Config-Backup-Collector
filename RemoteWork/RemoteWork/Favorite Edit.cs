@@ -297,8 +297,8 @@ namespace RemoteWork
                     {
                         case WindowsMode.ADD: FavoriteAdd(); break;
                         case WindowsMode.EDIT: FavoriteEdit(); break;
-                    }                  
-
+                    }
+                    ContextDispose();
                     this.DialogResult = DialogResult.OK;
                 }
                 catch (DbEntityValidationException dbEx)
@@ -351,6 +351,10 @@ namespace RemoteWork
             if (queryPort != null)
                 numericUpDownPort.Value = queryPort.DefaultPort;
         }
-        
+
+        private void ContextDispose()
+        {
+            context.Dispose();
+        }
     }
 }

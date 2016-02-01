@@ -40,6 +40,7 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,6 @@
             this.toolStripButtonReport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonLoadConfig = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStripFavInfo = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewFavorites = new System.Windows.Forms.TreeView();
@@ -75,7 +75,8 @@
             this.listViewConfig = new System.Windows.Forms.ListView();
             this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBoxTasks = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -158,16 +159,22 @@
             // managementToolStripMenuItem
             // 
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.managementToolStripMenuItem.Text = "Management";
             this.managementToolStripMenuItem.Click += new System.EventHandler(this.managementToolStripMenuItem_Click);
             // 
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.reportsToolStripMenuItem.Text = "Reports";
             this.reportsToolStripMenuItem.Click += new System.EventHandler(this.reportsToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // aboutToolStripMenuItem
             // 
@@ -194,7 +201,7 @@
             // 
             // toolStripMain
             // 
-            this.toolStripMain.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripMain.Font = new System.Drawing.Font("Segoe UI Symbol", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
@@ -205,6 +212,7 @@
             this.toolStripButtonReport,
             this.toolStripSeparator3,
             this.toolStripButtonLoadConfig,
+            this.toolStripComboBoxTasks,
             this.toolStripSeparator1});
             this.toolStripMain.Location = new System.Drawing.Point(0, 24);
             this.toolStripMain.Name = "toolStripMain";
@@ -275,13 +283,8 @@
             this.toolStripButtonLoadConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonLoadConfig.Name = "toolStripButtonLoadConfig";
             this.toolStripButtonLoadConfig.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonLoadConfig.Text = "Load Configuration";
+            this.toolStripButtonLoadConfig.Text = "Run Task";
             this.toolStripButtonLoadConfig.Click += new System.EventHandler(this.toolStripButtonLoadConfig_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // statusStripFavInfo
             // 
@@ -466,11 +469,16 @@
             this.columnHeaderDate.Text = "Date";
             this.columnHeaderDate.Width = 80;
             // 
-            // settingsToolStripMenuItem
+            // toolStripComboBoxTasks
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.toolStripComboBoxTasks.Name = "toolStripComboBoxTasks";
+            this.toolStripComboBoxTasks.Size = new System.Drawing.Size(121, 27);
+            this.toolStripComboBoxTasks.ToolTipText = "Select Task";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // Rconfig
             // 
@@ -544,11 +552,12 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonEditFav;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelFav;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem deleteFavoriteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxTasks;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

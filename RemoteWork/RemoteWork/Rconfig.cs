@@ -62,7 +62,7 @@ namespace RemoteWork
         {
             foreach (TreeNode node in treeViewFavorites.Nodes)
             {
-                node.Nodes.Clear();
+               // node.Nodes.Clear();//при использовании альтернативы
                 string nodeGroup = node.Text;
                 var queryGroup = (from category in context.Categories
                                   where category.CategoryName == nodeGroup
@@ -81,7 +81,15 @@ namespace RemoteWork
             treeViewFavorites.Refresh();
             //не срабатывает при добавлении устройства, при удалении срабатывает
         }
+        
+        //подгружаем список задач
+        private async void LoadTask()
+        {
+            var queryTasks=await (from c in context.RemoteTasks
+                           select c.TaskName).ToListAsync();
 
+            //toolStripComboBoxTasks.
+        }
         //Уведомления
         private void NotifyInfo(string info)
         {
@@ -233,8 +241,12 @@ namespace RemoteWork
             DialogResult result = frm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                // treeViewFavorites.Nodes.Clear();
-                // LoadData();
+                context.Dispose();
+                context = new RconfigContext();
+                treeViewFavorites.Nodes.Clear();
+            ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
+                treeViewFavorites.Refresh();
+                LoadData();
             }
         }
         //!!!! доработать логику обновления данных в treeview
@@ -252,26 +264,28 @@ namespace RemoteWork
                 DialogResult result = frm.ShowDialog();
                 if(result==DialogResult.OK)
                 {
-                    Favorite fav = frm.GetLastFavorite();
-                    string editedFavName = fav.Hostname;
-                    string editedCategory = fav.Category.CategoryName;
-                    //если категория была изменена мы удаляем из категории ранее избранное
-                    if (editedCategory != favCategory)
-                    {
-                        treeViewFavorites.SelectedNode.Remove();
-                        //foreach(TreeNode node in treeViewFavorites.Nodes.)
-                    }
-                    else
-                    {
-                        //если категория не была изменена, но изменен избранный
-                        if (editedFavName != favName)
-                        {
 
-                            TreeNode childNode = new TreeNode();
-                            childNode.Name = editedFavName;
-                            childNode.Text = editedFavName;
-                        }
-                    }
+                    //удалить не требуется проблема с 
+                    //Favorite fav = frm.GetLastFavorite();
+                    //string editedFavName = fav.Hostname;
+                    //string editedCategory = fav.Category.CategoryName;
+                    ////если категория была изменена мы удаляем из категории ранее избранное
+                    //if (editedCategory != favCategory)
+                    //{
+                    //    treeViewFavorites.SelectedNode.Remove();
+                    //    //foreach(TreeNode node in treeViewFavorites.Nodes.)
+                    //}
+                    //else
+                    //{
+                    //    //если категория не была изменена, но изменен избранный
+                    //    if (editedFavName != favName)
+                    //    {
+
+                    //        TreeNode childNode = new TreeNode();
+                    //        childNode.Name = editedFavName;
+                    //        childNode.Text = editedFavName;
+                    //    }
+                    //}
                 }
             }
         }
@@ -346,16 +360,25 @@ namespace RemoteWork
             frm.ShowDialog();
         }
 
-        //дочерние данные после добавления
+        //дочерние данные после добавления!!!
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Favorite_Edit frm = new Favorite_Edit();
             DialogResult result = frm.ShowDialog();
             if (result == DialogResult.OK)
             {
+                //проблемы была с очисткой контекста!!!
+                context.Dispose();
+                context = new RconfigContext();
+                treeViewFavorites.Nodes.Clear();
+            ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
+                treeViewFavorites.Refresh();
+                LoadData();
+
+                //альтернатива!!!
                 // treeViewFavorites.Nodes.Clear();
                 //LoadData();
-                LoadChildData();
+                //LoadChildData();
             }
         }
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
@@ -437,7 +460,6 @@ namespace RemoteWork
            
         }
         #endregion
-
        
     }
 }
