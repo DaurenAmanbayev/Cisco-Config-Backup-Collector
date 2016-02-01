@@ -29,7 +29,7 @@ namespace RemoteWork
         WindowsMode mode = WindowsMode.ADD;
         RconfigContext context = new RconfigContext();
         IPAddress address;
-        Favorite prevFavorite;
+        Favorite currentFavorite;
         string prevFavName;
         public Favorite_Edit()
         {
@@ -87,7 +87,7 @@ namespace RemoteWork
             if (queryPrevFavorite != null)
             {
                 //сохраняем наше избранное 
-                prevFavorite = queryPrevFavorite;
+                currentFavorite = queryPrevFavorite;
 
                 //редактируем данные формы
                 textBoxHostname.Text = prevFavName;
@@ -173,45 +173,45 @@ namespace RemoteWork
         //добавляем избранное в базу
         private void FavoriteAdd()
         {
-            Favorite fav = new Favorite();           
-            fav.Hostname = textBoxHostname.Text.Trim();
-            fav.Address = textBoxAddress.Text.Trim();
-            fav.Port = (int)numericUpDownPort.Value;
-            fav.Date = DateTime.UtcNow;
+            currentFavorite = new Favorite();           
+            currentFavorite.Hostname = textBoxHostname.Text.Trim();
+            currentFavorite.Address = textBoxAddress.Text.Trim();
+            currentFavorite.Port = (int)numericUpDownPort.Value;
+            currentFavorite.Date = DateTime.UtcNow;
             //данные по местоположению
             string location = comboBoxLocation.SelectedValue.ToString();
             var queryLocation = (from c in context.Locations
                                  where c.LocationName == location
                                  select c).FirstOrDefault();
             if (queryLocation != null)
-                fav.Location = queryLocation;
+                currentFavorite.Location = queryLocation;
             //данные безопасности
             string credential = comboBoxCredential.SelectedValue.ToString();
             var queryCredential = (from c in context.Credentials
                                    where c.CredentialName == credential
                                    select c).FirstOrDefault();
             if (queryCredential != null)
-                fav.Credential = queryCredential;
+                currentFavorite.Credential = queryCredential;
             //данные протокола
             string protocol = comboBoxProtocol.SelectedValue.ToString();
             var queryProtocol = (from c in context.Protocols
                                  where c.Name == protocol
                                  select c).FirstOrDefault();
-            fav.Protocol = queryProtocol;
+            currentFavorite.Protocol = queryProtocol;
             //данные категории
 
             string category = comboBoxCategory.SelectedValue.ToString();
             var queryCategory = (from c in context.Categories
                                  where c.CategoryName == category
                                  select c).FirstOrDefault();
-            fav.Category = queryCategory;//**замена ниже
+            currentFavorite.Category = queryCategory;//**замена ниже
             //if (queryCategory != null)
             //    queryCategory.Favorites.Add(fav);
             //добавляем избранное в базу данных
 
-            context.Favorites.Add(fav);
+            context.Favorites.Add(currentFavorite);
             context.SaveChanges();//???
-            prevFavorite = fav;//для возврата данных в главную форму
+      
         }
         //изменяем избранное из базы
         private void FavoriteEdit()
@@ -249,13 +249,13 @@ namespace RemoteWork
             var queryCategory = (from c in context.Categories
                                  where c.CategoryName == category
                                  select c).FirstOrDefault();
-            prevFavorite.Category = queryCategory;
+            currentFavorite.Category = queryCategory;
 
 
-            prevFavorite.Hostname = textBoxHostname.Text.Trim();
-            prevFavorite.Address = textBoxAddress.Text.Trim();
-            prevFavorite.Port = (int)numericUpDownPort.Value;
-            prevFavorite.Date = DateTime.UtcNow;
+            currentFavorite.Hostname = textBoxHostname.Text.Trim();
+            currentFavorite.Address = textBoxAddress.Text.Trim();
+            currentFavorite.Port = (int)numericUpDownPort.Value;
+            currentFavorite.Date = DateTime.UtcNow;
 
             //данные по местоположению
             string location = comboBoxLocation.SelectedValue.ToString();
@@ -263,30 +263,32 @@ namespace RemoteWork
                                  where c.LocationName == location
                                  select c).FirstOrDefault();
             if (queryLocation != null)
-                prevFavorite.Location = queryLocation;
+                currentFavorite.Location = queryLocation;
             //данные безопасности
             string credential = comboBoxCredential.SelectedValue.ToString();
             var queryCredential = (from c in context.Credentials
                                    where c.CredentialName == credential
                                    select c).FirstOrDefault();
             if (queryCredential != null)
-                prevFavorite.Credential = queryCredential;
+                currentFavorite.Credential = queryCredential;
             //данные протокола
             string protocol = comboBoxProtocol.SelectedValue.ToString();
             var queryProtocol = (from c in context.Protocols
                                  where c.Name == protocol
                                  select c).FirstOrDefault();
             //проверка
-            prevFavorite.Protocol = queryProtocol;
+            currentFavorite.Protocol = queryProtocol;
             //сохраняем изменения
-            context.Entry(prevFavorite).State = System.Data.Entity.EntityState.Modified;
+            context.Entry(currentFavorite).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
         //возврат данных о добавленном/редактированном избранном
-        public Favorite GetLastFavorite()
+        public string GetLastFavorite()
         {
-            return prevFavorite;
+            return currentFavorite.Hostname;
         }
+
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (ValidateInput())
@@ -298,7 +300,7 @@ namespace RemoteWork
                         case WindowsMode.ADD: FavoriteAdd(); break;
                         case WindowsMode.EDIT: FavoriteEdit(); break;
                     }
-                    ContextDispose();
+                  //  ContextDispose();
                     this.DialogResult = DialogResult.OK;
                 }
                 catch (DbEntityValidationException dbEx)
@@ -351,10 +353,6 @@ namespace RemoteWork
             if (queryPort != null)
                 numericUpDownPort.Value = queryPort.DefaultPort;
         }
-
-        private void ContextDispose()
-        {
-            context.Dispose();
-        }
+        
     }
 }

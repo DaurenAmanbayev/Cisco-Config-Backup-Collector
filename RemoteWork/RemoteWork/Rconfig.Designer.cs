@@ -77,8 +77,12 @@
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStripComboBoxTasks = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripStatusLabelCategory = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelFavorites = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBarRunner = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
+            this.statusStripFavInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -288,8 +292,13 @@
             // 
             // statusStripFavInfo
             // 
+            this.statusStripFavInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBarRunner,
+            this.toolStripStatusLabelFavorites,
+            this.toolStripStatusLabelCategory});
             this.statusStripFavInfo.Location = new System.Drawing.Point(0, 429);
             this.statusStripFavInfo.Name = "statusStripFavInfo";
+            this.statusStripFavInfo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.statusStripFavInfo.Size = new System.Drawing.Size(614, 22);
             this.statusStripFavInfo.TabIndex = 2;
             this.statusStripFavInfo.Text = "statusStripFavInfo";
@@ -471,6 +480,8 @@
             // 
             // toolStripComboBoxTasks
             // 
+            this.toolStripComboBoxTasks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxTasks.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxTasks.Name = "toolStripComboBoxTasks";
             this.toolStripComboBoxTasks.Size = new System.Drawing.Size(121, 27);
             this.toolStripComboBoxTasks.ToolTipText = "Select Task";
@@ -479,6 +490,23 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripStatusLabelCategory
+            // 
+            this.toolStripStatusLabelCategory.Name = "toolStripStatusLabelCategory";
+            this.toolStripStatusLabelCategory.Size = new System.Drawing.Size(58, 17);
+            this.toolStripStatusLabelCategory.Text = ":Category";
+            // 
+            // toolStripStatusLabelFavorites
+            // 
+            this.toolStripStatusLabelFavorites.Name = "toolStripStatusLabelFavorites";
+            this.toolStripStatusLabelFavorites.Size = new System.Drawing.Size(52, 17);
+            this.toolStripStatusLabelFavorites.Text = ":Favorite";
+            // 
+            // toolStripProgressBarRunner
+            // 
+            this.toolStripProgressBarRunner.Name = "toolStripProgressBarRunner";
+            this.toolStripProgressBarRunner.Size = new System.Drawing.Size(100, 16);
             // 
             // Rconfig
             // 
@@ -496,6 +524,8 @@
             this.menuStrip1.PerformLayout();
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
+            this.statusStripFavInfo.ResumeLayout(false);
+            this.statusStripFavInfo.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -558,6 +588,9 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxTasks;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarRunner;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFavorites;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelCategory;
     }
 }
 

@@ -6,23 +6,29 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using RemoteWork.Access;
 using System.Data.Entity;
 using RemoteWork.Data;
 using RemoteWork.Expect;
 
+//https://msdn.microsoft.com/en-us/library/dd537607(v=vs.110).aspx
 namespace RemoteWork
 {   
     public partial class Rconfig : Form
     {
-        RconfigContext context = new RconfigContext();
+        RconfigContext context=new RconfigContext();
+        CancellationToken token;
+        List<Task> taskRunnerManager = new List<Task>();
+        bool isLock = false;
         public Rconfig()
         {
             InitializeComponent();
             Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<RconfigContext, RemoteWork.Access.Migrations.Configuration>());
             StartConfiguration();
             LoadData();
+            LoadTask();
         }
 
         #region CUSTOM METHODS
@@ -40,19 +46,23 @@ namespace RemoteWork
         //подгрузка данных для отображения
         private async void LoadData()
         {
-            var queryCategory = await (from c in context.Categories
-                                       select c).ToListAsync();
-            foreach (Category category in queryCategory)
+            using (context = new RconfigContext())
             {
-                TreeNode node = new TreeNode();
-                node.Name = category.CategoryName;
-                node.Text = category.CategoryName;
-                //foreach (Favorite favorite in category.Favorites)
-                //{
-                //    TreeNode childNode = new TreeNode();
-                //    childNode.Text = favorite.Hostname;
-                //}
-                treeViewFavorites.Nodes.Add(node);
+                var queryCategory = await (from c in context.Categories
+                                           select c).ToListAsync();
+
+                foreach (Category category in queryCategory)
+                {
+                    TreeNode node = new TreeNode();
+                    node.Name = category.CategoryName;
+                    node.Text = category.CategoryName;
+                    //foreach (Favorite favorite in category.Favorites)
+                    //{
+                    //    TreeNode childNode = new TreeNode();
+                    //    childNode.Text = favorite.Hostname;
+                    //}
+                    treeViewFavorites.Nodes.Add(node);
+                }
             }
             LoadChildData();
            
@@ -60,34 +70,42 @@ namespace RemoteWork
         //подгружаем дочерние данные избранные
         private void LoadChildData()
         {
-            foreach (TreeNode node in treeViewFavorites.Nodes)
+            using (context = new RconfigContext())
             {
-               // node.Nodes.Clear();//при использовании альтернативы
-                string nodeGroup = node.Text;
-                var queryGroup = (from category in context.Categories
-                                  where category.CategoryName == nodeGroup
-                                  select category).FirstOrDefault();
-                if (queryGroup != null)
+                foreach (TreeNode node in treeViewFavorites.Nodes)
                 {
-                    foreach (Favorite fav in queryGroup.Favorites)
+                    // node.Nodes.Clear();//при использовании альтернативы
+                    string nodeGroup = node.Text;
+                    var queryGroup = (from category in context.Categories
+                                      where category.CategoryName == nodeGroup
+                                      select category).FirstOrDefault();
+                    if (queryGroup != null)
                     {
-                        TreeNode childNode = new TreeNode();
-                        childNode.Name = fav.Hostname;
-                        childNode.Text = fav.Hostname;
-                        node.Nodes.Add(childNode);
+                        foreach (Favorite fav in queryGroup.Favorites)
+                        {
+                            TreeNode childNode = new TreeNode();
+                            childNode.Name = fav.Hostname;
+                            childNode.Text = fav.Hostname;
+                            node.Nodes.Add(childNode);
+                        }
                     }
                 }
             }
-            treeViewFavorites.Refresh();
+            //treeViewFavorites.Refresh();
             //не срабатывает при добавлении устройства, при удалении срабатывает
         }
         
         //подгружаем список задач
         private async void LoadTask()
         {
-            var queryTasks=await (from c in context.RemoteTasks
-                           select c.TaskName).ToListAsync();
+            using (context = new RconfigContext())
+            {
+                var queryTasks = await (from c in context.RemoteTasks
+                                        select c.TaskName).ToArrayAsync();
 
+               toolStripComboBoxTasks.Items.AddRange(queryTasks); //почему не выбирает первую модель               
+                //добавлять данные в комбо бокс
+            }
             //toolStripComboBoxTasks.
         }
         //Уведомления
@@ -100,10 +118,14 @@ namespace RemoteWork
         #region EXPECT
         private void LoadConfiguration(RemoteTask task)
         {
+            //LockForm();
+            var tokenSource = new CancellationTokenSource();
+            token = tokenSource.Token;
+            ProgressInit(task.Favorites.Count);
             foreach (Favorite fav in task.Favorites)
             {                
                 List<string> commands = new List<string>();
-                //проходим по списку команд, выявляем соответствие используемой команды и категории избранного
+                //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
                 foreach (Command command in task.Commands)
                 {
                     foreach (Category category in command.Categories)
@@ -114,12 +136,36 @@ namespace RemoteWork
                         }
                     }
                 }
+                //мультипоточность
                 //устанавливаем соединение
-                Connection(fav, commands, task);
+                FavoriteConnect connect=new FavoriteConnect();
+                connect.commands=commands;
+                connect.favorite=fav;
+                connect.task=task;
+                Task taskRunner = Task.Factory.StartNew(Connection, connect, token);
+                /*
+                 * t = Task.Factory.StartNew(() => DoSomeWork(1, token), token);
+        Console.WriteLine("Task {0} executing", t.Id);
+        tasks.Add(t);
+                 */
+                taskRunnerManager.Add(taskRunner);
+                //Connection(fav, commands, task);
             }
+            //дожидаемся пока выполняться все задания
+            foreach (Task taskRunner in taskRunnerManager)
+            {
+                ProgressStep();
+                taskRunner.Wait();
+            }
+            //LockForm();
+           // NotifyInfo("Success!");
+            ProgressClear();
         }
-        private void Connection(Favorite fav, List<string> commands, RemoteTask task)
+        private void Connection(object favConnect)
         {
+            RemoteTask task=((FavoriteConnect)favConnect).task;
+            List<string> commands = ((FavoriteConnect)favConnect).commands;
+            Favorite fav=((FavoriteConnect)favConnect).favorite;
             //данные для подключения к сетевому устройству
             ConnectionData data = new ConnectionData();
             data.address = fav.Address;
@@ -161,6 +207,39 @@ namespace RemoteWork
                 report.Favorite = fav;
             }
         }
+        //блокировка формы на время выполнения задачи
+        private void LockForm()
+        {
+            if (isLock)
+            {
+               
+            }
+            else
+            {
+ 
+            }
+            isLock = !isLock;
+        }
+        #endregion
+
+        #region PROGRESS BAR
+        //PROGRESS INIT
+        private void ProgressInit(int steps)
+        {
+            toolStripProgressBarRunner.Maximum = steps;
+            toolStripProgressBarRunner.Minimum = 0;
+            toolStripProgressBarRunner.Step = 1;
+        }
+        //PROGRESS CHANGES
+        private void ProgressStep()
+        {
+            toolStripProgressBarRunner.PerformStep();
+        }
+        //PROGRESS CLEAR
+        private void ProgressClear()
+        {
+            toolStripProgressBarRunner.Value = 0;
+        }
         #endregion
 
         #region TREEVIEW DATA
@@ -197,38 +276,45 @@ namespace RemoteWork
         //подгрузка данных при выборе избранного или категории
         private void LoadFavoriteData(string favorite)
         {
-            var queryFavorite=(from c in context.Favorites
-                              where c.Hostname==favorite
-                              select c).FirstOrDefault();
-            if (queryFavorite != null)
+            using (context = new RconfigContext())
             {
-                listViewDetails.Items.Clear();
-                var item = new ListViewItem(new[] { queryFavorite.Hostname,
+                var queryFavorite = (from c in context.Favorites
+                                     where c.Hostname == favorite
+                                     select c).FirstOrDefault();
+                if (queryFavorite != null)
+                {
+                    listViewDetails.Items.Clear();
+                    var item = new ListViewItem(new[] { queryFavorite.Hostname,
                     queryFavorite.Address,
                     queryFavorite.Port.ToString(),
                     queryFavorite.Protocol.Name,
                     queryFavorite.Location.LocationName });
-                listViewDetails.Items.Add(item);
+                    listViewDetails.Items.Add(item);
+                }
             }
         }
 
         private void LoadCategoryData(string category)
         {
-            var queryCategory=(from c in context.Categories
-                              where c.CategoryName==category
-                              select c).FirstOrDefault();
-
-            if (queryCategory != null)
+            using (context = new RconfigContext())
             {
-                listViewDetails.Items.Clear();
-                foreach (Favorite fav in queryCategory.Favorites)
+                var queryCategory = (from c in context.Categories
+                                     where c.CategoryName == category
+                                     select c).FirstOrDefault();
+
+                if (queryCategory != null)
                 {
-                    var item = new ListViewItem(new[] { fav.Hostname,
+                    listViewDetails.Items.Clear();
+                    foreach (Favorite fav in queryCategory.Favorites)
+                    {
+                        var item = new ListViewItem(new[] { fav.Hostname,
                     fav.Address,
                     fav.Port.ToString(),
                     fav.Protocol.Name,
                     fav.Location.LocationName });
-                    listViewDetails.Items.Add(item);
+                        listViewDetails.Items.Add(item);
+                    }
+
                 }
             }
         }
@@ -241,11 +327,11 @@ namespace RemoteWork
             DialogResult result = frm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                context.Dispose();
-                context = new RconfigContext();
+                //context.Dispose();
+                //context = new RconfigContext();
                 treeViewFavorites.Nodes.Clear();
             ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
-                treeViewFavorites.Refresh();
+              //  treeViewFavorites.Refresh();
                 LoadData();
             }
         }
@@ -255,15 +341,19 @@ namespace RemoteWork
             if(treeViewFavorites.SelectedNode!=null)
             {
                 string favName = treeViewFavorites.SelectedNode.Text;
-                string favCategory = treeViewFavorites.SelectedNode.Parent.Text;
-                int indexFav = treeViewFavorites.SelectedNode.Index;
-                int indexCategory = treeViewFavorites.SelectedNode.Parent.Index;
+              //  string favCategory = treeViewFavorites.SelectedNode.Parent.Text;
+              //  int indexFav = treeViewFavorites.SelectedNode.Index;
+              //  int indexCategory = treeViewFavorites.SelectedNode.Parent.Index;
                // string index=treeViewFavorites.Nodes.IndexOfKey(favCategory).ToString();
                // MessageBox.Show(favName+favCategory+index);
                 Favorite_Edit frm = new Favorite_Edit(favName);
                 DialogResult result = frm.ShowDialog();
                 if(result==DialogResult.OK)
                 {
+                    string favorite = frm.GetLastFavorite();
+                    LoadFavoriteData(favorite);
+                    treeViewFavorites.Nodes.Clear();
+                    LoadData();
 
                     //удалить не требуется проблема с 
                     //Favorite fav = frm.GetLastFavorite();
@@ -296,15 +386,18 @@ namespace RemoteWork
             {
                 string favName = treeViewFavorites.SelectedNode.Text;
                 //  MessageBox.Show(favName);
-                var queryFavorite=(from c in context.Favorites
-                                  where c.Hostname==favName
-                                  select c).Single();
-                if (queryFavorite != null)
+                using (context = new RconfigContext())
                 {
-                    context.Favorites.Remove(queryFavorite);
-                    context.SaveChanges();
+                    var queryFavorite = (from c in context.Favorites
+                                         where c.Hostname == favName
+                                         select c).Single();
+                    if (queryFavorite != null)
+                    {
+                        context.Favorites.Remove(queryFavorite);
+                        context.SaveChanges();
+                        treeViewFavorites.SelectedNode.Remove();
+                    }                   
                 }
-                treeViewFavorites.SelectedNode.Remove();
             }
         }
         #endregion
@@ -350,7 +443,8 @@ namespace RemoteWork
             DialogResult result = frm.ShowDialog();
             if (result == DialogResult.OK)
             {
-
+                //нужно отследить какие окна открывались, чтобы обновить списки
+                //или обновлять список нативно каждый раз
             }
         }
 
@@ -368,11 +462,11 @@ namespace RemoteWork
             if (result == DialogResult.OK)
             {
                 //проблемы была с очисткой контекста!!!
-                context.Dispose();
-                context = new RconfigContext();
+              //  context.Dispose();
+              //  context = new RconfigContext();
                 treeViewFavorites.Nodes.Clear();
             ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
-                treeViewFavorites.Refresh();
+              //  treeViewFavorites.Refresh();
                 LoadData();
 
                 //альтернатива!!!
@@ -383,7 +477,21 @@ namespace RemoteWork
         }
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (treeViewFavorites.SelectedNode != null)
+            {
+                string favName = treeViewFavorites.SelectedNode.Text;
 
+                Favorite_Edit frm = new Favorite_Edit(favName);
+                DialogResult result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string favorite = frm.GetLastFavorite();
+                    LoadFavoriteData(favorite);
+
+                    treeViewFavorites.Nodes.Clear();
+                    LoadData();
+                }
+            }
         }
 
         private void deleteFavoriteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -392,15 +500,18 @@ namespace RemoteWork
             {
                 string favName = treeViewFavorites.SelectedNode.Text;
                 //  MessageBox.Show(favName);
-                var queryFavorite = (from c in context.Favorites
-                                     where c.Hostname == favName
-                                     select c).Single();
-                if (queryFavorite != null)
+                using (context = new RconfigContext())
                 {
-                    context.Favorites.Remove(queryFavorite);
-                    context.SaveChanges();
+                    var queryFavorite = (from c in context.Favorites
+                                         where c.Hostname == favName
+                                         select c).Single();
+                    if (queryFavorite != null)
+                    {
+                        context.Favorites.Remove(queryFavorite);
+                        context.SaveChanges();
+                        treeViewFavorites.SelectedNode.Remove();
+                    }
                 }
-                treeViewFavorites.SelectedNode.Remove();
             }
         }
 
@@ -424,11 +535,43 @@ namespace RemoteWork
         private void toolStripButtonAddFav_Click(object sender, EventArgs e)
         {
             /**/
+            Favorite_Edit frm = new Favorite_Edit();
+            DialogResult result = frm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                //проблемы была с очисткой контекста!!!
+                //  context.Dispose();
+                //  context = new RconfigContext();
+                treeViewFavorites.Nodes.Clear();
+                ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
+                //  treeViewFavorites.Refresh();
+                LoadData();
+
+                //альтернатива!!!
+                // treeViewFavorites.Nodes.Clear();
+                //LoadData();
+                //LoadChildData();
+            }
         }
 
         private void toolStripButtonEditFav_Click(object sender, EventArgs e)
         {
             /**/
+            if (treeViewFavorites.SelectedNode != null)
+            {
+                string favName = treeViewFavorites.SelectedNode.Text;
+
+                Favorite_Edit frm = new Favorite_Edit(favName);
+                DialogResult result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string favorite = frm.GetLastFavorite();
+                    LoadFavoriteData(favorite);
+
+                    treeViewFavorites.Nodes.Clear();
+                    LoadData();
+                }
+            }
         }
 
         private void toolStripButtonDelFav_Click(object sender, EventArgs e)
@@ -437,15 +580,18 @@ namespace RemoteWork
             {
                 string favName = treeViewFavorites.SelectedNode.Text;
                 //  MessageBox.Show(favName);
-                var queryFavorite = (from c in context.Favorites
-                                     where c.Hostname == favName
-                                     select c).Single();
-                if (queryFavorite != null)
+                using (context = new RconfigContext())
                 {
-                    context.Favorites.Remove(queryFavorite);
-                    context.SaveChanges();
+                    var queryFavorite = (from c in context.Favorites
+                                         where c.Hostname == favName
+                                         select c).Single();
+                    if (queryFavorite != null)
+                    {
+                        context.Favorites.Remove(queryFavorite);
+                        context.SaveChanges();
+                        treeViewFavorites.SelectedNode.Remove();
+                    }
                 }
-                treeViewFavorites.SelectedNode.Remove();
             }
         }
 
@@ -454,10 +600,31 @@ namespace RemoteWork
             Analytics.Analytic frm = new Analytics.Analytic();
             frm.ShowDialog();
         }
-
+        /*
+         TASK RUN CONFIG
+         */
         private void toolStripButtonLoadConfig_Click(object sender, EventArgs e)
         {
-           
+            if (toolStripComboBoxTasks.SelectedItem != null)
+            {
+                //MessageBox.Show(toolStripComboBoxTasks.SelectedItem.ToString());
+                using(context=new RconfigContext())
+                {
+                    string taskName = toolStripComboBoxTasks.SelectedItem.ToString();
+                    var queryTask=(from c in context.RemoteTasks
+                                  where c.TaskName==taskName
+                                  select c).FirstOrDefault();
+                    if (queryTask != null)
+                    {
+                        LoadConfiguration(queryTask);
+                       // UseWaitCursor = true;
+                    }
+                }
+            }
+
+            //выбираем таск 
+          //  this.UseWaitCursor = true;
+            
         }
         #endregion
        
