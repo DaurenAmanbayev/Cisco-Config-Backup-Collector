@@ -37,3 +37,13 @@ D:\Repository\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServ
 D:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.csprojResolveAssemblyReference.cache
 D:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.dll
 D:\Repository\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.pdb
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\RemoteWork.Data.dll.config
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\RemoteWork.Data.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\RemoteWork.Data.pdb
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.xml
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.csprojResolveAssemblyReference.cache
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.pdb

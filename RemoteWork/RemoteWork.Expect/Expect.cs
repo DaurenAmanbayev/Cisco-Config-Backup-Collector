@@ -19,13 +19,13 @@ namespace RemoteWork.Expect
         public abstract void ExecuteCommand(string command);
         public abstract void ExecuteCommands(List<string> commands);
 
-        public List<string> GetResult()
+        public string GetResult()
         {
-            return listResult;
+            return string.Join(Environment.NewLine,listResult.ToArray());
         }
         public string GetError()
         {
-            return string.Join("** ", listError.ToArray());
+            return string.Join(Environment.NewLine, listError.ToArray());
         }
         public bool isSuccess
         {

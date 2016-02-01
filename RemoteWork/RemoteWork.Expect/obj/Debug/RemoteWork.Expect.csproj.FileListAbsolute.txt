@@ -1,0 +1,7 @@
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\RemoteWork.Expect.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\RemoteWork.Expect.pdb
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\Renci.SshNet.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\Renci.SshNet.xml
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.csprojResolveAssemblyReference.cache
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.pdb
