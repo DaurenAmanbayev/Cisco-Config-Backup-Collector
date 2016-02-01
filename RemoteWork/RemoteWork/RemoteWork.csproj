@@ -121,6 +121,18 @@
     <Compile Include="Managers\Location Manager.Designer.cs">
       <DependentUpon>Location Manager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Managers\Task Edit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Task Edit.Designer.cs">
+      <DependentUpon>Task Edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Task Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Task Manager.Designer.cs">
+      <DependentUpon>Task Manager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rconfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +171,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Managers\Location Manager.resx">
       <DependentUpon>Location Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Task Edit.resx">
+      <DependentUpon>Task Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Task Manager.resx">
+      <DependentUpon>Task Manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

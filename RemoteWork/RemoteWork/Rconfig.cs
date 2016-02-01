@@ -93,14 +93,7 @@ namespace RemoteWork
         private void LoadConfiguration(RemoteTask task)
         {
             foreach (Favorite fav in task.Favorites)
-            {
-                ConnectionData data = new ConnectionData();
-                data.address = fav.Address;
-                data.port = fav.Port;
-                data.username = fav.Credential.Username;
-                data.password = fav.Credential.Password;
-
-                string protocol = fav.Protocol.Name;
+            {                
                 List<string> commands = new List<string>();
                 //проходим по списку команд, выявляем соответствие используемой команды и категории избранного
                 foreach (Command command in task.Commands)
@@ -113,11 +106,21 @@ namespace RemoteWork
                         }
                     }
                 }
-
+                //устанавливаем соединение
+                Connection(fav, commands, task);
             }
         }
-        private void Connection(ConnectionData data, string protocol, List<string> commands)
+        private void Connection(Favorite fav, List<string> commands, RemoteTask task)
         {
+            //данные для подключения к сетевому устройству
+            ConnectionData data = new ConnectionData();
+            data.address = fav.Address;
+            data.port = fav.Port;
+            data.username = fav.Credential.Username;
+            data.password = fav.Credential.Password;
+
+            //по типу протоколу выбираем требуемое подключение
+            string protocol = fav.Protocol.Name;
             Expect.Expect expect;
             switch (protocol)
             {
@@ -126,12 +129,28 @@ namespace RemoteWork
                 //по умолчанию для сетевых устройств протокол Telnet
                 default: expect = new TelnetExpect(data); break;
             }
+            //если объект expect успешно создан
             if (expect != null)
             {
+                //выполняем список команд
                 expect.ExecuteCommands(commands);
-                List<string> result = expect.GetResult();
+                string result = expect.GetResult();
                 bool success = expect.isSuccess;
                 string error = expect.GetError();
+                //если успешно сохраняем конфигурацию устройства
+                if (success)
+                {
+                    Config config = new Config();
+                    config.Current = result;
+                    config.Date = DateTime.UtcNow;                    
+                }
+                //создаем отчет о проделанном задании
+                Report report = new Report();
+                report.Date = DateTime.UtcNow;
+                report.Status = success;
+                report.Info = error;
+                report.Task = task;
+                report.Favorite = fav;
             }
         }
         #endregion
@@ -310,8 +329,6 @@ namespace RemoteWork
 
         #endregion
 
-
-
         #region TOOLSTRIP MENU
         private void managementToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -367,12 +384,7 @@ namespace RemoteWork
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void tasksToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
+        }       
 
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -422,7 +434,7 @@ namespace RemoteWork
 
         private void toolStripButtonLoadConfig_Click(object sender, EventArgs e)
         {
-
+           
         }
         #endregion
 

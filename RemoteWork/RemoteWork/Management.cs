@@ -18,6 +18,7 @@ namespace RemoteWork
         bool isWindowLockCategory = false;
         bool isWindowLockLocation = false;
         bool isWindowLockCredential = false;
+        bool isWindowLockTask = false;
         public Management()
         {
             InitializeComponent();
@@ -50,6 +51,7 @@ namespace RemoteWork
         #endregion
 
         #region CHILD WINDOWS
+        //category
         private void categoryManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!isWindowLockCategory)
@@ -65,7 +67,7 @@ namespace RemoteWork
         {
             isWindowLockCategory = false;
         }
-
+        //command
         private void commandManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!isWindowLockCommand)
@@ -81,7 +83,7 @@ namespace RemoteWork
         {
             isWindowLockCommand = false;
         }
-
+        //location
         private void locationManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!isWindowLockLocation)
@@ -98,7 +100,7 @@ namespace RemoteWork
         {
             isWindowLockLocation = false;
         }
-
+        //credential
         private void credentialManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!isWindowLockCredential)
@@ -114,11 +116,30 @@ namespace RemoteWork
         {
             isWindowLockCredential = false;
         }
+        //task
+        private void taskManageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!isWindowLockTask)
+            {
+                isWindowLockTask = true;
+                Task_Manager frm = new Task_Manager();
+                frm.MdiParent = this;
+                frm.Show();
+                frm.FormClosing += UnlockTaskWindow;
+            }
+
+        }
+        private void UnlockTaskWindow(object sender, EventArgs e)
+        {
+            isWindowLockTask = false;
+        }
         #endregion
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        
 
        
     }

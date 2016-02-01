@@ -34,6 +34,9 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteFavoriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +44,15 @@
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonAddFav = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonEditFav = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDelFav = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonReport = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonLoadConfig = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStripFavInfo = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewFavorites = new System.Windows.Forms.TreeView();
@@ -64,18 +75,7 @@
             this.listViewConfig = new System.Windows.Forms.ListView();
             this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStripButtonReport = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonAddFav = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonEditFav = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDelFav = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteFavoriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -126,12 +126,31 @@
             this.editToolStripMenuItem.Text = "Edit Favorite";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
+            // deleteFavoriteToolStripMenuItem
+            // 
+            this.deleteFavoriteToolStripMenuItem.Name = "deleteFavoriteToolStripMenuItem";
+            this.deleteFavoriteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteFavoriteToolStripMenuItem.Text = "Delete Favorite";
+            this.deleteFavoriteToolStripMenuItem.Click += new System.EventHandler(this.deleteFavoriteToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managementToolStripMenuItem,
             this.reportsToolStripMenuItem,
-            this.tasksToolStripMenuItem});
+            this.settingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -162,14 +181,14 @@
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
@@ -194,6 +213,61 @@
             this.toolStripMain.TabIndex = 1;
             this.toolStripMain.Text = "Menu";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripButtonAddFav
+            // 
+            this.toolStripButtonAddFav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonAddFav.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddFav.Image")));
+            this.toolStripButtonAddFav.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAddFav.Name = "toolStripButtonAddFav";
+            this.toolStripButtonAddFav.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonAddFav.Text = "Add Favorite";
+            this.toolStripButtonAddFav.Click += new System.EventHandler(this.toolStripButtonAddFav_Click);
+            // 
+            // toolStripButtonEditFav
+            // 
+            this.toolStripButtonEditFav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEditFav.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditFav.Image")));
+            this.toolStripButtonEditFav.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEditFav.Name = "toolStripButtonEditFav";
+            this.toolStripButtonEditFav.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonEditFav.Text = "Edit Favorite";
+            this.toolStripButtonEditFav.Click += new System.EventHandler(this.toolStripButtonEditFav_Click);
+            // 
+            // toolStripButtonDelFav
+            // 
+            this.toolStripButtonDelFav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonDelFav.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelFav.Image")));
+            this.toolStripButtonDelFav.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDelFav.Name = "toolStripButtonDelFav";
+            this.toolStripButtonDelFav.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonDelFav.Text = "Delete Favorite";
+            this.toolStripButtonDelFav.Click += new System.EventHandler(this.toolStripButtonDelFav_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripButtonReport
+            // 
+            this.toolStripButtonReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonReport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReport.Image")));
+            this.toolStripButtonReport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonReport.Name = "toolStripButtonReport";
+            this.toolStripButtonReport.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonReport.Text = "Report";
+            this.toolStripButtonReport.Click += new System.EventHandler(this.toolStripButtonReport_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
+            // 
             // toolStripButtonLoadConfig
             // 
             this.toolStripButtonLoadConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -203,6 +277,11 @@
             this.toolStripButtonLoadConfig.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonLoadConfig.Text = "Load Configuration";
             this.toolStripButtonLoadConfig.Click += new System.EventHandler(this.toolStripButtonLoadConfig_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // statusStripFavInfo
             // 
@@ -359,7 +438,7 @@
             this.tabPageConfigs.Location = new System.Drawing.Point(4, 22);
             this.tabPageConfigs.Name = "tabPageConfigs";
             this.tabPageConfigs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConfigs.Size = new System.Drawing.Size(398, 354);
+            this.tabPageConfigs.Size = new System.Drawing.Size(398, 352);
             this.tabPageConfigs.TabIndex = 1;
             this.tabPageConfigs.Text = "Configurations";
             this.tabPageConfigs.UseVisualStyleBackColor = true;
@@ -372,7 +451,7 @@
             this.listViewConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewConfig.Location = new System.Drawing.Point(3, 3);
             this.listViewConfig.Name = "listViewConfig";
-            this.listViewConfig.Size = new System.Drawing.Size(392, 348);
+            this.listViewConfig.Size = new System.Drawing.Size(392, 346);
             this.listViewConfig.TabIndex = 0;
             this.listViewConfig.UseCompatibleStateImageBehavior = false;
             this.listViewConfig.View = System.Windows.Forms.View.Details;
@@ -387,91 +466,11 @@
             this.columnHeaderDate.Text = "Date";
             this.columnHeaderDate.Width = 80;
             // 
-            // toolStripButtonReport
+            // settingsToolStripMenuItem
             // 
-            this.toolStripButtonReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonReport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReport.Image")));
-            this.toolStripButtonReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonReport.Name = "toolStripButtonReport";
-            this.toolStripButtonReport.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonReport.Text = "Report";
-            this.toolStripButtonReport.Click += new System.EventHandler(this.toolStripButtonReport_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripButtonAddFav
-            // 
-            this.toolStripButtonAddFav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonAddFav.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddFav.Image")));
-            this.toolStripButtonAddFav.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAddFav.Name = "toolStripButtonAddFav";
-            this.toolStripButtonAddFav.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonAddFav.Text = "Add Favorite";
-            this.toolStripButtonAddFav.Click += new System.EventHandler(this.toolStripButtonAddFav_Click);
-            // 
-            // toolStripButtonEditFav
-            // 
-            this.toolStripButtonEditFav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonEditFav.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditFav.Image")));
-            this.toolStripButtonEditFav.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditFav.Name = "toolStripButtonEditFav";
-            this.toolStripButtonEditFav.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonEditFav.Text = "Edit Favorite";
-            this.toolStripButtonEditFav.Click += new System.EventHandler(this.toolStripButtonEditFav_Click);
-            // 
-            // toolStripButtonDelFav
-            // 
-            this.toolStripButtonDelFav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonDelFav.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelFav.Image")));
-            this.toolStripButtonDelFav.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelFav.Name = "toolStripButtonDelFav";
-            this.toolStripButtonDelFav.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonDelFav.Text = "Delete Favorite";
-            this.toolStripButtonDelFav.Click += new System.EventHandler(this.toolStripButtonDelFav_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
-            // 
-            // deleteFavoriteToolStripMenuItem
-            // 
-            this.deleteFavoriteToolStripMenuItem.Name = "deleteFavoriteToolStripMenuItem";
-            this.deleteFavoriteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.deleteFavoriteToolStripMenuItem.Text = "Delete Favorite";
-            this.deleteFavoriteToolStripMenuItem.Click += new System.EventHandler(this.deleteFavoriteToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // tasksToolStripMenuItem
-            // 
-            this.tasksToolStripMenuItem.Name = "tasksToolStripMenuItem";
-            this.tasksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.tasksToolStripMenuItem.Text = "Tasks";
-            this.tasksToolStripMenuItem.Click += new System.EventHandler(this.tasksToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // Rconfig
             // 
@@ -549,7 +548,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteFavoriteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
 
