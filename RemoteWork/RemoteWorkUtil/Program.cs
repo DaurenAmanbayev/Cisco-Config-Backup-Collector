@@ -7,35 +7,183 @@ using RemoteWork.Access;
 using RemoteWork.Data;
 using System.Data.Entity;
 using RemoteWork.Expect;
+using System.Threading;
 
 namespace RemoteWorkUtil
 {
     class Program
     {
+        static RconfigContext context;
         static void Main(string[] args)
         {
-            ConnectionData data = new ConnectionData();
-            data.address = "192.168.234.130";
-            data.password = "Zx_998877Kad";
-            data.port = 22;
-            data.username = "root";
-            SshExpect ssh = new SshExpect(data);
-            ssh.ExecuteCommand("ls -la");
-            if (ssh.isSuccess)
-            {
-                Console.WriteLine(ssh.GetResult());
+            
+            //ConnectionData data = new ConnectionData();
+            //data.address = "192.168.234.130";
+            //data.password = "Zx_998877Kad";
+            //data.port = 22;
+            //data.username = "root";
+            //SshExpect ssh = new SshExpect(data);
+            //ssh.ExecuteCommand("ls -la");
+            //if (ssh.isSuccess)
+            //{
+            //    Console.WriteLine(ssh.GetResult());
 
-            }
-            else
-            {
-                Console.WriteLine(ssh.GetError());
+            //}
+            //else
+            //{
+            //    Console.WriteLine(ssh.GetError());
                 
-            }
-            Console.ReadKey();
+            //}
+            //Console.ReadKey();
 
 
+            //**
+            //int TaskID = 4;
+            //context = new RconfigContext();
+            //var queryTask=(from c in context.RemoteTasks
+            //              where c.Id==TaskID
+
+            //              select c).FirstOrDefault();
+
+            //if (queryTask != null)
+            //{
+            //    LoadConfiguration(queryTask);
+            //}
+            //Console.ReadKey();
         }
 
+        private static void LoadConfiguration(RemoteTask task)
+        {
+            CancellationToken token;
+
+            List<Task> taskRunnerManager = new List<Task>();
+            //LockForm();
+            var tokenSource = new CancellationTokenSource();
+            token = tokenSource.Token;
+            //   ProgressInit(task.Favorites.Count);
+            try
+            {
+                foreach (Favorite fav in task.Favorites)
+                {
+                    //STARTED
+                    Console.WriteLine("OPERATION started for {0}...", fav.Address);
+                    List<string> commands = new List<string>();
+                    //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
+                    foreach (Command command in task.Commands)
+                    {
+                        foreach (Category category in command.Categories)
+                        {
+                            if (fav.Category.CategoryName == category.CategoryName)
+                            {
+                                commands.Add(command.Name);
+                            }
+                        }
+                    }
+                    //мультипоточность
+                    //устанавливаем соединение
+                    FavoriteConnect connect = new FavoriteConnect();
+                    connect.commands = commands;
+                    connect.favorite = fav;
+                    connect.task = task;
+
+                    Task taskRunner = Task.Factory.StartNew(() =>
+                        Connection(connect, token), token
+                    );
+                    /*
+                     * t = Task.Factory.StartNew(() => DoSomeWork(1, token), token);
+            Console.WriteLine("Task {0} executing", t.Id);
+            tasks.Add(t);
+                     */
+                    Console.WriteLine("Task {0} started...", taskRunner.Id);
+                    taskRunnerManager.Add(taskRunner);
+                    //Connection(fav, commands, task);
+                }
+                //дожидаемся пока выполняться все задания
+                foreach (Task taskRunner in taskRunnerManager)
+                {
+                    // ProgressStep();
+                    taskRunner.Wait();
+                    Console.WriteLine("Task {0} finished...", taskRunner.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+            }
+
+            //LockForm();
+            // NotifyInfo("Success!");
+            //  ProgressClear();
+        }
+        //проблема с многопоточностью
+        //наверняка нужно создавать новый контекст для каждого потока
+        //или опрашивать и сохранять данные локально с последующей выгрузкой в базу данных
+        private static void Connection(FavoriteConnect favConnect, CancellationToken ct)
+        {
+            //token stopped!!
+            if (ct.IsCancellationRequested)
+            {
+                Console.WriteLine("Task was cancelled and not started!");
+                ct.ThrowIfCancellationRequested();
+            }
+
+            RemoteTask task = favConnect.task;
+            List<string> commands = favConnect.commands;
+            Favorite fav = favConnect.favorite;
+            //данные для подключения к сетевому устройству
+            ConnectionData data = new ConnectionData();
+            data.address = fav.Address;
+            data.port = fav.Port;
+            data.username = fav.Credential.Username;
+            data.password = fav.Credential.Password;
+
+            //по типу протоколу выбираем требуемое подключение
+            string protocol = fav.Protocol.Name;
+            Expect expect;
+            switch (protocol)
+            {
+                case "Telnet": expect = new TelnetExpect(data); break;
+                case "SSH": expect = new SshExpect(data); break;
+                //по умолчанию для сетевых устройств протокол Telnet
+                default: expect = new TelnetExpect(data); break;
+            }
+
+            //token stopped!!
+            if (ct.IsCancellationRequested)
+            {
+                Console.WriteLine("Task was cancelled!");
+                ct.ThrowIfCancellationRequested();
+            }
+
+
+            //если объект expect успешно создан
+            if (expect != null)
+            {
+                //выполняем список команд
+                expect.ExecuteCommands(commands);
+                string result = expect.GetResult();
+                bool success = expect.isSuccess;
+                string error = expect.GetError();
+                //если успешно сохраняем конфигурацию устройства
+                if (success)
+                {
+                    Config config = new Config();
+                    config.Current = result;
+                    config.Date = DateTime.UtcNow;
+                    fav.Configs.Add(config);
+                }
+                //создаем отчет о проделанном задании
+                Report report = new Report();
+                report.Date = DateTime.UtcNow;
+                report.Status = success;
+                report.Info = error;
+                report.Task = task;
+                report.Favorite = fav;
+                context.Reports.Add(report);
+                context.SaveChanges();
+            }
+        }
         private void Test()
         {
             Database.SetInitializer(new Init());
