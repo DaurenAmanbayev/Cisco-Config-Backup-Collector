@@ -125,3 +125,4 @@ Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Location_Edit.
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Location_Manager.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Edit.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Manager.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Config_Watcher.resources
