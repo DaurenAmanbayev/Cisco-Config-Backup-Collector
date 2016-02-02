@@ -9,6 +9,7 @@ namespace RemoteWork.Expect
     public class TelnetExpect : Expect
     {
         Telnet client;
+        //изменить таймаут???
         int timeOut = 120;
         public TelnetExpect(ConnectionData host)
             : base(host)
@@ -36,7 +37,7 @@ namespace RemoteWork.Expect
                 prompt = client.Read();
                 listResult.Add(prompt);
                 client.Disconnect();
-
+                success = true;
             }
             catch (Exception ex)//заменить проброс исключения, или использовать список проблем
             {
@@ -52,12 +53,14 @@ namespace RemoteWork.Expect
                 string prompt = loginStatus.TrimEnd();
                 prompt = loginStatus.Substring(prompt.Length - 1, 1);
                 //результат возвращаемый соединением
-                //Console.WriteLine(prompt);
-                if (prompt != "$" && prompt != ">" && prompt != ":")
+               // Console.WriteLine(prompt);
+                if (prompt != "$" && prompt != ">" && prompt != ":" && prompt != "#")
                     throw new Exception("Connection failed!");
 
-                prompt = client.Read();
-                //Console.WriteLine(prompt);
+                //prompt = client.Read();
+               // Console.WriteLine(prompt);
+                //if (prompt != "$" && prompt != ">" && prompt != ":")
+                //    throw new Exception("Connection failed!");
 
                 foreach (string command in commands)
                 {
@@ -66,7 +69,7 @@ namespace RemoteWork.Expect
                     listResult.Add(prompt);
                 }
                 client.Disconnect();
-
+                success = true;
             }
             catch (Exception ex)//заменить проброс исключения
             {
