@@ -37,7 +37,7 @@ namespace RemoteWork.Managers
             mode = WindowsMode.EDIT;
             prevTaskId = taskId;
             LoadData();
-            LoadPrevData();
+            //LoadPrevData();
         }
 
         private async void LoadData()
@@ -57,6 +57,8 @@ namespace RemoteWork.Managers
             {
                 checkedListBoxCommands.Items.Add(command);
             }
+            if (mode == WindowsMode.EDIT)
+                LoadPrevData();
         }
         private async void LoadPrevData()
         {            

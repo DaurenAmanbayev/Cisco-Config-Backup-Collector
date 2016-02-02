@@ -13,7 +13,7 @@ using System.Data.Entity;
 using RemoteWork.Data;
 using RemoteWork.Expect;
 
-//https://msdn.microsoft.com/en-us/library/dd537607(v=vs.110).aspx
+
 namespace RemoteWork
 {   
     public partial class Rconfig : Form
@@ -196,7 +196,8 @@ namespace RemoteWork
                 {
                     Config config = new Config();
                     config.Current = result;
-                    config.Date = DateTime.UtcNow;                    
+                    config.Date = DateTime.UtcNow;
+                    fav.Configs.Add(config);
                 }
                 //создаем отчет о проделанном задании
                 Report report = new Report();
@@ -205,6 +206,8 @@ namespace RemoteWork
                 report.Info = error;
                 report.Task = task;
                 report.Favorite = fav;
+                context.Reports.Add(report);
+                context.SaveChanges();
             }
         }
         //блокировка формы на время выполнения задачи
@@ -318,6 +321,11 @@ namespace RemoteWork
                 }
             }
         }
+
+        private void LoadConfigurationData(string favorite, bool isFavorite)
+        {
+ 
+        }
         #endregion
 
         #region FAVORITE 
@@ -411,17 +419,20 @@ namespace RemoteWork
                 if ( treeViewFavorites.SelectedNode.Level == 1)
                 {
                     string fav = treeViewFavorites.SelectedNode.Name.ToString();
-                    NotifyInfo(fav);
-                    var queryFavorite = (from c in context.Favorites
-                                         where c.Hostname == fav
-                                         select c).FirstOrDefault();
-                    if (queryFavorite != null)
+                    using (context = new RconfigContext())
                     {
-                        listViewConfig.Items.Clear();
-                        foreach (Config config in queryFavorite.Configs)
+                        //  NotifyInfo(fav);
+                        var queryFavorite = (from c in context.Favorites
+                                             where c.Hostname == fav
+                                             select c).FirstOrDefault();
+                        if (queryFavorite != null)
                         {
-                            var item = new ListViewItem(new[] { config.Id.ToString(), config.Date.ToString() });
-                            listViewDetails.Items.Add(item);
+                            listViewConfig.Items.Clear();
+                            foreach (Config config in queryFavorite.Configs)
+                            {
+                                var item = new ListViewItem(new[] { config.Id.ToString(), config.Date.ToString() });
+                                listViewConfig.Items.Add(item);
+                            }
                         }
                     }
                 }
@@ -627,6 +638,30 @@ namespace RemoteWork
             
         }
         #endregion
+
+        private void openConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listViewConfig.SelectedItems.Count != 0)
+            {
+                var item = listViewConfig.SelectedItems[0];
+                int configId=Int32.Parse(item.SubItems[0].Text);
+                using (context = new RconfigContext())
+                {
+                    var queryConfig=(from c in context.Configs
+                                        where c.Id==configId
+                                        select c).FirstOrDefault();
+                    if (queryConfig != null)
+                    {                        
+                        Config_Watcher frm = new Config_Watcher(queryConfig);
+                        DialogResult result = frm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
        
     }
 }
