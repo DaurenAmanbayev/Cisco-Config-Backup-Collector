@@ -16,28 +16,7 @@ namespace RemoteWorkUtil
         static RconfigContext context;
         static void Main(string[] args)
         {
-            
-            //ConnectionData data = new ConnectionData();
-            //data.address = "192.168.234.130";
-            //data.password = "Zx_998877Kad";
-            //data.port = 22;
-            //data.username = "root";
-            //SshExpect ssh = new SshExpect(data);
-            //ssh.ExecuteCommand("ls -la");
-            //if (ssh.isSuccess)
-            //{
-            //    Console.WriteLine(ssh.GetResult());
-
-            //}
-            //else
-            //{
-            //    Console.WriteLine(ssh.GetError());
-                
-            //}
-            //Console.ReadKey();
-
-
-            //**
+                        //*ERROR**
             //int TaskID = 4;
             //context = new RconfigContext();
             //var queryTask=(from c in context.RemoteTasks
@@ -51,7 +30,14 @@ namespace RemoteWorkUtil
             //}
             //Console.ReadKey();
         }
-
+        /*        
+         * The entity framework DbContext and ObjectContext classes are NOT thread-safe. So you should not use them over multiple threads.       
+         * Although it seems like you're only passing entities to other threads, it's easy to go wrong at this, when lazy loading is involved.        
+         * This means that under the covers the entity will callback to the context to get some more data.        
+         * So instead, I would advice to convert the list of entities to a list of special immutable data structures that only need the data that is needed for the calculation.
+         * Those immutable structures should not have to call back into the context and should not be able to change. 
+         * When you do this, it will be safe to pass them on to other threads to do the calculation.
+         */
         private static void LoadConfiguration(RemoteTask task)
         {
             CancellationToken token;
