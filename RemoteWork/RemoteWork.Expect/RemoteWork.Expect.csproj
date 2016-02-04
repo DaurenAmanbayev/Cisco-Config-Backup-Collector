@@ -50,6 +50,7 @@
     <Compile Include="SshExpect.cs" />
     <Compile Include="Telnet.cs" />
     <Compile Include="TelnetExpect.cs" />
+    <Compile Include="TelnetMintExpect.cs" />
     <Compile Include="TelnetMint.cs" />
     <Compile Include="Verbs.cs" />
   </ItemGroup>
