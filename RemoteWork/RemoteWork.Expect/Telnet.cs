@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //проблема с сетевыми устройствами, не успевает возвращать строку ответа
+    //с сервером телнет проблем нет
     public class Telnet
     {
         TcpClient tcpSocket;
@@ -16,6 +18,7 @@ namespace RemoteWork.Expect
             tcpSocket = new TcpClient(Hostname, Port);
 
         }
+        //подключение к серверу
         public string Login(string Username, string Password, int LoginTimeOutMs)
         {
             int oldTimeOutMs = TimeOutMs;
@@ -34,16 +37,19 @@ namespace RemoteWork.Expect
             TimeOutMs = oldTimeOutMs;
             return s;
         }
+        //отправить строку
         public void WriteLine(string cmd)
         {
             Write(cmd + "\n");
         }
+        //отправить значение
         public void Write(string cmd)
         {
             if (!tcpSocket.Connected) return;
             byte[] buf = System.Text.ASCIIEncoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
             tcpSocket.GetStream().Write(buf, 0, buf.Length);
         }
+        //прочесть доступные данные
         public string Read()
         {
             if (!tcpSocket.Connected) return null;
@@ -55,14 +61,17 @@ namespace RemoteWork.Expect
             } while (tcpSocket.Available > 0);
             return sb.ToString();
         }
+        //проверить состояние клиента
         public bool IsConnected
         {
             get { return tcpSocket.Connected; }
         }
+        //отключить клиент
         public void Disconnect()
         {
             tcpSocket.Close();
         }
+        //обработать полученные данные 
         void ParseTelnet(StringBuilder sb)
         {
             while (tcpSocket.Available > 0)
