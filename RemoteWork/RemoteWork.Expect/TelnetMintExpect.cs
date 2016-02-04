@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
@@ -11,6 +12,10 @@ namespace RemoteWork.Expect
         TelnetMint client;
         string rcvStr;
         int timeOut=1;//1 sec
+        Regex regexUsername = new Regex("Username:|Login:", RegexOptions.IgnoreCase);
+        Regex regexPassword = new Regex("Password:", RegexOptions.IgnoreCase);
+        //last input should be one of these variants
+        Regex regexSuccess = new Regex("\d\#");
         public TelnetMintExpect(ConnectionData host)
             : base(host)
         {
@@ -23,15 +28,15 @@ namespace RemoteWork.Expect
         public override void ExecuteCommand(string command)
         {
             //change Username and Password for regex pattern with login Login: and other modification---
-            rcvStr = client.ReceiveDataWaitWord("Username:", timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
             client.SendData(host.username);
-            rcvStr = client.ReceiveDataWaitWord("Password:", timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
             client.SendData(host.password);
             rcvStr = client.ReceiveDataWaitWord("#",timeOut);
             client.SendData(command);
             rcvStr = client.ReceiveDataWaitWord(command, timeOut);
             listResult.Add(rcvStr);
-
+            client.Close();
             //try
             //{
             //    string loginStatus = client.Login(host.username, host.password, timeOut);
@@ -57,35 +62,19 @@ namespace RemoteWork.Expect
         }
         public override void ExecuteCommands(List<string> commands)
         {
-            //try
-            //{
-            //    string loginStatus = client.Login(host.username, host.password, timeOut);
-            //    string prompt = loginStatus.TrimEnd();
-            //    prompt = loginStatus.Substring(prompt.Length - 1, 1);
-            //    //результат возвращаемый соединением
-            //   // Console.WriteLine(prompt);
-            //    if (prompt != "$" && prompt != ">" && prompt != ":" && prompt != "#")
-            //        throw new Exception("Connection failed!");
-
-            //    //prompt = client.Read();
-            //   // Console.WriteLine(prompt);
-            //    //if (prompt != "$" && prompt != ">" && prompt != ":")
-            //    //    throw new Exception("Connection failed!");
-
-            //    foreach (string command in commands)
-            //    {
-            //        client.WriteLine(command);
-            //        prompt = client.Read();
-            //        listResult.Add(prompt);
-            //    }
-            //    client.Disconnect();
-            //    success = true;
-            //}
-            //catch (Exception ex)//заменить проброс исключения
-            //{
-            //    success = false;
-            //    listError.Add(ex.Message);
-            //}
+            //change Username and Password for regex pattern with login Login: and other modification---
+            rcvStr = client.ReceiveDataWaitWord("Username:", timeOut);
+            client.SendData(host.username);
+            rcvStr = client.ReceiveDataWaitWord("Password:", timeOut);
+            client.SendData(host.password);
+            rcvStr = client.ReceiveDataWaitWord("#", timeOut);
+            foreach (string command in commands)
+            {
+                client.SendData(command);
+                rcvStr = client.ReceiveDataWaitWord(command, timeOut);
+                listResult.Add(rcvStr);
+            }
+            client.Close();
         }
     }
 }
