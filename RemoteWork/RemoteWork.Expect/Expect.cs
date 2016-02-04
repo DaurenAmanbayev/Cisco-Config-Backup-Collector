@@ -16,17 +16,21 @@ namespace RemoteWork.Expect
         {
             this.host = host;
         }
+        //использование одной команды
         public abstract void ExecuteCommand(string command);
+        //использование нескольких команд
         public abstract void ExecuteCommands(List<string> commands);
-
+        //вернуть результат
         public string GetResult()
         {
             return string.Join(Environment.NewLine,listResult.ToArray());
         }
+        //вернуть ошибку
         public string GetError()
         {
             return string.Join(Environment.NewLine, listError.ToArray());
         }
+        //удачное подключение или нет?
         public bool isSuccess
         {
             get { return success; }
