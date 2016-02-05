@@ -12,10 +12,12 @@ namespace RemoteWork.Expect
         TelnetMint client;
         string rcvStr;
         int timeOut=1;//1 sec
+        //username string should be Username: or Login: not case sensitive
         Regex regexUsername = new Regex("Username:|Login:", RegexOptions.IgnoreCase);
         Regex regexPassword = new Regex("Password:", RegexOptions.IgnoreCase);
         //last input should be one of these variants
-        Regex regexSuccess = new Regex("\d\#");
+        //: or > or $ or #
+        Regex regexUseMode = new Regex("[:,$,>,#]$");
         public TelnetMintExpect(ConnectionData host)
             : base(host)
         {
@@ -32,9 +34,9 @@ namespace RemoteWork.Expect
             client.SendData(host.username);
             rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
             client.SendData(host.password);
-            rcvStr = client.ReceiveDataWaitWord("#",timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexUseMode,timeOut);
             client.SendData(command);
-            rcvStr = client.ReceiveDataWaitWord(command, timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
             listResult.Add(rcvStr);
             client.Close();
             //try
@@ -63,15 +65,15 @@ namespace RemoteWork.Expect
         public override void ExecuteCommands(List<string> commands)
         {
             //change Username and Password for regex pattern with login Login: and other modification---
-            rcvStr = client.ReceiveDataWaitWord("Username:", timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
             client.SendData(host.username);
-            rcvStr = client.ReceiveDataWaitWord("Password:", timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
             client.SendData(host.password);
-            rcvStr = client.ReceiveDataWaitWord("#", timeOut);
+            rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
             foreach (string command in commands)
             {
                 client.SendData(command);
-                rcvStr = client.ReceiveDataWaitWord(command, timeOut);
+                rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
                 listResult.Add(rcvStr);
             }
             client.Close();
