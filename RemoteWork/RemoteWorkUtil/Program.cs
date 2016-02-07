@@ -8,6 +8,9 @@ using RemoteWork.Data;
 using System.Data.Entity;
 using RemoteWork.Expect;
 using System.Threading;
+using System.Runtime.Serialization;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace RemoteWorkUtil
 {
@@ -16,19 +19,24 @@ namespace RemoteWorkUtil
         static RconfigContext context;
         static void Main(string[] args)
         {
-                        //*ERROR**
-            //int TaskID = 4;
-            //context = new RconfigContext();
-            //var queryTask=(from c in context.RemoteTasks
-            //              where c.Id==TaskID
+            //*ERROR**
+            int TaskID = 1;
+            context = new RconfigContext();
+            var queryTask = (from c in context.RemoteTasks
+                             where c.Id == TaskID
 
-            //              select c).FirstOrDefault();
-
-            //if (queryTask != null)
-            //{
-            //    LoadConfiguration(queryTask);
-            //}
-            //Console.ReadKey();
+                             select c).FirstOrDefault();
+            Console.WriteLine("Process started...");
+            if (queryTask != null)
+            {
+                LoadConfiguration(queryTask);
+                Console.WriteLine("Finish!");
+            }
+            else
+            {
+                Console.WriteLine("Task is null!");
+            }
+            Console.ReadKey();
         }
         /*        
          * The entity framework DbContext and ObjectContext classes are NOT thread-safe. So you should not use them over multiple threads.       
@@ -46,6 +54,7 @@ namespace RemoteWorkUtil
             //LockForm();
             var tokenSource = new CancellationTokenSource();
             token = tokenSource.Token;
+            int countFav = 0;
             //   ProgressInit(task.Favorites.Count);
             try
             {
@@ -72,25 +81,30 @@ namespace RemoteWorkUtil
                     connect.favorite = fav;
                     connect.task = task;
 
-                    Task taskRunner = Task.Factory.StartNew(() =>
-                        Connection(connect, token), token
-                    );
+                    Console.WriteLine("Connection started for {0} favorites...", countFav++);
+                    Connection(connect, token);
+                    //Многопоточный вариант отпадает в связи с ограничением работы EF с потоками
+                    //
+                    //Task taskRunner = Task.Factory.StartNew(() =>
+                    //    Connection(connect, token), token
+                    //);
                     /*
-                     * t = Task.Factory.StartNew(() => DoSomeWork(1, token), token);
-            Console.WriteLine("Task {0} executing", t.Id);
-            tasks.Add(t);
+                     t = Task.Factory.StartNew(() => DoSomeWork(1, token), token)
+                     Console.WriteLine("Task {0} executing", t.Id);
+                     tasks.Add(t);
                      */
-                    Console.WriteLine("Task {0} started...", taskRunner.Id);
-                    taskRunnerManager.Add(taskRunner);
+                    //Console.WriteLine("Task {0} started...", taskRunner.Id);
+                   // taskRunnerManager.Add(taskRunner);
                     //Connection(fav, commands, task);
                 }
+
                 //дожидаемся пока выполняться все задания
-                foreach (Task taskRunner in taskRunnerManager)
-                {
-                    // ProgressStep();
-                    taskRunner.Wait();
-                    Console.WriteLine("Task {0} finished...", taskRunner.Id);
-                }
+                //foreach (Task taskRunner in taskRunnerManager)
+                //{
+                //    // ProgressStep();
+                //    taskRunner.Wait();
+                //    Console.WriteLine("Task {0} finished...", taskRunner.Id);
+                //}
             }
             catch (Exception ex)
             {
@@ -108,11 +122,11 @@ namespace RemoteWorkUtil
         private static void Connection(FavoriteConnect favConnect, CancellationToken ct)
         {
             //token stopped!!
-            if (ct.IsCancellationRequested)
-            {
-                Console.WriteLine("Task was cancelled and not started!");
-                ct.ThrowIfCancellationRequested();
-            }
+            //if (ct.IsCancellationRequested)
+            //{
+            //    Console.WriteLine("Task was cancelled and not started!");
+            //    ct.ThrowIfCancellationRequested();
+            //}
 
             RemoteTask task = favConnect.task;
             List<string> commands = favConnect.commands;
@@ -129,18 +143,18 @@ namespace RemoteWorkUtil
             Expect expect;
             switch (protocol)
             {
-                case "Telnet": expect = new TelnetExpect(data); break;
+                case "Telnet": expect = new TelnetMintExpect(data); break;
                 case "SSH": expect = new SshExpect(data); break;
                 //по умолчанию для сетевых устройств протокол Telnet
-                default: expect = new TelnetExpect(data); break;
+                default: expect = new TelnetMintExpect(data); break;
             }
 
             //token stopped!!
-            if (ct.IsCancellationRequested)
-            {
-                Console.WriteLine("Task was cancelled!");
-                ct.ThrowIfCancellationRequested();
-            }
+            //if (ct.IsCancellationRequested)
+            //{
+            //    Console.WriteLine("Task was cancelled!");
+            //    ct.ThrowIfCancellationRequested();
+            //}
 
 
             //если объект expect успешно создан
@@ -170,6 +184,9 @@ namespace RemoteWorkUtil
                 context.SaveChanges();
             }
         }
+
+        #region TEST METHODS
+        //тестовые методы
         private void Test()
         {
             Database.SetInitializer(new Init());
@@ -278,7 +295,40 @@ namespace RemoteWorkUtil
                 context.SaveChanges();
             }
         }
+        #endregion
     }
+    //deep cloning object 
+    //object must be serializable
+    public static class ObjectCopier
+    {
+        /// <summary>
+        /// Perform a deep Copy of the object.
+        /// </summary>
+        /// <typeparam name="T">The type of object being copied.</typeparam>
+        /// <param name="source">The object instance to copy.</param>
+        /// <returns>The copied object.</returns>
+        public static T Clone<T>(T source)
+        {
+            if (!typeof(T).IsSerializable)
+            {
+                throw new ArgumentException("The type must be serializable.", "source");
+            }
 
+            // Don't serialize a null object, simply return the default for that object
+            if (Object.ReferenceEquals(source, null))
+            {
+                return default(T);
+            }
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new MemoryStream();
+            using (stream)
+            {
+                formatter.Serialize(stream, source);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(stream);
+            }
+        }
+    }
 
 }
