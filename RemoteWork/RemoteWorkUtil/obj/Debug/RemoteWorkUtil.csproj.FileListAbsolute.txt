@@ -58,3 +58,7 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\Renci.SshNet.xml
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.csprojResolveAssemblyReference.cache
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Expect.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\Renci.SshNet.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.Expect.pdb
+D:\Repository\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\Renci.SshNet.xml

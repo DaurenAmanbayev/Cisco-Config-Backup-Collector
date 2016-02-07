@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
-    class TelnetMintExpect: Expect
+    public class TelnetMintExpect: Expect
     {
         TelnetMint client;
         string rcvStr;
@@ -18,6 +18,7 @@ namespace RemoteWork.Expect
         //last input should be one of these variants
         //: or > or $ or #
         Regex regexUseMode = new Regex("[:,$,>,#]$");
+
         public TelnetMintExpect(ConnectionData host)
             : base(host)
         {
@@ -29,54 +30,56 @@ namespace RemoteWork.Expect
          */
         public override void ExecuteCommand(string command)
         {
-            //change Username and Password for regex pattern with login Login: and other modification---
-            rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-            client.SendData(host.username);
-            rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-            client.SendData(host.password);
-            rcvStr = client.ReceiveDataWaitWord(regexUseMode,timeOut);
-            client.SendData(command);
-            rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
-            listResult.Add(rcvStr);
-            client.Close();
-            //try
-            //{
-            //    string loginStatus = client.Login(host.username, host.password, timeOut);
-            //    string prompt = loginStatus.TrimEnd();
-            //    prompt = loginStatus.Substring(prompt.Length - 1, 1);
-            //    //!!!! clear all console commands
-            //    //результат возвращаемый соединением
-            //    //Console.WriteLine(prompt);
-            //    if (prompt != "$" && prompt != ">" && prompt != ":" && prompt != "#")
-            //        throw new Exception("Connection failed!");
-
-            //    client.WriteLine(command);
-            //    prompt = client.Read();
-            //    listResult.Add(prompt);
-            //    client.Disconnect();
-            //    success = true;
-            //}
-            //catch (Exception ex)//заменить проброс исключения, или использовать список проблем
-            //{
-            //    success = false;
-            //    listError.Add(ex.Message);
-            //}
-        }
-        public override void ExecuteCommands(List<string> commands)
-        {
-            //change Username and Password for regex pattern with login Login: and other modification---
-            rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-            client.SendData(host.username);
-            rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-            client.SendData(host.password);
-            rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
-            foreach (string command in commands)
+            success = true;
+            try
             {
+                //change Username and Password for regex pattern with login Login: and other modification---
+                //аутентификация
+                rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
+                client.SendData(host.username);
+                rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                client.SendData(host.password);
+                rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                //использование команды
                 client.SendData(command);
                 rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
                 listResult.Add(rcvStr);
+                client.Close();
             }
-            client.Close();
+            catch (Exception ex)
+            {
+                success = false;
+                listError.Add(ex.Message);
+            }      
+        
+        }
+        
+        public override void ExecuteCommands(List<string> commands)
+        {
+            success = true;
+            try
+            {
+                //change Username and Password for regex pattern with login Login: and other modification---
+                //аутентификация
+                rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
+                client.SendData(host.username);
+                rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                client.SendData(host.password);
+                rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                //использование команды
+                foreach (string command in commands)
+                {
+                    client.SendData(command);
+                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                    listResult.Add(rcvStr);
+                }
+                client.Close();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                listError.Add(ex.Message);
+            }
         }
     }
 }

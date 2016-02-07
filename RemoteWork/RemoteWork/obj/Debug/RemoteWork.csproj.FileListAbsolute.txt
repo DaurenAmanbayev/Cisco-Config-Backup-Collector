@@ -126,3 +126,10 @@ Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Location_Manag
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Edit.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Manager.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Config_Watcher.resources
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Expect.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Renci.SshNet.dll
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.Expect.pdb
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Renci.SshNet.xml
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Config_Watcher.resources
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Edit.resources
+D:\Repository\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Manager.resources

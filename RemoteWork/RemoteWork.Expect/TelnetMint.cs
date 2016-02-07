@@ -11,7 +11,7 @@ namespace RemoteWork.Expect
 {
     //класс Telnet другая имплементация
     //ожидает возврата требуемой строки с указнным таймаутом
-    class TelnetMint
+    public class TelnetMint
     {
         TcpClient client;
         IPEndPoint remote;
@@ -24,16 +24,18 @@ namespace RemoteWork.Expect
                 return "\r\n";
             }
         }
-  
+        //конструктор с параметрами 
         public TelnetMint(string host, int port)
         {
             if (port < 1 || port > 65536)
             {
+                //проверка валидности порта
                 throw new Exception("Invalid port!");
             }
             IPAddress ip = System.Net.Dns.GetHostAddresses(host)[0];
             remote = new IPEndPoint(ip, port);
             client = new TcpClient();
+            //подключаемся
             client.Connect(remote);
             networkStream = client.GetStream();
 
@@ -52,7 +54,10 @@ namespace RemoteWork.Expect
         {
             client.Close(); 
         }
- 
+        /// <summary>
+        /// отправка сообщения
+        /// </summary>
+        /// <param name="command"></param>
         public void SendData(string command)
         {
             if (!command.EndsWith(ENTER))
