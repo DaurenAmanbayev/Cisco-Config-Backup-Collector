@@ -19,6 +19,156 @@ namespace RemoteWorkUtil
         static RconfigContext context;
         static void Main(string[] args)
         {
+           
+        }
+        #region TASK USE
+        private void TaskUse()
+        {
+        }
+        private static void LoadConfigurationThread(RemoteTask task)
+        {
+            CancellationToken token;
+
+            List<Task> taskRunnerManager = new List<Task>();
+            //LockForm();
+            var tokenSource = new CancellationTokenSource();
+            token = tokenSource.Token;
+            int countFav = 0;
+            //   ProgressInit(task.Favorites.Count);
+            try
+            {
+                foreach (Favorite fav in task.Favorites)
+                {
+                    //STARTED
+                    Console.WriteLine("OPERATION started for {0}...", fav.Address);
+                    List<string> commands = new List<string>();
+                    //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
+                    foreach (Command command in task.Commands)
+                    {
+                        foreach (Category category in command.Categories)
+                        {
+                            if (fav.Category.CategoryName == category.CategoryName)
+                            {
+                                commands.Add(command.Name);
+                            }
+                        }
+                    }
+                    //мультипоточность
+                    //устанавливаем соединение
+                    FavoriteConnect connect = new FavoriteConnect();
+                    connect.commands = commands;
+                    connect.favorite = fav;
+                    connect.task = task;
+
+                    Console.WriteLine("Connection started for {0} favorites...", countFav++);
+                    ConnectionThread(connect, token);
+                    //Многопоточный вариант отпадает в связи с ограничением работы EF с потоками
+                    //
+                    //Task taskRunner = Task.Factory.StartNew(() =>
+                    //    Connection(connect, token), token
+                    //);
+                    /*
+                     t = Task.Factory.StartNew(() => DoSomeWork(1, token), token)
+                     Console.WriteLine("Task {0} executing", t.Id);
+                     tasks.Add(t);
+                     */
+                    //Console.WriteLine("Task {0} started...", taskRunner.Id);
+                    // taskRunnerManager.Add(taskRunner);
+                    //Connection(fav, commands, task);
+                }
+
+                //дожидаемся пока выполняться все задания
+                //foreach (Task taskRunner in taskRunnerManager)
+                //{
+                //    // ProgressStep();
+                //    taskRunner.Wait();
+                //    Console.WriteLine("Task {0} finished...", taskRunner.Id);
+                //}
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+            }
+
+            //LockForm();
+            // NotifyInfo("Success!");
+            //  ProgressClear();
+        }
+        //проблема с многопоточностью
+        //наверняка нужно создавать новый контекст для каждого потока
+        //или опрашивать и сохранять данные локально с последующей выгрузкой в базу данных
+        private static void ConnectionThread(FavoriteConnect favConnect, CancellationToken ct)
+        {
+            //token stopped!!
+            //if (ct.IsCancellationRequested)
+            //{
+            //    Console.WriteLine("Task was cancelled and not started!");
+            //    ct.ThrowIfCancellationRequested();
+            //}
+
+            RemoteTask task = favConnect.task;
+            List<string> commands = favConnect.commands;
+            Favorite fav = favConnect.favorite;
+            //данные для подключения к сетевому устройству
+            ConnectionData data = new ConnectionData();
+            data.address = fav.Address;
+            data.port = fav.Port;
+            data.username = fav.Credential.Username;
+            data.password = fav.Credential.Password;
+
+            //по типу протоколу выбираем требуемое подключение
+            string protocol = fav.Protocol.Name;
+            Expect expect;
+            switch (protocol)
+            {
+                case "Telnet": expect = new TelnetMintExpect(data); break;
+                case "SSH": expect = new SshExpect(data); break;
+                //по умолчанию для сетевых устройств протокол Telnet
+                default: expect = new TelnetMintExpect(data); break;
+            }
+
+            //token stopped!!
+            //if (ct.IsCancellationRequested)
+            //{
+            //    Console.WriteLine("Task was cancelled!");
+            //    ct.ThrowIfCancellationRequested();
+            //}
+
+
+            //если объект expect успешно создан
+            if (expect != null)
+            {
+                //выполняем список команд
+                expect.ExecuteCommands(commands);
+                string result = expect.GetResult();
+                bool success = expect.isSuccess;
+                string error = expect.GetError();
+                //если успешно сохраняем конфигурацию устройства
+                if (success)
+                {
+                    Config config = new Config();
+                    config.Current = result;
+                    config.Date = DateTime.Now;
+                    fav.Configs.Add(config);
+                }
+                //создаем отчет о проделанном задании
+                Report report = new Report();
+                report.Date = DateTime.Now;
+                report.Status = success;
+                report.Info = error;
+                report.Task = task;
+                report.Favorite = fav;
+                context.Reports.Add(report);
+                context.SaveChanges();
+            }
+
+        }
+        #endregion
+
+        #region LOOP USE
+        private void LoopMethod()
+        {
             //*ERROR**
             int TaskID = 1;
             context = new RconfigContext();
@@ -170,12 +320,12 @@ namespace RemoteWorkUtil
                 {
                     Config config = new Config();
                     config.Current = result;
-                    config.Date = DateTime.UtcNow;
+                    config.Date = DateTime.Now;
                     fav.Configs.Add(config);
                 }
                 //создаем отчет о проделанном задании
                 Report report = new Report();
-                report.Date = DateTime.UtcNow;
+                report.Date = DateTime.Now;
                 report.Status = success;
                 report.Info = error;
                 report.Task = task;
@@ -184,6 +334,7 @@ namespace RemoteWorkUtil
                 context.SaveChanges();
             }
         }
+        #endregion
 
         #region TEST METHODS
         //тестовые методы

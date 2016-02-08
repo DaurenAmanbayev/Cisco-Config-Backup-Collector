@@ -13,7 +13,9 @@ using System.Data.Entity;
 using RemoteWork.Data;
 using RemoteWork.Expect;
 
-
+/*
+добавление устройств по аналогии с KeePass
+*/
 namespace RemoteWork
 {   
     public partial class Rconfig : Form
