@@ -27,29 +27,31 @@ namespace RemoteWork.Managers
             this.TaskID = TaskID;
            
         }
-
+        //инициализация прогресс бара
         private void ProgressInit()
         {
             progressBarTask.Maximum = max;
             progressBarTask.Minimum = 0;
             progressBarTask.Step = 1;
         }
-        //PROGRESS CHANGES
+        //шаг прогресс бара
         private void ProgressStep(string info)
         {
             labelStatus.Text = string.Format("Load for: {0} | Progress: {1} of {2}", info, current, max);//проблема с отображением прогресса
             progressBarTask.PerformStep();
         }
-        //PROGRESS CLEAR
+        //очистка прогресс бара
         private void ProgressFinish()
         {
             progressBarTask.Value = 0;
             this.DialogResult = DialogResult.OK;
         }
+        //запуск прогресс бара
         private void ProgressStart()
         {
             LoopMethod(TaskID);
         }
+        //обход и сбор конфигурации с устройств по задаче
         #region LOOP USE
         //проход в цикле для каждого устройства
         private async void LoopMethod(int TaskID)
@@ -176,7 +178,7 @@ namespace RemoteWork.Managers
             }
         }
         #endregion
-
+        //как только форма отрисовалась, запустить операцию и прогресс бар
         private void Task_Progress_Shown(object sender, EventArgs e)
         {
             ProgressStart();

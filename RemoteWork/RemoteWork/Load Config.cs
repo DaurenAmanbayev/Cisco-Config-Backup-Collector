@@ -27,7 +27,7 @@ namespace RemoteWork
             labelFav.Text = favName;
             LoadData();
         }
-
+        //подгрузка данных
         private async void LoadData()
         {
             using(RconfigContext context=new RconfigContext())
@@ -52,26 +52,33 @@ namespace RemoteWork
                 }
             }
         }
-
+        //запуск сбора конфигурации
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             if (checkedListBoxCommand.CheckedItems.Count != 0)
             {
-                DialogResult result=MessageBox.Show("This load configuration will not be saved to database!", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("This load configuration will not be saved to database!", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 //предупредить пользователя, что единовременный сбор конфигурации не будет храниться в базе данных
                 //затем сделать сбор конфигурации
                 if (result == DialogResult.OK)
                 {
+                    //создаем список команд
                     List<string> commands = new List<string>();
                     foreach (var item in checkedListBoxCommand.CheckedItems)
                     {
                         string command = item.ToString();
                         commands.Add(command);
                     }
+                    //передаем наш список для сбора конфигурации
                     Connection(commands);
                 }
             }
+            else
+            {
+                MessageBox.Show("Must be checked configuration commands!", "Load Config", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+        //подключение к сетевому устройству
         private void Connection(List<string> commands)
         {
             using (RconfigContext context = new RconfigContext())

@@ -26,7 +26,9 @@ namespace RemoteWork
             InitializeComponent();
         }
 
-        #region WINDOWS LAYOUT
+        //организация дочерных окон в родительском
+        //каскадное, вертикальная и горизонтальная ориентация
+        #region WINDOWS LAYOUT        
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(System.Windows.Forms.MdiLayout.Cascade);
@@ -51,8 +53,10 @@ namespace RemoteWork
             foreach (Form cf in forms) cf.WindowState = FormWindowState.Minimized;
         }
         #endregion
-
+        //управление дочерними окнами
         #region CHILD WINDOWS
+        //открываем дочернее окно, создаем подписку на закрытие дочернего окна
+        //блокируем открытие нового схожего окна, пока предыдущее не было закрыто
         //category
         private void categoryManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -137,12 +141,12 @@ namespace RemoteWork
             isWindowLockTask = false;
         }
         #endregion
-
+        //выход из формы
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        //проверка изменялась ли категория
         public bool CategoryChanged
         {
             get { return isCategoryChanged; }

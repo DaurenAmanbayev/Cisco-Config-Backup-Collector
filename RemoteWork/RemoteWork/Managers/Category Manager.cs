@@ -20,7 +20,7 @@ namespace RemoteWork.Managers
             InitializeComponent();
             LoadData();
         }
-
+        //подгражем требуемые данные
         private async void LoadData()
         {
             var queryCategory= await (from c in context.Categories
@@ -28,7 +28,7 @@ namespace RemoteWork.Managers
 
             listBoxCategory.DataSource = queryCategory;
         }
-
+        //добавляем новую категорию
         private void addCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Category_Edit frm = new Category_Edit();
@@ -38,7 +38,7 @@ namespace RemoteWork.Managers
                 LoadData();
             }
         }
-
+        //редактируем существующую категорию
         private void editCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxCategory.SelectedItem != null)
@@ -52,7 +52,7 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //удаляем существующую категорию
         private void deleteCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxCategory.SelectedItem != null)

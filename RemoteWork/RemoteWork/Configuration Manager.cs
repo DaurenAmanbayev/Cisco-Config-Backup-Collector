@@ -33,12 +33,14 @@ namespace RemoteWork
         string prevHostname;       
         FavoriteFilter filter = FavoriteFilter.ByIPAddress;
         Period period = Period.All;
+        //запуск менеджера
         public Configuration_Manager()
         {
             InitializeComponent();
             StartConfiguration();         
             LoadData();
         }
+        //запуск менеджера с выбранным устройством
         public Configuration_Manager(string hostname)
         {
             //необходимо выбрать переданное устройство
@@ -49,6 +51,7 @@ namespace RemoteWork
             checkBoxHostname.Checked = true;
             LoadData();
         }
+        //начальные настройки приложения
         private void StartConfiguration()
         {
             periods=new List<string>
@@ -61,6 +64,7 @@ namespace RemoteWork
             };
             comboBoxPeriod.DataSource = periods;
         }
+        //подгрузка требуемых данных
         private async void LoadData()
         {
             using (context = new RconfigContext())
@@ -87,6 +91,7 @@ namespace RemoteWork
                 LoadConfigurationData();
             }
         }
+        //фильтрация по устройству
         private void buttonFind_Click(object sender, EventArgs e)
         {
             if (comboBoxFavs.SelectedItem != null)
@@ -101,10 +106,12 @@ namespace RemoteWork
             }
         }
         //не реализовано
+        //фильтрация по периоду времени
         private void buttonTime_Click(object sender, EventArgs e)
         {
             //реализация временного фильтра, требуется ли???
         }
+        //сбор конфигурационных данных
         private void LoadConfigurationData()
         {
             string favorite = comboBoxFavs.SelectedItem.ToString();
@@ -152,6 +159,7 @@ namespace RemoteWork
                     break;
             }
         }
+        //проверка изменения фильтра устройства
         private void checkBoxHostname_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxHostname.Checked)

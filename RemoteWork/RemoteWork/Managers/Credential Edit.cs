@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace RemoteWork.Managers
 {
+    //проверка данных учетной записи
     enum CredentialInputValidate
     {
         CredentialNameEmpty,
@@ -39,7 +40,7 @@ namespace RemoteWork.Managers
             textBoxCredName.Text = credential;
             LoadData();
         }
-
+        //подгружаем данные
         private async void LoadData()
         {
             var queryCredential=await (from c in context.Credentials
@@ -51,7 +52,7 @@ namespace RemoteWork.Managers
             textBoxDomain.Text = queryCredential.Domain;
             textBoxPaassword.Text = queryCredential.Password;
         }
-
+        //проверка на уникальность
         private bool isUnique(string credential)
         {
             if (mode == WindowsMode.EDIT && prevCredential == textBoxCredName.Text.Trim())
@@ -71,6 +72,7 @@ namespace RemoteWork.Managers
 
             return uniqueCommand;
         }
+        //проверка данных пользователя
         private bool CheckData()
         {
             if (string.IsNullOrWhiteSpace(textBoxCredName.Text.Trim()))
@@ -90,7 +92,7 @@ namespace RemoteWork.Managers
             }
             return isUnique(textBoxCredName.Text.Trim());
         }
-
+        //подтверждение операции
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (CheckData())
@@ -128,12 +130,12 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //отмена операции
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
+        //сменить видимость пароля
         private void checkBoxPassword_CheckStateChanged(object sender, EventArgs e)
         {
             CheckState state = checkBoxPassword.CheckState;
@@ -143,7 +145,7 @@ namespace RemoteWork.Managers
                 case CheckState.Unchecked: textBoxPaassword.UseSystemPasswordChar = true; break;
             }
         }
-
+        //уведомление 
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);

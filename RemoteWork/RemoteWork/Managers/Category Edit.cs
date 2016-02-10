@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace RemoteWork.Managers
 {
+    //проверка данных категории
     enum CategoryInputValidate
     {
         CategoryEmpty,
@@ -38,7 +39,7 @@ namespace RemoteWork.Managers
             prevCategory = category;
             LoadData();
         }
-
+        //подгрузка требуемых данных
         private async void LoadData()
         {
             var queryCategory=await (from c in context.Categories
@@ -46,6 +47,7 @@ namespace RemoteWork.Managers
                               select c).FirstOrDefaultAsync();
             currentCategory = queryCategory;
         }
+        //проверка на уникальность устройства
         private bool isUnique(string category)
         {
             if (mode == WindowsMode.EDIT && prevCategory == textBoxCategory.Text.Trim())
@@ -65,6 +67,7 @@ namespace RemoteWork.Managers
 
             return uniqueCommand;
         }
+        //проверка введеных данных пользователя
         private bool CheckData()
         {
             if (string.IsNullOrWhiteSpace(textBoxCategory.Text.Trim()))
@@ -73,6 +76,7 @@ namespace RemoteWork.Managers
             }           
             return isUnique(textBoxCategory.Text.Trim());
         }
+        //подтверждение операции
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (CheckData())
@@ -102,12 +106,12 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //отмена операции
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
+        //уведомление пользователя
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);

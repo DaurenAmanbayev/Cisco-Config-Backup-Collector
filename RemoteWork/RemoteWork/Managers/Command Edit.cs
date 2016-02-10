@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace RemoteWork.Managers
 {
+    //проверка корректности данных команды
     enum CommandInputValidate
     {
         CommandEmpty,
@@ -40,6 +41,7 @@ namespace RemoteWork.Managers
             prevCommand = command;
             LoadPrevData();
         }
+        //подгружаем требуемые данные
         private async void LoadData()
         {
             var queryCategories = await (from c in context.Categories
@@ -52,6 +54,8 @@ namespace RemoteWork.Managers
             
             
         }
+        //в случае режима редактирования
+        //подгружаем данные выбранной команды
         private async void LoadPrevData()
         {
             var queryCommand = await (from c in context.Commands
@@ -101,6 +105,7 @@ namespace RemoteWork.Managers
 
             return uniqueCommand;
         }
+        //проверка данных пользователя
         private bool CheckData()
         {
             if (string.IsNullOrWhiteSpace(textBoxName.Text.Trim()))
@@ -115,7 +120,7 @@ namespace RemoteWork.Managers
             }
             return isUnique(textBoxName.Text.Trim());
         }
-
+        //добавить команду
         private void AddCommand()
         {
             currentCommand = new Command();
@@ -133,6 +138,7 @@ namespace RemoteWork.Managers
             context.Commands.Add(currentCommand);
             context.SaveChanges();
         }
+        //редактировать команду
         private void EditCommand()
         {
             currentCommand.Name = textBoxName.Text.Trim();
@@ -149,6 +155,7 @@ namespace RemoteWork.Managers
             context.Entry(currentCommand).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
+        //подтверждение операции
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (CheckData())
@@ -177,16 +184,19 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //отмена операции
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
+        //уведомление
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        //операции по выбору категорий для команды
+        //добавление и удаление
         #region CATEGORY SELECTION
         private void addToCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -16,6 +16,7 @@ using System.Diagnostics;
 
 namespace RemoteWork
 {   
+    //проверка корректности данных
     enum FavoriteInputValidate
     {
        HostnameEmpty,
@@ -287,8 +288,7 @@ namespace RemoteWork
         {
             return currentFavorite.Hostname;
         }
-
-
+        //подтверждаем нашу операцию
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (ValidateInput())
@@ -333,17 +333,17 @@ namespace RemoteWork
                 }
             }
         }
-
+        //отмена операции
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
+        //уведомление 
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
+        //смена порта на порт по умолчанию для выбранного протокола
         private void comboBoxProtocol_SelectedIndexChanged(object sender, EventArgs e)
         {
             //подгружаем данные о портах по умолчанию для выбранного протокола

@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace RemoteWork.Managers
 {
+    //проверка корректности данных задачи
     enum TaskInputValidate
     {
         TaskNameIsEmpty,
@@ -37,9 +38,9 @@ namespace RemoteWork.Managers
             mode = WindowsMode.EDIT;
             prevTaskId = taskId;
             LoadData();
-            //LoadPrevData();
+            //LoadPrevData();//реализовать!!!
         }
-
+        //подгрузка данных
         private async void LoadData()
         {
             var queryFavs=await (from c in context.Favorites
@@ -60,6 +61,8 @@ namespace RemoteWork.Managers
             if (mode == WindowsMode.EDIT)
                 LoadPrevData();
         }
+        //подгрузка данных при редактировании
+        //не работает!!!
         private async void LoadPrevData()
         {            
             var queryRemoteTask=await (from c in context.RemoteTasks
@@ -72,7 +75,7 @@ namespace RemoteWork.Managers
             textBoxName.Text = currentTask.TaskName;
             textBoxDesc.Text = currentTask.Description;
         }
-
+        //проверка данных пользователя
         private bool CheckData()
         {
             if (string.IsNullOrWhiteSpace(textBoxName.Text))
@@ -91,7 +94,7 @@ namespace RemoteWork.Managers
             }
             return true;
         }
-
+        //добавить задачу
         private void TaskAdd()
         {
             currentTask = new RemoteTask();
@@ -126,6 +129,7 @@ namespace RemoteWork.Managers
             context.RemoteTasks.Add(currentTask);
             context.SaveChanges();
         }
+        //изменить задачу
         private void TaskEdit()
         {           
             currentTask.TaskName = textBoxName.Text.Trim();
@@ -159,6 +163,7 @@ namespace RemoteWork.Managers
             context.Entry(currentTask).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
+        //подтверждение операции
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (CheckData())
@@ -180,12 +185,12 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //отмена операции
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
+        //уведомление
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);

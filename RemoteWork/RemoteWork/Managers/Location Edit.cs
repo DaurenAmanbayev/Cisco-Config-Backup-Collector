@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace RemoteWork.Managers
 {
+    //проверка данных местоположения
     enum LocationInputValidate
     {
         LocationEmpty,
@@ -37,7 +38,7 @@ namespace RemoteWork.Managers
             mode = WindowsMode.EDIT;
             LoadData();
         }
-
+        //подгружаем данные
         private void LoadData()
         {
             var queryLocation=(from c in context.Locations
@@ -46,7 +47,7 @@ namespace RemoteWork.Managers
             if (queryLocation != null)
                 currentLocation = queryLocation;
         }
-
+        //проверка на уникальность
         private bool isUnique(string location)
         {
             //если режим редактирования, то проверка на уникальность должна учитывать существующее имя
@@ -67,7 +68,7 @@ namespace RemoteWork.Managers
 
             return uniqueLocation;
         }
-
+        //проверка данных пользователя
         private bool CheckData()
         {
             if (string.IsNullOrWhiteSpace(textBoxLocation.Text.Trim()))
@@ -76,7 +77,7 @@ namespace RemoteWork.Managers
             }            
             return isUnique(textBoxLocation.Text.Trim());
         }
-
+        //подтверждение операции
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (CheckData())
@@ -106,12 +107,12 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //отмена операции
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
+        //уведомление
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);

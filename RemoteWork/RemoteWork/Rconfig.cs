@@ -28,7 +28,7 @@ namespace RemoteWork
             StartConfiguration();
             LoadData();         
         }
-
+        //дополнительные методы используемые в форме
         #region CUSTOM METHODS
         //стартовые настройки интерфейса
         private void StartConfiguration()
@@ -100,6 +100,7 @@ namespace RemoteWork
         }
         #endregion       
 
+        //управление данными в дереве
         #region TREEVIEW DATA
         //для подгрузки данных об устройствах при выборе категории
         private void treeViewFavorites_AfterSelect(object sender, TreeViewEventArgs e)
@@ -183,6 +184,7 @@ namespace RemoteWork
 
         //добавление, редактирование и удаление устройства, а также просмотр конфигурации по устройству
         #region FAVORITE 
+        //запуск единовременного сбор конфигурации
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeViewFavorites.SelectedNode != null && listViewDetails.SelectedItems.Count != 0)
@@ -194,7 +196,7 @@ namespace RemoteWork
                 frm.ShowDialog();
             }
         }
-
+        //просмотр конфигурации
         private void seeConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeViewFavorites.SelectedNode != null && listViewDetails.SelectedItems.Count != 0)
@@ -272,10 +274,8 @@ namespace RemoteWork
             {
                 NotifyInfo("Please select favorite to edit!");
             }
-        }
-        
+        }        
         #endregion       
-
      
         //опции главного меню
         #region TOOLSTRIP MENU
@@ -350,9 +350,7 @@ namespace RemoteWork
         {
             NotifyInfo("About Info");
         }
-        #endregion
-
-       
+        #endregion    
 
        
        

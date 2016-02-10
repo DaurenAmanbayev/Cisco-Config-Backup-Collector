@@ -19,7 +19,7 @@ namespace RemoteWork.Analytics
         {
             InitializeComponent();
         }
-
+        //вызов отчетности
         private void buttonLoadData_Click(object sender, EventArgs e)
         {
             try
@@ -31,7 +31,7 @@ namespace RemoteWork.Analytics
                 MessageBox.Show(ex.Message);
             }
         }
-
+        //подгрузка данных
         private async void LoadData()
         {
             var queryReport = await (from c in context.Reports

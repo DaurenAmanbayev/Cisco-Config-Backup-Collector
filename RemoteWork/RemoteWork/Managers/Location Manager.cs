@@ -20,6 +20,7 @@ namespace RemoteWork.Managers
             InitializeComponent();
             LoadData();
         }
+        //подгрузка данных
         public async void LoadData()
         {
             var queryLocations = await (from c in context.Locations
@@ -27,7 +28,7 @@ namespace RemoteWork.Managers
 
             listBoxLocations.DataSource = queryLocations;
         }
-
+        //добавить местоположение
         private void addLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Location_Edit frm = new Location_Edit();
@@ -37,7 +38,7 @@ namespace RemoteWork.Managers
                 LoadData();
             }
         }
-
+        //редактировать местоположение
         private void editLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxLocations.SelectedItem != null)
@@ -52,7 +53,7 @@ namespace RemoteWork.Managers
             }
             
         }
-
+        //удаление
         private void deleteLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxLocations.SelectedItem != null)

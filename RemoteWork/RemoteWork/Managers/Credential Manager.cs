@@ -20,7 +20,7 @@ namespace RemoteWork.Managers
             InitializeComponent();
             LoadData();
         }
-
+        //подгружаем данные
         private async void LoadData()
         {
             var queryCredentials=await (from c in context.Credentials
@@ -28,7 +28,7 @@ namespace RemoteWork.Managers
 
             listBoxCredentials.DataSource = queryCredentials;
         }
-
+        //добавление учетной записи
         private void addCredentialToolStripMenuItem_Click(object sender, EventArgs e)
         {          
             Credential_Edit frm = new Credential_Edit();
@@ -39,7 +39,7 @@ namespace RemoteWork.Managers
             }
 
         }
-
+        //редактирование
         private void editCredentialToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxCredentials.SelectedItem != null)
@@ -53,7 +53,7 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //удаление
         private void deleteCredentialToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxCredentials.SelectedItem != null)

@@ -21,6 +21,7 @@ namespace RemoteWork.Managers
             InitializeComponent();
             LoadData();
         }
+        //подгружаем данные
         private async void LoadData()
         { 
             var queryCommands=await (from c in context.Commands
@@ -28,7 +29,7 @@ namespace RemoteWork.Managers
 
             listBoxCommands.DataSource = queryCommands;
         }
-
+        //добавить команду
         private void addCommandToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Command_Edit frm = new Command_Edit();
@@ -38,7 +39,7 @@ namespace RemoteWork.Managers
                 LoadData();
             }
         }
-
+        //редактировать команду
         private void editCommandToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxCommands.SelectedItem != null)
@@ -52,7 +53,7 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //удалить команду
         private void deleteCommandToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBoxCommands.SelectedItem != null)
