@@ -44,6 +44,7 @@
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.checkBoxByFavorite = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -131,6 +132,7 @@
             // 
             this.flowLayoutPanel4.Controls.Add(this.label1);
             this.flowLayoutPanel4.Controls.Add(this.checkedListBoxFavorites);
+            this.flowLayoutPanel4.Controls.Add(this.checkBoxByFavorite);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 88);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
@@ -142,9 +144,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Selected Favorites";
+            this.label1.Text = "Selected Categories";
             // 
             // checkedListBoxFavorites
             // 
@@ -212,6 +214,16 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
+            // checkBoxByFavorite
+            // 
+            this.checkBoxByFavorite.AutoSize = true;
+            this.checkBoxByFavorite.Location = new System.Drawing.Point(3, 146);
+            this.checkBoxByFavorite.Name = "checkBoxByFavorite";
+            this.checkBoxByFavorite.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxByFavorite.TabIndex = 9;
+            this.checkBoxByFavorite.Text = "by Favorite";
+            this.checkBoxByFavorite.UseVisualStyleBackColor = true;
+            // 
             // Task_Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,8 +231,6 @@
             this.ClientSize = new System.Drawing.Size(340, 490);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Task_Edit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Task_Edit";
@@ -256,5 +266,6 @@
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.CheckedListBox checkedListBoxFavorites;
         private System.Windows.Forms.CheckedListBox checkedListBoxCommands;
+        private System.Windows.Forms.CheckBox checkBoxByFavorite;
     }
 }

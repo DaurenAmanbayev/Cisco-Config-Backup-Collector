@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace RemoteWork.Managers
 {
+    //добавить адаптивности в интерфейс!!!!
     //проверка корректности данных задачи
     enum TaskInputValidate
     {
@@ -194,11 +195,6 @@ namespace RemoteWork.Managers
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-     
-
-
-
+        }   
     }
 }

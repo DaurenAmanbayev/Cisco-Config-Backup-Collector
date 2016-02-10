@@ -20,6 +20,9 @@ namespace RemoteWork.Managers
         CommandNotUnique,
         CommandCategoryNotSelected
     }
+    //добавить описание откуда - куда
+    //добавить приоритет команды
+    //при использовании сортировать по приоритету
     public partial class Command_Edit : Form
     {
         CommandInputValidate validateInput = CommandInputValidate.CommandEmpty;

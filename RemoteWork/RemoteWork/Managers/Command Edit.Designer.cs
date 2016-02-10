@@ -138,7 +138,7 @@
             this.removeFromCurrentToolStripMenuItem,
             this.removeAllFromCurrentToolStripMenuItem});
             this.contextMenuStripCurrent.Name = "contextMenuStripCurrent";
-            this.contextMenuStripCurrent.Size = new System.Drawing.Size(207, 70);
+            this.contextMenuStripCurrent.Size = new System.Drawing.Size(207, 48);
             // 
             // removeFromCurrentToolStripMenuItem
             // 

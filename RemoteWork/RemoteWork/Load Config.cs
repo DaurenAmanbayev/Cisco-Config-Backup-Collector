@@ -117,11 +117,11 @@ namespace RemoteWork
                         //если успешно сохраняем конфигурацию устройства
                         if (success)
                         {
-                            textBoxConfig.Text = result;
+                            richTextBoxConfig.Text = result;
                         }
                         else
                         {
-                            textBoxConfig.Text = error;
+                            richTextBoxConfig.Text = error;
                         }
                     }
                 }

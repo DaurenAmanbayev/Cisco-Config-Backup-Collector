@@ -30,24 +30,29 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewReports = new System.Windows.Forms.DataGridView();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonLoadData = new System.Windows.Forms.Button();
+            this.checkBoxFailed = new System.Windows.Forms.CheckBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.buttonFilter = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReports)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
             this.tableLayoutPanel1.Controls.Add(this.dataGridViewReports, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonLoadData, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(669, 431);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(676, 431);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // dataGridViewReports
@@ -59,29 +64,69 @@
             this.dataGridViewReports.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewReports.Name = "dataGridViewReports";
             this.dataGridViewReports.ReadOnly = true;
-            this.dataGridViewReports.Size = new System.Drawing.Size(543, 425);
+            this.dataGridViewReports.Size = new System.Drawing.Size(532, 425);
             this.dataGridViewReports.TabIndex = 0;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.buttonLoadData);
+            this.flowLayoutPanel1.Controls.Add(this.checkBoxFailed);
+            this.flowLayoutPanel1.Controls.Add(this.dateTimePicker1);
+            this.flowLayoutPanel1.Controls.Add(this.buttonFilter);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(541, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(132, 425);
+            this.flowLayoutPanel1.TabIndex = 1;
             // 
             // buttonLoadData
             // 
-            this.buttonLoadData.Location = new System.Drawing.Point(552, 3);
+            this.buttonLoadData.Location = new System.Drawing.Point(3, 3);
             this.buttonLoadData.Name = "buttonLoadData";
-            this.buttonLoadData.Size = new System.Drawing.Size(114, 36);
-            this.buttonLoadData.TabIndex = 1;
+            this.buttonLoadData.Size = new System.Drawing.Size(125, 42);
+            this.buttonLoadData.TabIndex = 0;
             this.buttonLoadData.Text = "Load Report";
             this.buttonLoadData.UseVisualStyleBackColor = true;
             this.buttonLoadData.Click += new System.EventHandler(this.buttonLoadData_Click);
+            // 
+            // checkBoxFailed
+            // 
+            this.checkBoxFailed.AutoSize = true;
+            this.checkBoxFailed.Location = new System.Drawing.Point(3, 51);
+            this.checkBoxFailed.Name = "checkBoxFailed";
+            this.checkBoxFailed.Size = new System.Drawing.Size(106, 17);
+            this.checkBoxFailed.TabIndex = 1;
+            this.checkBoxFailed.Text = "Only failed status";
+            this.checkBoxFailed.UseVisualStyleBackColor = true;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(3, 74);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(125, 20);
+            this.dateTimePicker1.TabIndex = 2;
+            // 
+            // buttonFilter
+            // 
+            this.buttonFilter.Location = new System.Drawing.Point(3, 100);
+            this.buttonFilter.Name = "buttonFilter";
+            this.buttonFilter.Size = new System.Drawing.Size(125, 37);
+            this.buttonFilter.TabIndex = 3;
+            this.buttonFilter.Text = "Filter by Date";
+            this.buttonFilter.UseVisualStyleBackColor = true;
             // 
             // Analytic
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 431);
+            this.ClientSize = new System.Drawing.Size(676, 431);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Analytic";
             this.Text = "Analytic";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReports)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -90,6 +135,10 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridView dataGridViewReports;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button buttonLoadData;
+        private System.Windows.Forms.CheckBox checkBoxFailed;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button buttonFilter;
     }
 }
