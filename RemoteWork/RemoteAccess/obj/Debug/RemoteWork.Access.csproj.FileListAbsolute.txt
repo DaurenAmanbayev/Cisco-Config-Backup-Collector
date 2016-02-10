@@ -67,3 +67,5 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\Re
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
 Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.third.resources
 Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fourth.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources

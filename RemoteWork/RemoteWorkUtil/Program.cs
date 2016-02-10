@@ -19,8 +19,35 @@ namespace RemoteWorkUtil
         static RconfigContext context;
         static void Main(string[] args)
         {
-           
+            //добавить логирование
+            int TaskID;            
+            if (args.Length > 0)
+            {
+                if (Int32.TryParse(args[0], out TaskID))
+                {
+                    if(CheckTask(TaskID))
+                    {
+                        LoopMethod(TaskID);
+                    }
+                }
+
+            }
         }
+        private static bool CheckTask(int TaskID)
+        {
+            using(RconfigContext ctx=new RconfigContext())
+            {
+                var queryTask=(from c in ctx.RemoteTasks
+                              where c.Id==TaskID
+                              select c).Single();
+                if(queryTask!=null)
+                    return true;
+                else 
+                    return false;
+            }
+        }
+        //многопоточный вариант
+        //не реализован
         #region TASK USE
         private void TaskUse()
         {
@@ -166,11 +193,10 @@ namespace RemoteWorkUtil
         }
         #endregion
 
+        //вариант прохождения в цикле
         #region LOOP USE
-        private void LoopMethod()
-        {
-            //*ERROR**
-            int TaskID = 1;
+        private static void LoopMethod(int TaskID)
+        {           
             context = new RconfigContext();
             var queryTask = (from c in context.RemoteTasks
                              where c.Id == TaskID
@@ -450,6 +476,7 @@ namespace RemoteWorkUtil
     }
     //deep cloning object 
     //object must be serializable
+    //при сериализации классов context откзывается работать миграция
     public static class ObjectCopier
     {
         /// <summary>
