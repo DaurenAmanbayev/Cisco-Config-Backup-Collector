@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //структура с данными для подключения
     public struct ConnectionData
     {
         public string address;

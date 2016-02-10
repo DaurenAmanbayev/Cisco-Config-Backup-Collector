@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //используется в имплементации протокола телнет
     enum Verbs
     {
         WILL = 251,

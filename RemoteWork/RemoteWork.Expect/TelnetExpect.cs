@@ -17,9 +17,7 @@ namespace RemoteWork.Expect
             client = new Telnet(host.address, host.port);
             this.host = host;
         }
-        /*
-         * CLEAR ALL CONSOLE COMMANDS!!!
-         */
+        //используем команду
         public override void ExecuteCommand(string command)
         {
             try
@@ -45,6 +43,7 @@ namespace RemoteWork.Expect
                 listError.Add(ex.Message);
             }
         }
+        //используем команды
         public override void ExecuteCommands(List<string> commands)
         {
             try
@@ -52,13 +51,11 @@ namespace RemoteWork.Expect
                 string loginStatus = client.Login(host.username, host.password, timeOut);
                 string prompt = loginStatus.TrimEnd();
                 prompt = loginStatus.Substring(prompt.Length - 1, 1);
-                //результат возвращаемый соединением
-                //Console.WriteLine(prompt);
+                //результат возвращаемый соединением               
                 if (prompt != "$" && prompt != ">" && prompt != ":")
                     throw new Exception("Connection failed!");
 
-                prompt = client.Read();
-                //Console.WriteLine(prompt);
+                prompt = client.Read();           
 
                 foreach (string command in commands)
                 {

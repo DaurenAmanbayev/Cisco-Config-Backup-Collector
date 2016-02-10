@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 namespace RemoteWork.Expect
 {
     //класс Telnet другая имплементация
-    //ожидает возврата требуемой строки с указнным таймаутом
+    //ожидает возврата требуемой строки с указанным таймаутом для каждой строки
     public class TelnetMint
     {
-        TcpClient client;
-        IPEndPoint remote;
-        NetworkStream networkStream;
-        int buffSize = 256;
+        TcpClient client;//клиент
+        IPEndPoint remote;//данные о подключении
+        NetworkStream networkStream;//поток
+        int buffSize = 256;//буфер
         public string ENTER
         {
             get
             {
                 return "\r\n";
             }
-        }
+        }//возврат значения клавиши Enter
         //конструктор с параметрами 
         public TelnetMint(string host, int port)
         {
@@ -53,11 +53,8 @@ namespace RemoteWork.Expect
          ~TelnetMint()
         {
             client.Close(); 
-        }
-        /// <summary>
-        /// отправка сообщения
-        /// </summary>
-        /// <param name="command"></param>
+        }     
+        //отправка сообщения      
         public void SendData(string command)
         {
             if (!command.EndsWith(ENTER))
@@ -73,11 +70,11 @@ namespace RemoteWork.Expect
             DateTime current = DateTime.Now.AddSeconds(second);
             do
             {
-                temp = ReceiveData();
-                result.Append(temp);
-                if (msg.Match(temp).Success)
+                temp = ReceiveData();//принимаем данные
+                result.Append(temp);//добавляем принятые данные в строку
+                if (msg.Match(temp).Success)//если паттерн сравнения работает
                 {
-                    return result.ToString();
+                    return result.ToString();//возвращаем результат
                 }
 
             } while (DateTime.Now < current);
@@ -93,9 +90,9 @@ namespace RemoteWork.Expect
             {
                 temp = ReceiveData();
                 result.Append(temp);
-                if (temp.TrimEnd().EndsWith(msg))
+                if (temp.TrimEnd().EndsWith(msg))//если строка оканчивается на ожидаемую строку
                 {
-                    return result.ToString();
+                    return result.ToString();//возвращаем строку
                 }
 
             } while (DateTime.Now < current);
@@ -109,7 +106,7 @@ namespace RemoteWork.Expect
             int count = 0;
             do
             {
-                if (!networkStream.DataAvailable)
+                if (!networkStream.DataAvailable)//пока подключение доступно
                 {
                     //если нет данных вернуть пустую строку
                     return "";
@@ -127,13 +124,13 @@ namespace RemoteWork.Expect
             {
                 if (data[i] == 255)
                 {
-                    byte[] remoteData = data.Skip(i).Take(3).ToArray();
+                    byte[] remoteData = data.Skip(i).Take(3).ToArray();//обрабатываем данные
                     for (int j = 0; j < remoteData.Length; j++)
                     {
                         if (remoteData[j] == 253)
                             remoteData[j] = 252;
                     }
-                    sendData.AddRange(remoteData);
+                    sendData.AddRange(remoteData);//добавляем данные 
                 }
                 else
                 {

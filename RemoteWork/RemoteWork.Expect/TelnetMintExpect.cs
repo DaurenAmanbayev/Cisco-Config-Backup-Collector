@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //автоматизация сбора по протоколу телнет
+    //итоговая версия
     public class TelnetMintExpect: Expect
     {
         TelnetMint client;
         string rcvStr;
-        int timeOut=1;//1 sec
+        int timeOut=1;//1 секунда таймаут
+        //при авторизации запрос имени пользователя или логина
         //username string should be Username: or Login: not case sensitive
         Regex regexUsername = new Regex("Username:|Login:", RegexOptions.IgnoreCase);
         Regex regexPassword = new Regex("Password:", RegexOptions.IgnoreCase);
+        //проверка данных с помощью регулярных выражений
         //last input should be one of these variants
         //: or > or $ or #
         Regex regexUseMode = new Regex("[:,$,>,#]$");
@@ -25,9 +29,7 @@ namespace RemoteWork.Expect
             client = new TelnetMint(host.address, host.port);
             this.host = host;
         }
-        /*
-         * CLEAR ALL CONSOLE COMMANDS!!!
-         */
+        //используем команду
         public override void ExecuteCommand(string command)
         {
             success = true;
@@ -53,7 +55,7 @@ namespace RemoteWork.Expect
             }      
         
         }
-        
+        //используем список команд
         public override void ExecuteCommands(List<string> commands)
         {
             success = true;

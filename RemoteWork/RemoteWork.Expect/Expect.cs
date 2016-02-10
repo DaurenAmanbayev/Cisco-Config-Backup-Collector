@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //абстрактный класс для автоматизации процесса подключения и сбора конфигурации
     public abstract class Expect
     {
-        protected ConnectionData host;
-        protected bool success = false;
-        protected List<string> listError = new List<string>();
-        protected List<string> listResult = new List<string>();
+        protected ConnectionData host;        
+        protected bool success = false;//статус подключения, работы
+        protected List<string> listError = new List<string>();//список ошибок
+        protected List<string> listResult = new List<string>();//список строк результатов
         public Expect(ConnectionData host)
         {
             this.host = host;

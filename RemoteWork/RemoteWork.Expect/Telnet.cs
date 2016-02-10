@@ -11,8 +11,8 @@ namespace RemoteWork.Expect
     //с сервером телнет проблем нет
     public class Telnet
     {
-        TcpClient tcpSocket;
-        int TimeOutMs = 150;
+        TcpClient tcpSocket;//клиент
+        int TimeOutMs = 150;//таймаут
         public Telnet(string Hostname, int Port)
         {
             tcpSocket = new TcpClient(Hostname, Port);
@@ -45,21 +45,21 @@ namespace RemoteWork.Expect
         //отправить значение
         public void Write(string cmd)
         {
-            if (!tcpSocket.Connected) return;
+            if (!tcpSocket.Connected) return;//если подключение не доступно
             byte[] buf = System.Text.ASCIIEncoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
             tcpSocket.GetStream().Write(buf, 0, buf.Length);
         }
         //прочесть доступные данные
         public string Read()
-        {
-            if (!tcpSocket.Connected) return null;
+        {           
+            if (!tcpSocket.Connected) return null;//если нет подключение, возвращаем пустую строку
             StringBuilder sb = new StringBuilder();
             do
             {
-                ParseTelnet(sb);
-                System.Threading.Thread.Sleep(TimeOutMs);
-            } while (tcpSocket.Available > 0);
-            return sb.ToString();
+                ParseTelnet(sb);//читаем строку
+                System.Threading.Thread.Sleep(TimeOutMs);//ждем таймаут
+            } while (tcpSocket.Available > 0);//пока подключение доступно
+            return sb.ToString();//возвраащем строку
         }
         //проверить состояние клиента
         public bool IsConnected
@@ -74,28 +74,28 @@ namespace RemoteWork.Expect
         //обработать полученные данные 
         void ParseTelnet(StringBuilder sb)
         {
-            while (tcpSocket.Available > 0)
+            while (tcpSocket.Available > 0)//если подключение доступно
             {
-                int input = tcpSocket.GetStream().ReadByte();
-                switch (input)
+                int input = tcpSocket.GetStream().ReadByte();//читаем поток
+                switch (input)//проверка
                 {
                     case -1:
                         break;
                     case (int)Verbs.IAC:
-                        // interpret as command
+                        // интерпретация команды
                         int inputverb = tcpSocket.GetStream().ReadByte();
                         if (inputverb == -1) break;
                         switch (inputverb)
                         {
                             case (int)Verbs.IAC:
-                                //literal IAC = 255 escaped, so append char 255 to string
+                                //литерал IAC = 255 добавляем в строку
                                 sb.Append(inputverb);
                                 break;
                             case (int)Verbs.DO:
                             case (int)Verbs.DONT:
                             case (int)Verbs.WILL:
                             case (int)Verbs.WONT:
-                                // reply to all commands with "WONT", unless it is SGA (suppres go ahead)
+                                // отвечаем на все команды с "WONT", пока нам приходит SGA (suppres go ahead)
                                 int inputoption = tcpSocket.GetStream().ReadByte();
                                 if (inputoption == -1) break;
                                 tcpSocket.GetStream().WriteByte((byte)Verbs.IAC);
@@ -110,7 +110,7 @@ namespace RemoteWork.Expect
                         }
                         break;
                     default:
-                        sb.Append((char)input);
+                        sb.Append((char)input);//добавлем символ в строку
                         break;
                 }
             }

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //класс для автоматизации сбора конфигурацию по протоколу SSH
     public class SshExpect : Expect
     {
-        ConnectionInfo connInfo;
+        ConnectionInfo connInfo;//строка подключения
         public SshExpect(ConnectionData host)
             : base(host)
         {
@@ -18,6 +19,7 @@ namespace RemoteWork.Expect
                 }
             );
         }
+        //выполнение команды
         public override void ExecuteCommand(string command)
         {
             try
@@ -36,6 +38,7 @@ namespace RemoteWork.Expect
                 listError.Add(ex.Message);
             }
         }
+        //выполнение списка команд
         public override void ExecuteCommands(List<string> commands)
         {
             try
@@ -58,6 +61,7 @@ namespace RemoteWork.Expect
             }
 
         }
+        //выполнение команды с новым клиентом
         private void Execute(SshClient client, string command)
         {
             using (var cmd = client.CreateCommand(command))
