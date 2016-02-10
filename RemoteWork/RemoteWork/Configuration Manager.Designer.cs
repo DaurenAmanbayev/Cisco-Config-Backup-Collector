@@ -34,14 +34,12 @@
             this.checkBoxHostname = new System.Windows.Forms.CheckBox();
             this.comboBoxFavs = new System.Windows.Forms.ComboBox();
             this.buttonFind = new System.Windows.Forms.Button();
-            this.comboBoxPeriod = new System.Windows.Forms.ComboBox();
-            this.buttonTime = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.listViewConfig = new System.Windows.Forms.ListView();
             this.columnHeaderID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripOpenConfig = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBoxPeriod = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.contextMenuStripOpenConfig.SuspendLayout();
@@ -68,8 +66,6 @@
             this.flowLayoutPanel1.Controls.Add(this.comboBoxFavs);
             this.flowLayoutPanel1.Controls.Add(this.buttonFind);
             this.flowLayoutPanel1.Controls.Add(this.comboBoxPeriod);
-            this.flowLayoutPanel1.Controls.Add(this.buttonTime);
-            this.flowLayoutPanel1.Controls.Add(this.dateTimePicker1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(465, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -105,31 +101,6 @@
             this.buttonFind.UseVisualStyleBackColor = true;
             this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
             // 
-            // comboBoxPeriod
-            // 
-            this.comboBoxPeriod.FormattingEnabled = true;
-            this.comboBoxPeriod.Location = new System.Drawing.Point(3, 91);
-            this.comboBoxPeriod.Name = "comboBoxPeriod";
-            this.comboBoxPeriod.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPeriod.TabIndex = 3;
-            // 
-            // buttonTime
-            // 
-            this.buttonTime.Location = new System.Drawing.Point(3, 118);
-            this.buttonTime.Name = "buttonTime";
-            this.buttonTime.Size = new System.Drawing.Size(121, 32);
-            this.buttonTime.TabIndex = 6;
-            this.buttonTime.Text = "Filter by Period";
-            this.buttonTime.UseVisualStyleBackColor = true;
-            this.buttonTime.Click += new System.EventHandler(this.buttonTime_Click);
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(3, 156);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(121, 20);
-            this.dateTimePicker1.TabIndex = 7;
-            // 
             // listViewConfig
             // 
             this.listViewConfig.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -160,7 +131,7 @@
             this.contextMenuStripOpenConfig.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openConfigurationToolStripMenuItem});
             this.contextMenuStripOpenConfig.Name = "contextMenuStripOpenConfig";
-            this.contextMenuStripOpenConfig.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuStripOpenConfig.Size = new System.Drawing.Size(181, 26);
             // 
             // openConfigurationToolStripMenuItem
             // 
@@ -168,6 +139,14 @@
             this.openConfigurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openConfigurationToolStripMenuItem.Text = "Open Configuration";
             this.openConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openConfigurationToolStripMenuItem_Click);
+            // 
+            // comboBoxPeriod
+            // 
+            this.comboBoxPeriod.FormattingEnabled = true;
+            this.comboBoxPeriod.Location = new System.Drawing.Point(3, 91);
+            this.comboBoxPeriod.Name = "comboBoxPeriod";
+            this.comboBoxPeriod.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPeriod.TabIndex = 3;
             // 
             // Configuration_Manager
             // 
@@ -192,13 +171,11 @@
         private System.Windows.Forms.CheckBox checkBoxHostname;
         private System.Windows.Forms.ComboBox comboBoxFavs;
         private System.Windows.Forms.Button buttonFind;
-        private System.Windows.Forms.ComboBox comboBoxPeriod;
-        private System.Windows.Forms.Button buttonTime;
         private System.Windows.Forms.ListView listViewConfig;
         private System.Windows.Forms.ColumnHeader columnHeaderID;
         private System.Windows.Forms.ColumnHeader columnHeaderDate;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripOpenConfig;
         private System.Windows.Forms.ToolStripMenuItem openConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ComboBox comboBoxPeriod;
     }
 }

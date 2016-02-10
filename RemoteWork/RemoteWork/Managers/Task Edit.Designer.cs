@@ -38,13 +38,13 @@
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.checkedListBoxFavorites = new System.Windows.Forms.CheckedListBox();
+            this.checkBoxByFavorite = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.checkedListBoxCommands = new System.Windows.Forms.CheckedListBox();
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.checkBoxByFavorite = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -69,9 +69,9 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 189F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 176F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(340, 490);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 225F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(340, 537);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -156,6 +156,16 @@
             this.checkedListBoxFavorites.Size = new System.Drawing.Size(328, 124);
             this.checkedListBoxFavorites.TabIndex = 8;
             // 
+            // checkBoxByFavorite
+            // 
+            this.checkBoxByFavorite.AutoSize = true;
+            this.checkBoxByFavorite.Location = new System.Drawing.Point(3, 146);
+            this.checkBoxByFavorite.Name = "checkBoxByFavorite";
+            this.checkBoxByFavorite.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxByFavorite.TabIndex = 9;
+            this.checkBoxByFavorite.Text = "by Favorite";
+            this.checkBoxByFavorite.UseVisualStyleBackColor = true;
+            // 
             // flowLayoutPanel5
             // 
             this.flowLayoutPanel5.Controls.Add(this.label2);
@@ -163,7 +173,7 @@
             this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 277);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(334, 170);
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(334, 219);
             this.flowLayoutPanel5.TabIndex = 7;
             // 
             // label2
@@ -188,10 +198,10 @@
             this.flowLayoutPanel8.Controls.Add(this.Cancel);
             this.flowLayoutPanel8.Controls.Add(this.buttonOK);
             this.flowLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel8.Location = new System.Drawing.Point(3, 453);
+            this.flowLayoutPanel8.Location = new System.Drawing.Point(3, 502);
             this.flowLayoutPanel8.Name = "flowLayoutPanel8";
             this.flowLayoutPanel8.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.flowLayoutPanel8.Size = new System.Drawing.Size(334, 35);
+            this.flowLayoutPanel8.Size = new System.Drawing.Size(334, 32);
             this.flowLayoutPanel8.TabIndex = 10;
             // 
             // Cancel
@@ -214,21 +224,11 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // checkBoxByFavorite
-            // 
-            this.checkBoxByFavorite.AutoSize = true;
-            this.checkBoxByFavorite.Location = new System.Drawing.Point(3, 146);
-            this.checkBoxByFavorite.Name = "checkBoxByFavorite";
-            this.checkBoxByFavorite.Size = new System.Drawing.Size(78, 17);
-            this.checkBoxByFavorite.TabIndex = 9;
-            this.checkBoxByFavorite.Text = "by Favorite";
-            this.checkBoxByFavorite.UseVisualStyleBackColor = true;
-            // 
             // Task_Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 490);
+            this.ClientSize = new System.Drawing.Size(340, 537);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Task_Edit";

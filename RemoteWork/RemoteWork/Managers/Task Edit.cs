@@ -195,6 +195,8 @@ namespace RemoteWork.Managers
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }   
+        }
+
+       
     }
 }

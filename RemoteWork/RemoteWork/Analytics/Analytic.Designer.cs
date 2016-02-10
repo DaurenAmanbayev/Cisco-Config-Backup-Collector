@@ -33,7 +33,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonLoadData = new System.Windows.Forms.Button();
             this.checkBoxFailed = new System.Windows.Forms.CheckBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerFilter = new System.Windows.Forms.DateTimePicker();
             this.buttonFilter = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReports)).BeginInit();
@@ -71,7 +71,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.buttonLoadData);
             this.flowLayoutPanel1.Controls.Add(this.checkBoxFailed);
-            this.flowLayoutPanel1.Controls.Add(this.dateTimePicker1);
+            this.flowLayoutPanel1.Controls.Add(this.dateTimePickerFilter);
             this.flowLayoutPanel1.Controls.Add(this.buttonFilter);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(541, 3);
@@ -98,13 +98,14 @@
             this.checkBoxFailed.TabIndex = 1;
             this.checkBoxFailed.Text = "Only failed status";
             this.checkBoxFailed.UseVisualStyleBackColor = true;
+            this.checkBoxFailed.CheckStateChanged += new System.EventHandler(this.checkBoxFailed_CheckStateChanged);
             // 
-            // dateTimePicker1
+            // dateTimePickerFilter
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(3, 74);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(125, 20);
-            this.dateTimePicker1.TabIndex = 2;
+            this.dateTimePickerFilter.Location = new System.Drawing.Point(3, 74);
+            this.dateTimePickerFilter.Name = "dateTimePickerFilter";
+            this.dateTimePickerFilter.Size = new System.Drawing.Size(125, 20);
+            this.dateTimePickerFilter.TabIndex = 2;
             // 
             // buttonFilter
             // 
@@ -114,6 +115,7 @@
             this.buttonFilter.TabIndex = 3;
             this.buttonFilter.Text = "Filter by Date";
             this.buttonFilter.UseVisualStyleBackColor = true;
+            this.buttonFilter.Click += new System.EventHandler(this.buttonFilter_Click);
             // 
             // Analytic
             // 
@@ -138,7 +140,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button buttonLoadData;
         private System.Windows.Forms.CheckBox checkBoxFailed;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFilter;
         private System.Windows.Forms.Button buttonFilter;
     }
 }

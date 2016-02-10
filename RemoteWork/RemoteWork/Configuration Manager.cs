@@ -13,6 +13,7 @@ using RemoteWork.Data;
 
 namespace RemoteWork
 {
+    //перечисление для периода
     enum Period
     {
         LastDay,
@@ -21,6 +22,7 @@ namespace RemoteWork
         All,
         BySpecifiedDate
     }
+    //перечисление фильтр
     enum FavoriteFilter
     {
         ByIPAddress,
@@ -88,7 +90,7 @@ namespace RemoteWork
             if (prevHostname != null)
             {
                 comboBoxFavs.SelectedItem = prevHostname;
-                LoadConfigurationData();
+                LoadConfigurationData(prevHostname);
             }
         }
         //фильтрация по устройству
@@ -96,13 +98,15 @@ namespace RemoteWork
         {
             if (comboBoxFavs.SelectedItem != null)
             {
-                LoadConfigurationData();
+                string favorite = comboBoxFavs.SelectedItem.ToString();
+                LoadConfigurationData(favorite);
             }
             //Find method
             else
             {
                 //необходимо найти устройство по введенной строке и спросить пользователя, требуется ли подгрузить данные
-                //MessageBox.Show(comboBoxFavs.Text.ToString());
+                string favorite=comboBoxFavs.Text.ToString();
+                LoadConfigurationData(favorite);
             }
         }
         //не реализовано
@@ -112,9 +116,8 @@ namespace RemoteWork
             //реализация временного фильтра, требуется ли???
         }
         //сбор конфигурационных данных
-        private void LoadConfigurationData()
-        {
-            string favorite = comboBoxFavs.SelectedItem.ToString();
+        private void LoadConfigurationData(string favorite)
+        {            
             switch (filter)
             {
                 case FavoriteFilter.ByHostname:
@@ -122,7 +125,7 @@ namespace RemoteWork
                     {
                         var queryByHostname = (from c in context.Favorites
                                                where c.Hostname == favorite
-                                               select c).Single();
+                                               select c).FirstOrDefault();//если использовать Single, выкидывает исключение
                         if (queryByHostname != null)
                         {
                             listViewConfig.Items.Clear();
@@ -135,6 +138,10 @@ namespace RemoteWork
                                 listViewConfig.Items.Add(item);
                             }
                         }
+                        else
+                        {
+                            NotifyInfo("Favorite not found!");
+                        }
                     }
                     break;
                 case FavoriteFilter.ByIPAddress:
@@ -142,7 +149,7 @@ namespace RemoteWork
                     {
                         var queryByAddress = (from c in context.Favorites
                                               where c.Address == favorite
-                                              select c).Single();
+                                              select c).FirstOrDefault();
                         if (queryByAddress != null)
                         {
                             listViewConfig.Items.Clear();
@@ -154,6 +161,10 @@ namespace RemoteWork
                                     });
                                 listViewConfig.Items.Add(item);
                             }
+                        }
+                        else
+                        {
+                            NotifyInfo("Favorite not found!");
                         }
                     }
                     break;
@@ -191,11 +202,17 @@ namespace RemoteWork
                         DialogResult result = frm.ShowDialog();
                         if (result == DialogResult.OK)
                         {
-
+                            //*******************************
                         }
                     }
                 }
             }            
         }
+        //Уведомления
+        private void NotifyInfo(string info)
+        {
+            MessageBox.Show(info, "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+     
     }
 }
