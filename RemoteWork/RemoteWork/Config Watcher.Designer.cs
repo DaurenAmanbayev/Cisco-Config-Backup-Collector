@@ -38,14 +38,14 @@
             this.textBoxConfig.Multiline = true;
             this.textBoxConfig.Name = "textBoxConfig";
             this.textBoxConfig.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxConfig.Size = new System.Drawing.Size(284, 388);
+            this.textBoxConfig.Size = new System.Drawing.Size(327, 411);
             this.textBoxConfig.TabIndex = 0;
             // 
             // Config_Watcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 388);
+            this.ClientSize = new System.Drawing.Size(327, 411);
             this.Controls.Add(this.textBoxConfig);
             this.Name = "Config_Watcher";
             this.Text = "Config_Watcher";
@@ -57,5 +57,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBoxConfig;
+
+
     }
 }

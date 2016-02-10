@@ -20,32 +20,26 @@ namespace RemoteWork
 {   
     public partial class Rconfig : Form
     {
-        RconfigContext context=new RconfigContext();
-        CancellationToken token;
-        List<Task> taskRunnerManager = new List<Task>();
-        bool isLock = false;
+        RconfigContext context=new RconfigContext();     
         public Rconfig()
         {
             InitializeComponent();
             Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<RconfigContext, RemoteWork.Access.Migrations.Configuration>());
             StartConfiguration();
-            LoadData();
-            LoadTask();
+            LoadData();         
         }
 
         #region CUSTOM METHODS
+        //стартовые настройки интерфейса
         private void StartConfiguration()
         {
             //контекстное меню категории
-           // addCategoryToolStripMenuItem.Visible = false;
+            addCategoryToolStripMenuItem.Visible = false;
             editCategoryToolStripMenuItem.Visible = false;
-            deleteCategoryToolStripMenuItem.Visible = false;
-            //контекстное меню избранного
-           // favoriteAddToolStripMenuItem.Visible = false;
-            favoriteEditToolStripMenuItem.Visible = false;
-            favoriteDeleteToolStripMenuItem.Visible = false;
+            deleteCategoryToolStripMenuItem.Visible = false; 
+         
         }
-        //подгрузка данных для отображения
+        //подгрузка данных о категории для отображения
         private async void LoadData()
         {
             using (context = new RconfigContext())
@@ -66,9 +60,12 @@ namespace RemoteWork
                     treeViewFavorites.Nodes.Add(node);
                 }
             }
-            LoadChildData();
+            //подгружать будем только данные верхнего уровня каталоги
+            //LoadChildData();
            
         }
+
+        //!!! не используется
         //подгружаем дочерние данные избранные
         private void LoadChildData()
         {
@@ -95,159 +92,16 @@ namespace RemoteWork
             }
             //treeViewFavorites.Refresh();
             //не срабатывает при добавлении устройства, при удалении срабатывает
-        }
-        
-        //подгружаем список задач
-        private async void LoadTask()
-        {
-            using (context = new RconfigContext())
-            {
-                var queryTasks = await (from c in context.RemoteTasks
-                                        select c.TaskName).ToArrayAsync();
-
-               toolStripComboBoxTasks.Items.AddRange(queryTasks); //почему не выбирает первую модель               
-                //добавлять данные в комбо бокс
-            }
-            //toolStripComboBoxTasks.
-        }
+        }               
         //Уведомления
         private void NotifyInfo(string info)
         {
-            MessageBox.Show(info, "information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(info, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        #endregion
-
-        #region EXPECT
-        private void LoadConfiguration(RemoteTask task)
-        {
-            //LockForm();
-            var tokenSource = new CancellationTokenSource();
-            token = tokenSource.Token;
-            ProgressInit(task.Favorites.Count);
-            foreach (Favorite fav in task.Favorites)
-            {                
-                List<string> commands = new List<string>();
-                //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
-                foreach (Command command in task.Commands)
-                {
-                    foreach (Category category in command.Categories)
-                    {
-                        if (fav.Category.CategoryName == category.CategoryName)
-                        {
-                            commands.Add(command.Name);
-                        }
-                    }
-                }
-                //мультипоточность
-                //устанавливаем соединение
-                FavoriteConnect connect=new FavoriteConnect();
-                connect.commands=commands;
-                connect.favorite=fav;
-                connect.task=task;
-                Task taskRunner = Task.Factory.StartNew(Connection, connect, token);
-                /*
-                 * t = Task.Factory.StartNew(() => DoSomeWork(1, token), token);
-        Console.WriteLine("Task {0} executing", t.Id);
-        tasks.Add(t);
-                 */
-                taskRunnerManager.Add(taskRunner);
-                //Connection(fav, commands, task);
-            }
-            //дожидаемся пока выполняться все задания
-            foreach (Task taskRunner in taskRunnerManager)
-            {
-                ProgressStep();
-                taskRunner.Wait();
-            }
-            //LockForm();
-           // NotifyInfo("Success!");
-            ProgressClear();
-        }
-        private void Connection(object favConnect)
-        {
-            RemoteTask task=((FavoriteConnect)favConnect).task;
-            List<string> commands = ((FavoriteConnect)favConnect).commands;
-            Favorite fav=((FavoriteConnect)favConnect).favorite;
-            //данные для подключения к сетевому устройству
-            ConnectionData data = new ConnectionData();
-            data.address = fav.Address;
-            data.port = fav.Port;
-            data.username = fav.Credential.Username;
-            data.password = fav.Credential.Password;
-
-            //по типу протоколу выбираем требуемое подключение
-            string protocol = fav.Protocol.Name;
-            Expect.Expect expect;
-            switch (protocol)
-            {
-                case "Telnet": expect = new TelnetExpect(data); break;
-                case "SSH": expect = new SshExpect(data); break;
-                //по умолчанию для сетевых устройств протокол Telnet
-                default: expect = new TelnetExpect(data); break;
-            }
-            //если объект expect успешно создан
-            if (expect != null)
-            {
-                //выполняем список команд
-                expect.ExecuteCommands(commands);
-                string result = expect.GetResult();
-                bool success = expect.isSuccess;
-                string error = expect.GetError();
-                //если успешно сохраняем конфигурацию устройства
-                if (success)
-                {
-                    Config config = new Config();
-                    config.Current = result;
-                    config.Date = DateTime.UtcNow;
-                    fav.Configs.Add(config);
-                }
-                //создаем отчет о проделанном задании
-                Report report = new Report();
-                report.Date = DateTime.UtcNow;
-                report.Status = success;
-                report.Info = error;
-                report.Task = task;
-                report.Favorite = fav;
-                context.Reports.Add(report);
-                context.SaveChanges();
-            }
-        }
-        //блокировка формы на время выполнения задачи
-        private void LockForm()
-        {
-            if (isLock)
-            {
-               
-            }
-            else
-            {
- 
-            }
-            isLock = !isLock;
-        }
-        #endregion
-
-        #region PROGRESS BAR
-        //PROGRESS INIT
-        private void ProgressInit(int steps)
-        {
-            toolStripProgressBarRunner.Maximum = steps;
-            toolStripProgressBarRunner.Minimum = 0;
-            toolStripProgressBarRunner.Step = 1;
-        }
-        //PROGRESS CHANGES
-        private void ProgressStep()
-        {
-            toolStripProgressBarRunner.PerformStep();
-        }
-        //PROGRESS CLEAR
-        private void ProgressClear()
-        {
-            toolStripProgressBarRunner.Value = 0;
-        }
-        #endregion
+        #endregion       
 
         #region TREEVIEW DATA
+        //для подгрузки данных об устройствах при выборе категории
         private void treeViewFavorites_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (treeViewFavorites.SelectedNode.Level == 0)
@@ -259,26 +113,28 @@ namespace RemoteWork
                 editCategoryToolStripMenuItem.Visible = true;
                 deleteCategoryToolStripMenuItem.Visible = true;
                 //контекстное меню избранного
-                favoriteAddToolStripMenuItem.Visible = false;
-                favoriteEditToolStripMenuItem.Visible = false;
-                favoriteDeleteToolStripMenuItem.Visible = false;
+                //favoriteAddToolStripMenuItem.Visible = false;
+                //favoriteEditToolStripMenuItem.Visible = false;
+                //favoriteDeleteToolStripMenuItem.Visible = false;
             }
-            else if (treeViewFavorites.SelectedNode.Level == 1)
-            {
-                //вызываем дополнительную информацию по устройству
-                string fav = treeViewFavorites.SelectedNode.Name.ToString();
-                LoadFavoriteData(fav);
-                //контекстное меню категории
-                addCategoryToolStripMenuItem.Visible = false;
-                editCategoryToolStripMenuItem.Visible = false;
-                deleteCategoryToolStripMenuItem.Visible = false;
-                //контекстное меню избранного
-                favoriteAddToolStripMenuItem.Visible = true;
-                favoriteEditToolStripMenuItem.Visible = true;
-                favoriteDeleteToolStripMenuItem.Visible = true;
-            }
+            //не требуется из-за того, что данные о сетевых устройствах будут подтягиваться в сам интерфейс
+            //else if (treeViewFavorites.SelectedNode.Level == 1)
+            //{
+            //    //вызываем дополнительную информацию по устройству
+            //    string fav = treeViewFavorites.SelectedNode.Name.ToString();
+            //    LoadFavoriteData(fav);
+            //    //контекстное меню категории
+            //    addCategoryToolStripMenuItem.Visible = false;
+            //    editCategoryToolStripMenuItem.Visible = false;
+            //    deleteCategoryToolStripMenuItem.Visible = false;
+            //    //контекстное меню избранного
+            //    favoriteAddToolStripMenuItem.Visible = true;
+            //    favoriteEditToolStripMenuItem.Visible = true;
+            //    favoriteDeleteToolStripMenuItem.Visible = true;
+            //}
         }
-        //подгрузка данных при выборе избранного или категории
+        //подгрузка данных при выборе избранного
+        //!!! не используется
         private void LoadFavoriteData(string favorite)
         {
             using (context = new RconfigContext())
@@ -298,7 +154,7 @@ namespace RemoteWork
                 }
             }
         }
-
+        //подгрузка данных при выборе категории
         private void LoadCategoryData(string category)
         {
             using (context = new RconfigContext())
@@ -313,206 +169,88 @@ namespace RemoteWork
                     foreach (Favorite fav in queryCategory.Favorites)
                     {
                         var item = new ListViewItem(new[] { fav.Hostname,
-                    fav.Address,
-                    fav.Port.ToString(),
-                    fav.Protocol.Name,
-                    fav.Location.LocationName });
+                        fav.Address,
+                        fav.Port.ToString(),
+                        fav.Protocol.Name,
+                        fav.Location.LocationName });
                         listViewDetails.Items.Add(item);
                     }
 
                 }
             }
         }
-
-        private void LoadConfigurationData(string favorite, bool isFavorite)
-        {
- 
-        }
         #endregion
 
+        //добавление, редактирование и удаление устройства, а также просмотр конфигурации по устройству
         #region FAVORITE 
+        private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewFavorites.SelectedNode != null && listViewDetails.SelectedItems.Count != 0)
+            {
+                string category = treeViewFavorites.SelectedNode.Text;
+                var item = listViewDetails.SelectedItems[0];
+                string favName = item.SubItems[0].Text;
+                Load_Config frm = new Load_Config(favName, category);
+                frm.ShowDialog();
+            }
+        }
+
+        private void seeConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewFavorites.SelectedNode != null && listViewDetails.SelectedItems.Count != 0)
+            {
+                //string category = treeViewFavorites.SelectedNode.Text;
+                var item = listViewDetails.SelectedItems[0];
+                string favName = item.SubItems[0].Text;
+                Configuration_Manager frm = new Configuration_Manager(favName);
+                frm.ShowDialog();
+            }
+        }
+       
+        //добавление нового устройства
         private void favoriteAddToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Favorite_Edit frm = new Favorite_Edit();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
+            if (treeViewFavorites.SelectedNode != null)
             {
-                //context.Dispose();
-                //context = new RconfigContext();
-                treeViewFavorites.Nodes.Clear();
-            ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
-              //  treeViewFavorites.Refresh();
-                LoadData();
+                string category = treeViewFavorites.SelectedNode.Text;
+                Favorite_Edit frm = new Favorite_Edit();
+                DialogResult result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    LoadCategoryData(category);
+                }
             }
         }
-        //!!!! доработать логику обновления данных в treeview
+        //редактирование устройства
         private void favoriteEditToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(treeViewFavorites.SelectedNode!=null)
+            if (treeViewFavorites.SelectedNode != null && listViewDetails.SelectedItems.Count != 0)
             {
-                string favName = treeViewFavorites.SelectedNode.Text;
-              //  string favCategory = treeViewFavorites.SelectedNode.Parent.Text;
-              //  int indexFav = treeViewFavorites.SelectedNode.Index;
-              //  int indexCategory = treeViewFavorites.SelectedNode.Parent.Index;
-               // string index=treeViewFavorites.Nodes.IndexOfKey(favCategory).ToString();
-               // MessageBox.Show(favName+favCategory+index);
-                Favorite_Edit frm = new Favorite_Edit(favName);
-                DialogResult result = frm.ShowDialog();
-                if(result==DialogResult.OK)
-                {
-                    string favorite = frm.GetLastFavorite();
-                    LoadFavoriteData(favorite);
-                    treeViewFavorites.Nodes.Clear();
-                    LoadData();
-
-                    //удалить не требуется проблема с 
-                    //Favorite fav = frm.GetLastFavorite();
-                    //string editedFavName = fav.Hostname;
-                    //string editedCategory = fav.Category.CategoryName;
-                    ////если категория была изменена мы удаляем из категории ранее избранное
-                    //if (editedCategory != favCategory)
-                    //{
-                    //    treeViewFavorites.SelectedNode.Remove();
-                    //    //foreach(TreeNode node in treeViewFavorites.Nodes.)
-                    //}
-                    //else
-                    //{
-                    //    //если категория не была изменена, но изменен избранный
-                    //    if (editedFavName != favName)
-                    //    {
-
-                    //        TreeNode childNode = new TreeNode();
-                    //        childNode.Name = editedFavName;
-                    //        childNode.Text = editedFavName;
-                    //    }
-                    //}
-                }
-            }
-        }
-
-        private void favoriteDeleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (treeViewFavorites.SelectedNode != null)
-            {
-                string favName = treeViewFavorites.SelectedNode.Text;
-                //  MessageBox.Show(favName);
-                using (context = new RconfigContext())
-                {
-                    var queryFavorite = (from c in context.Favorites
-                                         where c.Hostname == favName
-                                         select c).Single();
-                    if (queryFavorite != null)
-                    {
-                        context.Favorites.Remove(queryFavorite);
-                        context.SaveChanges();
-                        treeViewFavorites.SelectedNode.Remove();
-                    }                   
-                }
-            }
-        }
-        #endregion
-
-        #region TABCONTROL
-        private void tabControlFavInfo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabControlFavInfo.SelectedIndex == 1 && treeViewFavorites.SelectedNode != null)
-            {
-                //подгружаем конфигурационные данные избранного
-                if ( treeViewFavorites.SelectedNode.Level == 1)
-                {
-                    string fav = treeViewFavorites.SelectedNode.Name.ToString();
-                    using (context = new RconfigContext())
-                    {
-                        //  NotifyInfo(fav);
-                        var queryFavorite = (from c in context.Favorites
-                                             where c.Hostname == fav
-                                             select c).FirstOrDefault();
-                        if (queryFavorite != null)
-                        {
-                            listViewConfig.Items.Clear();
-                            foreach (Config config in queryFavorite.Configs)
-                            {
-                                var item = new ListViewItem(new[] { config.Id.ToString(), config.Date.ToString() });
-                                listViewConfig.Items.Add(item);
-                            }
-                        }
-                    }
-                }
-                //если была выбрана категория просим выбрать избранное
-                else if (treeViewFavorites.SelectedNode.Level == 0)
-                {
-                    NotifyInfo("Please select favorite to view configuration!");
-                }
-            }
-           
-        }
-
-        #endregion
-
-        #region TOOLSTRIP MENU
-        private void managementToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Management frm = new Management();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                //нужно отследить какие окна открывались, чтобы обновить списки
-                //или обновлять список нативно каждый раз
-            }
-        }
-
-        private void reportsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Analytics.Analytic frm = new Analytics.Analytic();
-            frm.ShowDialog();
-        }
-
-        //дочерние данные после добавления!!!
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Favorite_Edit frm = new Favorite_Edit();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                //проблемы была с очисткой контекста!!!
-              //  context.Dispose();
-              //  context = new RconfigContext();
-                treeViewFavorites.Nodes.Clear();
-            ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
-              //  treeViewFavorites.Refresh();
-                LoadData();
-
-                //альтернатива!!!
-                // treeViewFavorites.Nodes.Clear();
-                //LoadData();
-                //LoadChildData();
-            }
-        }
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (treeViewFavorites.SelectedNode != null)
-            {
-                string favName = treeViewFavorites.SelectedNode.Text;
+                string category = treeViewFavorites.SelectedNode.Text;
+                var item = listViewDetails.SelectedItems[0];
+                string favName = item.SubItems[0].Text;
 
                 Favorite_Edit frm = new Favorite_Edit(favName);
                 DialogResult result = frm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    string favorite = frm.GetLastFavorite();
-                    LoadFavoriteData(favorite);
-
-                    treeViewFavorites.Nodes.Clear();
-                    LoadData();
+                    LoadCategoryData(category);                  
                 }
             }
-        }
-
-        private void deleteFavoriteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (treeViewFavorites.SelectedNode != null)
+            else
             {
-                string favName = treeViewFavorites.SelectedNode.Text;
-                //  MessageBox.Show(favName);
+                NotifyInfo("Please select favorite to edit!");
+            }
+        }
+        //удаление устройства
+        private void favoriteDeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewFavorites.SelectedNode != null && listViewDetails.SelectedItems.Count != 0)
+            {
+                string category = treeViewFavorites.SelectedNode.Text;
+                var item = listViewDetails.SelectedItems[0];
+                string favName = item.SubItems[0].Text;
+                bool isChanged = false;
                 using (context = new RconfigContext())
                 {
                     var queryFavorite = (from c in context.Favorites
@@ -520,150 +258,103 @@ namespace RemoteWork
                                          select c).Single();
                     if (queryFavorite != null)
                     {
+                        queryFavorite.Configs.Clear();//требуется очищать дочерние таблицы данных
                         context.Favorites.Remove(queryFavorite);
                         context.SaveChanges();
-                        treeViewFavorites.SelectedNode.Remove();
+                        isChanged = true;
                     }
                 }
+                //для избежания конфликта контекстов
+                if (isChanged)
+                    LoadCategoryData(category);
+            }
+            else
+            {
+                NotifyInfo("Please select favorite to edit!");
             }
         }
+        
+        #endregion       
 
+     
+        //опции главного меню
+        #region TOOLSTRIP MENU
+        //управление данными приложения
+        private void managerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Management frm = new Management();
+            frm.ShowDialog();
+            //отслеживаем изменялись ли категории и обновляем данные, если да
+            if (frm.CategoryChanged)
+            {               
+                treeViewFavorites.Nodes.Clear();
+                LoadData();               
+            }
+        }
+        //просмотр и управление конфигурациями
+        private void configurationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Configuration_Manager frm = new Configuration_Manager();
+            frm.ShowDialog();
+        }
+        //настройка конфигурации приложения
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RconfigSettings frm = new RconfigSettings();
+            frm.ShowDialog();    
+        }      
+        //настройка отчетности по выполнению задач по сбору конфигурации
+        private void reportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Analytics.Analytic frm = new Analytics.Analytic();
+            frm.ShowDialog();
+        }       
+        //выход из программы       
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }       
-
+        //о программе
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             NotifyInfo("About Info");
         }
-
+        //справочная информация
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NotifyInfo("Help Info!");
         }
         #endregion
 
+        //кнопки быстрого доступа
         #region TOOLSTRIP BUTTONS
-        private void toolStripButtonAddFav_Click(object sender, EventArgs e)
+        //настройки приложения
+        private void toolStripButtonSettings_Click(object sender, EventArgs e)
         {
-            /**/
-            Favorite_Edit frm = new Favorite_Edit();
-            DialogResult result = frm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                //проблемы была с очисткой контекста!!!
-                //  context.Dispose();
-                //  context = new RconfigContext();
-                treeViewFavorites.Nodes.Clear();
-                ///    MessageBox.Show(treeViewFavorites.Nodes.Count.ToString());
-                //  treeViewFavorites.Refresh();
-                LoadData();
-
-                //альтернатива!!!
-                // treeViewFavorites.Nodes.Clear();
-                //LoadData();
-                //LoadChildData();
-            }
+            RconfigSettings frm = new RconfigSettings();
+            frm.ShowDialog();           
         }
-
-        private void toolStripButtonEditFav_Click(object sender, EventArgs e)
-        {
-            /**/
-            if (treeViewFavorites.SelectedNode != null)
-            {
-                string favName = treeViewFavorites.SelectedNode.Text;
-
-                Favorite_Edit frm = new Favorite_Edit(favName);
-                DialogResult result = frm.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    string favorite = frm.GetLastFavorite();
-                    LoadFavoriteData(favorite);
-
-                    treeViewFavorites.Nodes.Clear();
-                    LoadData();
-                }
-            }
-        }
-
-        private void toolStripButtonDelFav_Click(object sender, EventArgs e)
-        {
-            if (treeViewFavorites.SelectedNode != null)
-            {
-                string favName = treeViewFavorites.SelectedNode.Text;
-                //  MessageBox.Show(favName);
-                using (context = new RconfigContext())
-                {
-                    var queryFavorite = (from c in context.Favorites
-                                         where c.Hostname == favName
-                                         select c).Single();
-                    if (queryFavorite != null)
-                    {
-                        context.Favorites.Remove(queryFavorite);
-                        context.SaveChanges();
-                        treeViewFavorites.SelectedNode.Remove();
-                    }
-                }
-            }
-        }
-
-        private void toolStripButtonReport_Click(object sender, EventArgs e)
+        //отчетность о ходе выполнении задач
+        private void toolStripButtonReport_Click_1(object sender, EventArgs e)
         {
             Analytics.Analytic frm = new Analytics.Analytic();
             frm.ShowDialog();
         }
-        /*
-         TASK RUN CONFIG
-         */
-        private void toolStripButtonLoadConfig_Click(object sender, EventArgs e)
+        //просмотр конфигураций
+        private void toolStripButtonConfigs_Click(object sender, EventArgs e)
         {
-            if (toolStripComboBoxTasks.SelectedItem != null)
-            {
-                //MessageBox.Show(toolStripComboBoxTasks.SelectedItem.ToString());
-                using(context=new RconfigContext())
-                {
-                    string taskName = toolStripComboBoxTasks.SelectedItem.ToString();
-                    var queryTask=(from c in context.RemoteTasks
-                                  where c.TaskName==taskName
-                                  select c).FirstOrDefault();
-                    if (queryTask != null)
-                    {
-                        LoadConfiguration(queryTask);
-                       // UseWaitCursor = true;
-                    }
-                }
-            }
-
-            //выбираем таск 
-          //  this.UseWaitCursor = true;
-            
+            Configuration_Manager frm = new Configuration_Manager();
+            frm.ShowDialog();
+        }
+        private void toolStripButtonAbout_Click(object sender, EventArgs e)
+        {
+            NotifyInfo("About Info");
         }
         #endregion
 
-        private void openConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (listViewConfig.SelectedItems.Count != 0)
-            {
-                var item = listViewConfig.SelectedItems[0];
-                int configId=Int32.Parse(item.SubItems[0].Text);
-                using (context = new RconfigContext())
-                {
-                    var queryConfig=(from c in context.Configs
-                                        where c.Id==configId
-                                        select c).FirstOrDefault();
-                    if (queryConfig != null)
-                    {                        
-                        Config_Watcher frm = new Config_Watcher(queryConfig);
-                        DialogResult result = frm.ShowDialog();
-                        if (result == DialogResult.OK)
-                        {
+       
 
-                        }
-                    }
-                }
-            }
-        }
+       
        
     }
 }

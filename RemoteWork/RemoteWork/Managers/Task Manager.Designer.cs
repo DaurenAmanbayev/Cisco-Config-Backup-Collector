@@ -30,18 +30,23 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listViewDetails = new System.Windows.Forms.ListView();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonCreate = new System.Windows.Forms.Button();
-            this.buttonEdit = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
             this.columnHeaderID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderTaskName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCommands = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderFavCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.buttonCreate = new System.Windows.Forms.Button();
+            this.buttonEdit = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonRunTask = new System.Windows.Forms.Button();
+            this.statusStripInfo = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBarCurrent = new System.Windows.Forms.ToolStripProgressBar();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.statusStripInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -51,11 +56,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel1.Controls.Add(this.listViewDetails, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.statusStripInfo, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(667, 413);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -69,23 +76,55 @@
             this.columnHeaderFavCount,
             this.columnHeaderDate});
             this.listViewDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewDetails.FullRowSelect = true;
+            this.listViewDetails.HoverSelection = true;
             this.listViewDetails.Location = new System.Drawing.Point(3, 3);
             this.listViewDetails.MultiSelect = false;
             this.listViewDetails.Name = "listViewDetails";
-            this.listViewDetails.Size = new System.Drawing.Size(571, 407);
+            this.listViewDetails.Size = new System.Drawing.Size(571, 387);
             this.listViewDetails.TabIndex = 0;
             this.listViewDetails.UseCompatibleStateImageBehavior = false;
             this.listViewDetails.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderID
+            // 
+            this.columnHeaderID.Text = "Task ID";
+            // 
+            // columnHeaderTaskName
+            // 
+            this.columnHeaderTaskName.Text = "Task Name";
+            this.columnHeaderTaskName.Width = 85;
+            // 
+            // columnHeaderDesc
+            // 
+            this.columnHeaderDesc.Text = "Description";
+            this.columnHeaderDesc.Width = 95;
+            // 
+            // columnHeaderCommands
+            // 
+            this.columnHeaderCommands.Text = "Command Count";
+            this.columnHeaderCommands.Width = 95;
+            // 
+            // columnHeaderFavCount
+            // 
+            this.columnHeaderFavCount.Text = "Favorite Count";
+            this.columnHeaderFavCount.Width = 100;
+            // 
+            // columnHeaderDate
+            // 
+            this.columnHeaderDate.Text = "Date";
+            this.columnHeaderDate.Width = 120;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.buttonCreate);
             this.flowLayoutPanel1.Controls.Add(this.buttonEdit);
             this.flowLayoutPanel1.Controls.Add(this.buttonDelete);
+            this.flowLayoutPanel1.Controls.Add(this.buttonRunTask);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(580, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(84, 407);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(84, 387);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // buttonCreate
@@ -118,34 +157,37 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // columnHeaderID
+            // buttonRunTask
             // 
-            this.columnHeaderID.Text = "Task ID";
+            this.buttonRunTask.Location = new System.Drawing.Point(3, 123);
+            this.buttonRunTask.Name = "buttonRunTask";
+            this.buttonRunTask.Size = new System.Drawing.Size(75, 34);
+            this.buttonRunTask.TabIndex = 3;
+            this.buttonRunTask.Text = "Run Task";
+            this.buttonRunTask.UseVisualStyleBackColor = true;
+            this.buttonRunTask.Click += new System.EventHandler(this.buttonRunTask_Click);
             // 
-            // columnHeaderTaskName
+            // statusStripInfo
             // 
-            this.columnHeaderTaskName.Text = "Task Name";
-            this.columnHeaderTaskName.Width = 85;
+            this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelInfo,
+            this.toolStripProgressBarCurrent});
+            this.statusStripInfo.Location = new System.Drawing.Point(0, 393);
+            this.statusStripInfo.Name = "statusStripInfo";
+            this.statusStripInfo.Size = new System.Drawing.Size(577, 20);
+            this.statusStripInfo.TabIndex = 2;
+            this.statusStripInfo.Text = "statusStrip1";
             // 
-            // columnHeaderDesc
+            // toolStripStatusLabelInfo
             // 
-            this.columnHeaderDesc.Text = "Description";
-            this.columnHeaderDesc.Width = 95;
+            this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
+            this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(58, 15);
+            this.toolStripStatusLabelInfo.Text = "Task Info:";
             // 
-            // columnHeaderCommands
+            // toolStripProgressBarCurrent
             // 
-            this.columnHeaderCommands.Text = "Command Count";
-            this.columnHeaderCommands.Width = 95;
-            // 
-            // columnHeaderFavCount
-            // 
-            this.columnHeaderFavCount.Text = "Favorite Count";
-            this.columnHeaderFavCount.Width = 100;
-            // 
-            // columnHeaderDate
-            // 
-            this.columnHeaderDate.Text = "Date";
-            this.columnHeaderDate.Width = 120;
+            this.toolStripProgressBarCurrent.Name = "toolStripProgressBarCurrent";
+            this.toolStripProgressBarCurrent.Size = new System.Drawing.Size(100, 14);
             // 
             // Task_Manager
             // 
@@ -156,7 +198,10 @@
             this.Name = "Task_Manager";
             this.Text = "Task_Manager";
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.statusStripInfo.ResumeLayout(false);
+            this.statusStripInfo.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -175,5 +220,9 @@
         private System.Windows.Forms.ColumnHeader columnHeaderCommands;
         private System.Windows.Forms.ColumnHeader columnHeaderFavCount;
         private System.Windows.Forms.ColumnHeader columnHeaderDate;
+        private System.Windows.Forms.Button buttonRunTask;
+        private System.Windows.Forms.StatusStrip statusStripInfo;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInfo;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarCurrent;
     }
 }

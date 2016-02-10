@@ -19,6 +19,8 @@ namespace RemoteWork
         bool isWindowLockLocation = false;
         bool isWindowLockCredential = false;
         bool isWindowLockTask = false;
+        //для обновления дерева категорий в главном окне
+        bool isCategoryChanged = false;
         public Management()
         {
             InitializeComponent();
@@ -57,6 +59,7 @@ namespace RemoteWork
             if (!isWindowLockCategory)
             {
                 isWindowLockCategory = true;
+                isCategoryChanged = true;
                 Category_Manager frm = new Category_Manager();
                 frm.MdiParent = this;
                 frm.Show();
@@ -134,13 +137,16 @@ namespace RemoteWork
             isWindowLockTask = false;
         }
         #endregion
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        
-
+        public bool CategoryChanged
+        {
+            get { return isCategoryChanged; }
+        }
        
     }
 }

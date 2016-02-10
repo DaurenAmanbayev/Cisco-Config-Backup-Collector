@@ -38,11 +38,9 @@
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.checkedListBoxFavorites = new System.Windows.Forms.CheckedListBox();
-            this.buttonAddFav = new System.Windows.Forms.Button();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.checkedListBoxCommands = new System.Windows.Forms.CheckedListBox();
-            this.buttonAddCommand = new System.Windows.Forms.Button();
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -133,7 +131,6 @@
             // 
             this.flowLayoutPanel4.Controls.Add(this.label1);
             this.flowLayoutPanel4.Controls.Add(this.checkedListBoxFavorites);
-            this.flowLayoutPanel4.Controls.Add(this.buttonAddFav);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 88);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
@@ -157,20 +154,10 @@
             this.checkedListBoxFavorites.Size = new System.Drawing.Size(328, 124);
             this.checkedListBoxFavorites.TabIndex = 8;
             // 
-            // buttonAddFav
-            // 
-            this.buttonAddFav.Location = new System.Drawing.Point(3, 146);
-            this.buttonAddFav.Name = "buttonAddFav";
-            this.buttonAddFav.Size = new System.Drawing.Size(95, 25);
-            this.buttonAddFav.TabIndex = 7;
-            this.buttonAddFav.Text = "Add Favorite";
-            this.buttonAddFav.UseVisualStyleBackColor = true;
-            // 
             // flowLayoutPanel5
             // 
             this.flowLayoutPanel5.Controls.Add(this.label2);
             this.flowLayoutPanel5.Controls.Add(this.checkedListBoxCommands);
-            this.flowLayoutPanel5.Controls.Add(this.buttonAddCommand);
             this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 277);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
@@ -193,15 +180,6 @@
             this.checkedListBoxCommands.Name = "checkedListBoxCommands";
             this.checkedListBoxCommands.Size = new System.Drawing.Size(328, 124);
             this.checkedListBoxCommands.TabIndex = 9;
-            // 
-            // buttonAddCommand
-            // 
-            this.buttonAddCommand.Location = new System.Drawing.Point(3, 146);
-            this.buttonAddCommand.Name = "buttonAddCommand";
-            this.buttonAddCommand.Size = new System.Drawing.Size(95, 25);
-            this.buttonAddCommand.TabIndex = 2;
-            this.buttonAddCommand.Text = "Add Command";
-            this.buttonAddCommand.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel8
             // 
@@ -276,8 +254,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel8;
         private System.Windows.Forms.Button Cancel;
-        private System.Windows.Forms.Button buttonAddFav;
-        private System.Windows.Forms.Button buttonAddCommand;
         private System.Windows.Forms.CheckedListBox checkedListBoxFavorites;
         private System.Windows.Forms.CheckedListBox checkedListBoxCommands;
     }

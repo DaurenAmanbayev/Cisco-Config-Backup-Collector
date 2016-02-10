@@ -67,6 +67,12 @@
     <Compile Include="Config Watcher.Designer.cs">
       <DependentUpon>Config Watcher.cs</DependentUpon>
     </Compile>
+    <Compile Include="Configuration Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuration Manager.Designer.cs">
+      <DependentUpon>Configuration Manager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Favorite Edit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,12 @@
       <DependentUpon>Favorite Edit.cs</DependentUpon>
     </Compile>
     <Compile Include="FavoriteConnection.cs" />
+    <Compile Include="Load Config.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Load Config.Designer.cs">
+      <DependentUpon>Load Config.cs</DependentUpon>
+    </Compile>
     <Compile Include="Management.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +152,12 @@
     <Compile Include="Managers\Task Manager.Designer.cs">
       <DependentUpon>Task Manager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Managers\Task Progress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Managers\Task Progress.Designer.cs">
+      <DependentUpon>Task Progress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rconfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,11 +173,20 @@
       <DependentUpon>RconfigSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsMode.cs" />
+    <EmbeddedResource Include="Analytics\Analytic.resx">
+      <DependentUpon>Analytic.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Config Watcher.resx">
       <DependentUpon>Config Watcher.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Configuration Manager.resx">
+      <DependentUpon>Configuration Manager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Favorite Edit.resx">
       <DependentUpon>Favorite Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Load Config.resx">
+      <DependentUpon>Load Config.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Management.resx">
       <DependentUpon>Management.cs</DependentUpon>
@@ -194,6 +221,9 @@
     <EmbeddedResource Include="Managers\Task Manager.resx">
       <DependentUpon>Task Manager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Managers\Task Progress.resx">
+      <DependentUpon>Task Progress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -205,6 +235,9 @@
     </Compile>
     <EmbeddedResource Include="Rconfig.resx">
       <DependentUpon>Rconfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RconfigSettings.resx">
+      <DependentUpon>RconfigSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

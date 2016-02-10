@@ -10,12 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
+using RemoteWork.Expect;
 
 namespace RemoteWork.Managers
 {
     public partial class Task_Manager : Form
     {
-        RconfigContext context = new RconfigContext();
+        RconfigContext context;
 
         public Task_Manager()
         {
@@ -23,18 +24,20 @@ namespace RemoteWork.Managers
             LoadData();
             //TaskAddTest();
         }
-
+        //подгрузка данных по задачам
         private async  void LoadData()
         {
-            var queryTasks=await  (from c in context.RemoteTasks
-                           select c).ToListAsync();
-
-            if (queryTasks != null)
+            using (context = new RconfigContext())
             {
+                var queryTasks = await (from c in context.RemoteTasks
+                                        select c).ToListAsync();
 
-                foreach (RemoteTask task in queryTasks)
+                if (queryTasks != null)
                 {
-                    var item = new ListViewItem(new [] { 
+
+                    foreach (RemoteTask task in queryTasks)
+                    {
+                        var item = new ListViewItem(new[] { 
                     task.Id.ToString(),
                     task.TaskName,
                     task.Description,
@@ -42,7 +45,8 @@ namespace RemoteWork.Managers
                     task.Favorites.Count.ToString(),
                     task.Date.ToString()});
 
-                    listViewDetails.Items.Add(item);
+                        listViewDetails.Items.Add(item);
+                    }
                 }
             }
         }
@@ -75,6 +79,9 @@ namespace RemoteWork.Managers
                     DateTime.UtcNow.ToString()});
             listViewDetails.Items.Add(item3);
         }
+        //создание, редактирования и удаление задач
+        #region MANAGE
+        //создать задачу
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             Task_Edit frm = new Task_Edit();
@@ -85,7 +92,7 @@ namespace RemoteWork.Managers
                 LoadData();
             }
         }
-
+        //редактирование задачи
         private void buttonEdit_Click(object sender, EventArgs e)
         {
             if (listViewDetails.SelectedItems.Count != 0)
@@ -101,7 +108,7 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
+        //удаление задачи
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (listViewDetails.SelectedItems.Count != 0)
@@ -122,7 +129,21 @@ namespace RemoteWork.Managers
                 }
             }
         }
-
-
+        #endregion
+        //запуск задачи
+        private void buttonRunTask_Click(object sender, EventArgs e)
+        {
+            if (listViewDetails.SelectedItems.Count != 0)
+            {
+                var item = listViewDetails.SelectedItems[0];
+                int taskId = Int32.Parse(item.SubItems[0].Text);
+                Task_Progress frm = new Task_Progress(taskId);
+                DialogResult result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    frm.Close();//прогресс бар
+                }                
+            }
+        }
     }
 }
