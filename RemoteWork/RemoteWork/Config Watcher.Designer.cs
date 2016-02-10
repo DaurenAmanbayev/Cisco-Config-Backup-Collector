@@ -28,35 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxConfig = new System.Windows.Forms.TextBox();
+            this.richTextBoxConfig = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // textBoxConfig
+            // richTextBoxConfig
             // 
-            this.textBoxConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxConfig.Location = new System.Drawing.Point(0, 0);
-            this.textBoxConfig.Multiline = true;
-            this.textBoxConfig.Name = "textBoxConfig";
-            this.textBoxConfig.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxConfig.Size = new System.Drawing.Size(327, 411);
-            this.textBoxConfig.TabIndex = 0;
+            this.richTextBoxConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxConfig.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxConfig.Name = "richTextBoxConfig";
+            this.richTextBoxConfig.Size = new System.Drawing.Size(327, 411);
+            this.richTextBoxConfig.TabIndex = 0;
+            this.richTextBoxConfig.Text = "";
             // 
             // Config_Watcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(327, 411);
-            this.Controls.Add(this.textBoxConfig);
+            this.Controls.Add(this.richTextBoxConfig);
             this.Name = "Config_Watcher";
             this.Text = "Config_Watcher";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBoxConfig;
+        private System.Windows.Forms.RichTextBox richTextBoxConfig;
+
 
 
     }

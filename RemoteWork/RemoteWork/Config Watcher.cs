@@ -23,7 +23,7 @@ namespace RemoteWork
 
         private void LoadData()
         {
-            textBoxConfig.Text = currentConfig.Current;
+            richTextBoxConfig.Text = currentConfig.Current;
         }
     }
 }
