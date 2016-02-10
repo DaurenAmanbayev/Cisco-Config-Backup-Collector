@@ -19,14 +19,18 @@ namespace RemoteWork.Data
         public string Hostname { get; set; }
         [Required, MaxLength(50)]
         public string Address { get; set; }        
-        public int Port { get; set; }
+        public int Port { get; set; }   
         [Required]
-        public virtual Protocol Protocol {get; set;}
+        public virtual Protocol Protocol {get; set;}     
         public virtual Location Location { get; set; }
         public DateTime? Date { get; set; }
         public virtual Category Category { get; set; }
         [Required]
         public virtual Credential Credential { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
+        public override string ToString()
+        {
+            return string.Format("{0}", Address);//base.ToString();
+        }
     }
 }
