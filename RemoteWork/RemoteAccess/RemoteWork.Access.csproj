@@ -52,6 +52,14 @@
     <Compile Include="Migrations\201601290433111_third.Designer.cs">
       <DependentUpon>201601290433111_third.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602090556559_fourth.cs" />
+    <Compile Include="Migrations\201602090556559_fourth.Designer.cs">
+      <DependentUpon>201602090556559_fourth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602090600330_fifth.cs" />
+    <Compile Include="Migrations\201602090600330_fifth.Designer.cs">
+      <DependentUpon>201602090600330_fifth.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RconfigContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +77,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201601290433111_third.resx">
       <DependentUpon>201601290433111_third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602090556559_fourth.resx">
+      <DependentUpon>201602090556559_fourth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602090600330_fifth.resx">
+      <DependentUpon>201602090600330_fifth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
