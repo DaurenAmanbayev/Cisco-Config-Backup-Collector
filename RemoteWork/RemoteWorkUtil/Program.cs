@@ -19,20 +19,25 @@ namespace RemoteWorkUtil
         static RconfigContext context;
         static void Main(string[] args)
         {
-            //добавить логирование
-            int TaskID;            
+            //добавить логирование!!!
+            int TaskID;   
+            //если первый аргумент 
             if (args.Length > 0)
             {
+                //спарсить первый аргумент 
                 if (Int32.TryParse(args[0], out TaskID))
                 {
+                    //проверить первый аргумент на наличие идентификатора задачи в базе данных
                     if(CheckTask(TaskID))
                     {
+                        //если задача имеется запустить
                         LoopMethod(TaskID);
                     }
                 }
 
             }
         }
+        //проверка наличия задачи в базе данных
         private static bool CheckTask(int TaskID)
         {
             using(RconfigContext ctx=new RconfigContext())
