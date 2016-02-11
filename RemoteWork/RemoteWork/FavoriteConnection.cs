@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork
 {
-    //use for task run
+    //структура для запуска задачи
     struct FavoriteConnect
     {
         public Favorite favorite;

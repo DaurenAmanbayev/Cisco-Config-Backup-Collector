@@ -442,7 +442,7 @@
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "Rconfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Form1";
+            this.Text = "Remote Work";
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             this.toolStripMain.ResumeLayout(false);

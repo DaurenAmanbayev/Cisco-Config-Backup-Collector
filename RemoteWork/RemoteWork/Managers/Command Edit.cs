@@ -33,6 +33,7 @@ namespace RemoteWork.Managers
         public Command_Edit()
         {
             InitializeComponent();
+            StartConfiguration();
             LoadData();
         }
 
@@ -42,7 +43,28 @@ namespace RemoteWork.Managers
             mode = WindowsMode.EDIT;
             textBoxName.Text = command;
             prevCommand = command;
+            StartConfiguration();
             LoadPrevData();
+        }
+        //начальные настройки формы
+        private void StartConfiguration()
+        {
+            List<int> order = new List<int>
+            {
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            };
+
+            comboBoxOrders.DataSource = order;
         }
         //подгружаем требуемые данные
         private async void LoadData()
@@ -85,7 +107,9 @@ namespace RemoteWork.Managers
                     {
                         listBoxAvailable.Items.Add(cat);
                     }
-                }
+                }                
+                comboBoxOrders.SelectedItem = currentCommand.Order;
+                             
             }
         }
         //проверка на уникальность
@@ -128,6 +152,7 @@ namespace RemoteWork.Managers
         {
             currentCommand = new Command();
             currentCommand.Name = textBoxName.Text.Trim();
+            currentCommand.Order = (int)comboBoxOrders.SelectedItem;
             HashSet<Category> currentCommandCategories = new HashSet<Category>();
             foreach (string category in listBoxCurrent.Items)
             {
@@ -145,6 +170,7 @@ namespace RemoteWork.Managers
         private void EditCommand()
         {
             currentCommand.Name = textBoxName.Text.Trim();
+            currentCommand.Order = (int)comboBoxOrders.SelectedItem;
             HashSet<Category> currentCommandCategories = new HashSet<Category>();
             foreach (string category in listBoxCurrent.Items)
             {
@@ -154,8 +180,8 @@ namespace RemoteWork.Managers
                 if (queryCategory != null)
                     currentCommandCategories.Add(queryCategory);
             }
-            currentCommand.Categories = currentCommandCategories;
-            context.Entry(currentCommand).State = System.Data.Entity.EntityState.Modified;
+            currentCommand.Categories = currentCommandCategories;           
+            context.Entry(currentCommand).State = System.Data.Entity.EntityState.Modified;            
             context.SaveChanges();
         }
         //подтверждение операции

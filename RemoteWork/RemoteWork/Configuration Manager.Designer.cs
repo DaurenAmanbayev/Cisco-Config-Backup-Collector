@@ -34,12 +34,13 @@
             this.checkBoxHostname = new System.Windows.Forms.CheckBox();
             this.comboBoxFavs = new System.Windows.Forms.ComboBox();
             this.buttonFind = new System.Windows.Forms.Button();
+            this.dateTimePickerFilter = new System.Windows.Forms.DateTimePicker();
+            this.buttonFilter = new System.Windows.Forms.Button();
             this.listViewConfig = new System.Windows.Forms.ListView();
             this.columnHeaderID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripOpenConfig = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBoxPeriod = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.contextMenuStripOpenConfig.SuspendLayout();
@@ -65,7 +66,8 @@
             this.flowLayoutPanel1.Controls.Add(this.checkBoxHostname);
             this.flowLayoutPanel1.Controls.Add(this.comboBoxFavs);
             this.flowLayoutPanel1.Controls.Add(this.buttonFind);
-            this.flowLayoutPanel1.Controls.Add(this.comboBoxPeriod);
+            this.flowLayoutPanel1.Controls.Add(this.dateTimePickerFilter);
+            this.flowLayoutPanel1.Controls.Add(this.buttonFilter);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(465, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -100,6 +102,23 @@
             this.buttonFind.Text = "Filter by Favorite";
             this.buttonFind.UseVisualStyleBackColor = true;
             this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
+            // 
+            // dateTimePickerFilter
+            // 
+            this.dateTimePickerFilter.Location = new System.Drawing.Point(3, 91);
+            this.dateTimePickerFilter.Name = "dateTimePickerFilter";
+            this.dateTimePickerFilter.Size = new System.Drawing.Size(121, 20);
+            this.dateTimePickerFilter.TabIndex = 6;
+            // 
+            // buttonFilter
+            // 
+            this.buttonFilter.Location = new System.Drawing.Point(3, 117);
+            this.buttonFilter.Name = "buttonFilter";
+            this.buttonFilter.Size = new System.Drawing.Size(121, 32);
+            this.buttonFilter.TabIndex = 7;
+            this.buttonFilter.Text = "Filter by Date";
+            this.buttonFilter.UseVisualStyleBackColor = true;
+            this.buttonFilter.Click += new System.EventHandler(this.buttonFilter_Click);
             // 
             // listViewConfig
             // 
@@ -140,14 +159,6 @@
             this.openConfigurationToolStripMenuItem.Text = "Open Configuration";
             this.openConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openConfigurationToolStripMenuItem_Click);
             // 
-            // comboBoxPeriod
-            // 
-            this.comboBoxPeriod.FormattingEnabled = true;
-            this.comboBoxPeriod.Location = new System.Drawing.Point(3, 91);
-            this.comboBoxPeriod.Name = "comboBoxPeriod";
-            this.comboBoxPeriod.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPeriod.TabIndex = 3;
-            // 
             // Configuration_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -176,6 +187,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderDate;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripOpenConfig;
         private System.Windows.Forms.ToolStripMenuItem openConfigurationToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBoxPeriod;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFilter;
+        private System.Windows.Forms.Button buttonFilter;
     }
 }

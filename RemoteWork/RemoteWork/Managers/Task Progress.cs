@@ -92,7 +92,7 @@ namespace RemoteWork.Managers
                     ProgressStep(fav.Address);         
                     List<string> commands = new List<string>();
                     //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
-                    foreach (Command command in task.Commands)
+                    foreach (Command command in task.Commands.OrderBy(c=>c.Order))
                     {
                         foreach (Category category in command.Categories)
                         {
@@ -101,8 +101,7 @@ namespace RemoteWork.Managers
                                 commands.Add(command.Name);
                             }
                         }
-                    }
-                    //мультипоточность
+                    }                    
                     //устанавливаем соединение
                     FavoriteConnect connect = new FavoriteConnect();
                     connect.commands = commands;
@@ -117,11 +116,7 @@ namespace RemoteWork.Managers
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            //LockForm();
-            // NotifyInfo("Success!");
-            //  ProgressClear();
+            }            
         }
         //проблема с многопоточностью
         //наверняка нужно создавать новый контекст для каждого потока

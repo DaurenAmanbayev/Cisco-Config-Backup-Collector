@@ -39,7 +39,8 @@ namespace RemoteWork
                 {
                     var queryCommands = await (from c in context.Commands                                      
                                         select c).ToListAsync();
-                    foreach (Command command in queryCommands)
+                    //пробегаемся по списку команд отсортированну
+                    foreach (Command command in queryCommands.OrderBy(c=>c.Order))
                     {
                         foreach (Category category in command.Categories)
                         {

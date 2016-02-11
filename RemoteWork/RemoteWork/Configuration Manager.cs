@@ -10,18 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
 using RemoteWork.Data;
+using RemoteWork.Analytics;
 
 namespace RemoteWork
-{
-    //перечисление для периода
-    enum Period
-    {
-        LastDay,
-        LastDayTenDays,
-        LastMonths,
-        All,
-        BySpecifiedDate
-    }
+{    
     //перечисление фильтр
     enum FavoriteFilter
     {
@@ -30,42 +22,28 @@ namespace RemoteWork
     }
     public partial class Configuration_Manager : Form
     {
-        RconfigContext context;
-        List<string> periods;
+        RconfigContext context;        
         string prevHostname;       
         FavoriteFilter filter = FavoriteFilter.ByIPAddress;
-        Period period = Period.All;
+        DateFilter dateFilter = new DateFilter();
+        bool useDateFilter = false;
         //запуск менеджера
         public Configuration_Manager()
         {
-            InitializeComponent();
-            StartConfiguration();         
+            InitializeComponent();       
             LoadData();
         }
         //запуск менеджера с выбранным устройством
         public Configuration_Manager(string hostname)
         {
             //необходимо выбрать переданное устройство
-            InitializeComponent();
-            StartConfiguration();            
+            InitializeComponent();                     
             prevHostname = hostname;
             filter = FavoriteFilter.ByHostname;
             checkBoxHostname.Checked = true;
             LoadData();
         }
-        //начальные настройки приложения
-        private void StartConfiguration()
-        {
-            periods=new List<string>
-            {
-                "All Days",
-                "Last Day",
-                "Last 10 Days",
-                "Last 30 Days",                
-                "By Specified Date"
-            };
-            comboBoxPeriod.DataSource = periods;
-        }
+        
         //подгрузка требуемых данных
         private async void LoadData()
         {
@@ -108,13 +86,7 @@ namespace RemoteWork
                 string favorite=comboBoxFavs.Text.ToString();
                 LoadConfigurationData(favorite);
             }
-        }
-        //не реализовано
-        //фильтрация по периоду времени
-        private void buttonTime_Click(object sender, EventArgs e)
-        {
-            //реализация временного фильтра, требуется ли???
-        }
+        }        
         //сбор конфигурационных данных
         private void LoadConfigurationData(string favorite)
         {            
@@ -127,15 +99,34 @@ namespace RemoteWork
                                                where c.Hostname == favorite
                                                select c).FirstOrDefault();//если использовать Single, выкидывает исключение
                         if (queryByHostname != null)
-                        {
+                        {                            
                             listViewConfig.Items.Clear();
-                            foreach (Config config in queryByHostname.Configs)
+                            //пройтись по списку конфигураций устройства, отсортированный по ID
+                            foreach (Config config in queryByHostname.Configs.OrderByDescending(p => p.Id)) 
                             {
-                                var item = new ListViewItem(new[] { 
+                                //если используется фильтр по дате
+                                if (useDateFilter)
+                                {
+                                    if (config.Date.Value.Year == dateFilter.Year
+                                        & config.Date.Value.Month == dateFilter.Month
+                                        & config.Date.Value.Day == dateFilter.Day)
+                                    {
+                                        var item = new ListViewItem(new[] { 
                                     config.Id.ToString(),
                                     config.Date.ToString()
                                     });
-                                listViewConfig.Items.Add(item);
+                                        listViewConfig.Items.Add(item);
+                                    }
+                                }
+                                //если не используется фильтр по времени
+                                else
+                                {
+                                    var item = new ListViewItem(new[] { 
+                                    config.Id.ToString(),
+                                    config.Date.ToString()
+                                    });
+                                    listViewConfig.Items.Add(item);
+                                }
                             }
                         }
                         else
@@ -153,13 +144,32 @@ namespace RemoteWork
                         if (queryByAddress != null)
                         {
                             listViewConfig.Items.Clear();
-                            foreach (Config config in queryByAddress.Configs)
+                            //пройтись по списку конфигураций устройства, отсортированный по ID
+                            foreach (Config config in queryByAddress.Configs.OrderByDescending(p => p.Id))
                             {
-                                var item = new ListViewItem(new[] { 
+                                //если используется фильтр по дате
+                                if (useDateFilter)
+                                {
+                                    if (config.Date.Value.Year == dateFilter.Year
+                                        & config.Date.Value.Month == dateFilter.Month
+                                        & config.Date.Value.Day == dateFilter.Day)
+                                    {
+                                        var item = new ListViewItem(new[] { 
                                     config.Id.ToString(),
                                     config.Date.ToString()
                                     });
-                                listViewConfig.Items.Add(item);
+                                        listViewConfig.Items.Add(item);
+                                    }
+                                }
+                                //если не используется фильтр по времени
+                                else
+                                {
+                                    var item = new ListViewItem(new[] { 
+                                    config.Id.ToString(),
+                                    config.Date.ToString()
+                                    });
+                                    listViewConfig.Items.Add(item);
+                                }
                             }
                         }
                         else
@@ -212,6 +222,29 @@ namespace RemoteWork
         private void NotifyInfo(string info)
         {
             MessageBox.Show(info, "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+        //фильтрация по дате
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            //создаем фильтр данных
+            dateFilter.Year = dateTimePickerFilter.Value.Year;
+            dateFilter.Month = dateTimePickerFilter.Value.Month;
+            dateFilter.Day = dateTimePickerFilter.Value.Day;
+            useDateFilter = true;
+            //если выбрано из списка
+            if (comboBoxFavs.SelectedItem != null)
+            {
+                string favorite = comboBoxFavs.SelectedItem.ToString();
+                LoadConfigurationData(favorite);
+            }
+            //если не выбран из списка, то провести поиск в системе
+            else
+            {
+                //необходимо найти устройство по введенной строке и спросить пользователя, требуется ли подгрузить данные
+                string favorite = comboBoxFavs.Text.ToString();
+                LoadConfigurationData(favorite);
+            }
+            useDateFilter = false;
         }
      
     }

@@ -12,12 +12,19 @@ using System.Data.Entity;
 
 namespace RemoteWork.Analytics
 {
+    //структура для фильтрации даты
+    public struct DateFilter
+    {
+        public int Year;
+        public int Month;
+        public int Day;
+    }
     public partial class Analytic : Form
     {
-        RconfigContext context = new RconfigContext();
+        RconfigContext context=new RconfigContext();
         bool useFailedFilter = false;
         bool useDateFilter = false;
-        string dateFilter;
+        DateFilter dateFilter = new DateFilter();
         public Analytic()
         {
             InitializeComponent();
@@ -38,33 +45,41 @@ namespace RemoteWork.Analytics
         private void LoadData()
         {
             var queryReport = from c in context.Reports
-                                     select c;
-
+                              select c;
+            //nested query
             var filterQuery = queryReport;
-            if (useFailedFilter)
+            if (useFailedFilter)//фильтр неудавшихся задач
             {
                 filterQuery = from c in queryReport
-                              where c.Status==false
+                              where c.Status == false
                               select c;
             }
-            if (useDateFilter)
+            if (useDateFilter)//фильтр по дате
             {
                 filterQuery = from c in filterQuery
-                              where c.Date.Value.ToShortDateString() == dateFilter
-                              select c;
+                              where c.Date.Value.Year == dateFilter.Year    
+                               & c.Date.Value.Month==dateFilter.Month
+                               & c.Date.Value.Day==dateFilter.Day
+                              select c;                         
             }
-                
-            dataGridViewReports.DataSource = filterQuery.ToListAsync();
-        }
 
+            dataGridViewReports.DataSource = filterQuery.ToList();
+
+        }
+        //фильтр по дате
         private void buttonFilter_Click(object sender, EventArgs e)
         {
-            dateFilter = dateTimePickerFilter.Value.ToShortDateString();
+            //создаем фильтр данных
+            dateFilter.Year= dateTimePickerFilter.Value.Year;
+            dateFilter.Month = dateTimePickerFilter.Value.Month;
+            dateFilter.Day = dateTimePickerFilter.Value.Day;
+            //указываем, что требуется использование фильтров
             useDateFilter = true;
             LoadData();
+            //сбрасываем наш фильтр
             useDateFilter = false;
         }
-
+        //проверка неудавшихся задач 
         private void checkBoxFailed_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxFailed.CheckState == CheckState.Checked)

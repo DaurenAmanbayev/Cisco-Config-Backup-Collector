@@ -172,6 +172,7 @@
     <Compile Include="RconfigSettings.Designer.cs">
       <DependentUpon>RconfigSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="RegexExtract.cs" />
     <Compile Include="WindowsMode.cs" />
     <EmbeddedResource Include="Analytics\Analytic.resx">
       <DependentUpon>Analytic.cs</DependentUpon>
