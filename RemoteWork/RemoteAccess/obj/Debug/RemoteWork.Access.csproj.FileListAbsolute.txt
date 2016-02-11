@@ -71,3 +71,5 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\Re
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources
 Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fourth.resources
 Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources

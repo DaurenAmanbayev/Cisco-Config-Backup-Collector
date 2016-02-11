@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,10 @@ namespace RemoteWork.Data
         }
         [Key]
         public int Id { get; set; }
+        [Index("HostnameUniIndex", IsUnique = true)]
         [Required, MaxLength(100)]
         public string Hostname { get; set; }
+        [Index("AddressUniIndex", IsUnique = true)]
         [Required, MaxLength(50)]
         public string Address { get; set; }        
         public int Port { get; set; }   

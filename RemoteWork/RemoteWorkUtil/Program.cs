@@ -17,10 +17,10 @@ namespace RemoteWorkUtil
     class Program
     {
         static RconfigContext context;
+        static string logJournal = "rconfig-journal.log";
+        static int TaskID;
         static void Main(string[] args)
-        {
-            //добавить логирование!!!
-            int TaskID;   
+        {             
             //если первый аргумент 
             if (args.Length > 0)
             {
@@ -28,13 +28,28 @@ namespace RemoteWorkUtil
                 if (Int32.TryParse(args[0], out TaskID))
                 {
                     //проверить первый аргумент на наличие идентификатора задачи в базе данных
-                    if(CheckTask(TaskID))
+                    if (CheckTask(TaskID))
                     {
                         //если задача имеется запустить
                         LoopMethod(TaskID);
                     }
-                }
+                    else
+                    {
+                        //записать в логи провал
+                        Logging(string.Format("TASK {0} failed!!! Not correct task ID!!!", TaskID));
+                    }
 
+                }
+                else
+                {
+                    //записать в логи провал
+                    Logging(string.Format("TASK failed!!! Argument is not correct!!"));
+                }
+            }
+            else
+            {
+                //записать в логи провал
+                Logging(string.Format("TASK failed!!! Argument is null!!"));            
             }
         }
         //проверка наличия задачи в базе данных
@@ -52,11 +67,12 @@ namespace RemoteWorkUtil
             }
         }
         //многопоточный вариант
-        //не реализован
+        //не реализован!!!!
         #region TASK USE
         private void TaskUse()
         {
         }
+        //для подгрузки данных использовать ADO.NET и пул соединений
         private static void LoadConfigurationThread(RemoteTask task)
         {
             CancellationToken token;
@@ -207,17 +223,20 @@ namespace RemoteWorkUtil
                              where c.Id == TaskID
 
                              select c).FirstOrDefault();
-            Console.WriteLine("Process started...");
+            //записать в логи операция началась
             if (queryTask != null)
             {
+                Logging(string.Format("TASK {0} started...", TaskID));
                 LoadConfiguration(queryTask);
-                Console.WriteLine("Finish!");
+                //записать в логи успешное завершение
+                Logging(string.Format("TASK {0} finished...", TaskID));
             }
             else
             {
-                Console.WriteLine("Task is null!");
+                //записать в логи провал
+                Logging(string.Format("TASK {0} failed!!! Not correct task ID!!!", TaskID));
             }
-            Console.ReadKey();
+           
         }
         /*        
          * The entity framework DbContext and ObjectContext classes are NOT thread-safe. So you should not use them over multiple threads.       
@@ -228,24 +247,16 @@ namespace RemoteWorkUtil
          * When you do this, it will be safe to pass them on to other threads to do the calculation.
          */
         private static void LoadConfiguration(RemoteTask task)
-        {
-            CancellationToken token;
-
-            List<Task> taskRunnerManager = new List<Task>();
-            //LockForm();
-            var tokenSource = new CancellationTokenSource();
-            token = tokenSource.Token;
-            int countFav = 0;
-            //   ProgressInit(task.Favorites.Count);
+        {               
             try
             {
                 foreach (Favorite fav in task.Favorites)
-                {
-                    //STARTED
-                    Console.WriteLine("OPERATION started for {0}...", fav.Address);
+                {                    
+                    
                     List<string> commands = new List<string>();
-                    //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
-                    foreach (Command command in task.Commands)
+                    //проходим по списку команд, выявляем соответствие используемой команды и категории избранного 
+                    //в сортированном списке по ордеру
+                    foreach (Command command in task.Commands.OrderBy(c=>c.Order))
                     {
                         foreach (Category category in command.Categories)
                         {
@@ -254,61 +265,28 @@ namespace RemoteWorkUtil
                                 commands.Add(command.Name);
                             }
                         }
-                    }
-                    //мультипоточность
+                    }                    
                     //устанавливаем соединение
                     FavoriteConnect connect = new FavoriteConnect();
                     connect.commands = commands;
                     connect.favorite = fav;
-                    connect.task = task;
-
-                    Console.WriteLine("Connection started for {0} favorites...", countFav++);
-                    Connection(connect, token);
-                    //Многопоточный вариант отпадает в связи с ограничением работы EF с потоками
-                    //
-                    //Task taskRunner = Task.Factory.StartNew(() =>
-                    //    Connection(connect, token), token
-                    //);
-                    /*
-                     t = Task.Factory.StartNew(() => DoSomeWork(1, token), token)
-                     Console.WriteLine("Task {0} executing", t.Id);
-                     tasks.Add(t);
-                     */
-                    //Console.WriteLine("Task {0} started...", taskRunner.Id);
-                   // taskRunnerManager.Add(taskRunner);
-                    //Connection(fav, commands, task);
-                }
-
-                //дожидаемся пока выполняться все задания
-                //foreach (Task taskRunner in taskRunnerManager)
-                //{
-                //    // ProgressStep();
-                //    taskRunner.Wait();
-                //    Console.WriteLine("Task {0} finished...", taskRunner.Id);
-                //}
+                    connect.task = task;                    
+                    Connection(connect);                   
+                }               
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(ex.Message);
+               //записать в логи!!!
+                Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", TaskID, ex.Message));
             }
-
-            //LockForm();
-            // NotifyInfo("Success!");
-            //  ProgressClear();
+            
         }
         //проблема с многопоточностью
         //наверняка нужно создавать новый контекст для каждого потока
+        //!!! проблема в выгрузке данных необходимые для выполнение задач, конфликт потоков и LazyLoad
         //или опрашивать и сохранять данные локально с последующей выгрузкой в базу данных
-        private static void Connection(FavoriteConnect favConnect, CancellationToken ct)
-        {
-            //token stopped!!
-            //if (ct.IsCancellationRequested)
-            //{
-            //    Console.WriteLine("Task was cancelled and not started!");
-            //    ct.ThrowIfCancellationRequested();
-            //}
-
+        private static void Connection(FavoriteConnect favConnect)
+        {          
             RemoteTask task = favConnect.task;
             List<string> commands = favConnect.commands;
             Favorite fav = favConnect.favorite;
@@ -328,14 +306,7 @@ namespace RemoteWorkUtil
                 case "SSH": expect = new SshExpect(data); break;
                 //по умолчанию для сетевых устройств протокол Telnet
                 default: expect = new TelnetMintExpect(data); break;
-            }
-
-            //token stopped!!
-            //if (ct.IsCancellationRequested)
-            //{
-            //    Console.WriteLine("Task was cancelled!");
-            //    ct.ThrowIfCancellationRequested();
-            //}
+            }          
 
 
             //если объект expect успешно создан
@@ -353,6 +324,11 @@ namespace RemoteWorkUtil
                     config.Current = result;
                     config.Date = DateTime.Now;
                     fav.Configs.Add(config);
+                    Logging(string.Format("TASK {0} : success connection for {0} {1}", TaskID, fav.Hostname, fav.Address));
+                }
+                else
+                {
+                    Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", TaskID, fav.Hostname, fav.Address));
                 }
                 //создаем отчет о проделанном задании
                 Report report = new Report();
@@ -367,6 +343,7 @@ namespace RemoteWorkUtil
         }
         #endregion
 
+        //тестовые методы приложения
         #region TEST METHODS
         //тестовые методы
         private void Test()
@@ -478,8 +455,51 @@ namespace RemoteWorkUtil
             }
         }
         #endregion
+
+        //логгирование процедуры
+        #region LOGGING
+        private static void Logging(string log)
+        {
+            string[] content = new string[1] { "**** Logging data ****" };
+            FileInfo fileInf = new FileInfo(logJournal);
+            if (fileInf.Exists && fileInf.Length < 4000000)//если размер не превышает 4 Мб, прочитать и дополнить данные лога
+            {
+                FileRead(logJournal, ref content);
+            }
+            string buffer = string.Join("\n", content);
+            string line = "\n";
+            string space = " => ";
+            string date = DateTime.Now.ToString();
+            WriteCharacters(buffer + line + date + space + log, logJournal);
+        }
+        private static void FileRead(string targetPath, ref string[] content)
+        {
+            try
+            {
+                content = File.ReadAllLines(targetPath);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        private static async void WriteCharacters(string targetText, string targetPath)
+        {
+            try
+            {
+                using (StreamWriter writer = File.CreateText(targetPath))
+                {
+                    await writer.WriteLineAsync(targetText);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        #endregion
     }
-    //deep cloning object 
+    //deep cloning object объект глубокого клонирования; позволяет обойти создания конструктора копирования и создать полную копию объекта, а не ссылочную 
     //object must be serializable
     //при сериализации классов context откзывается работать миграция
     public static class ObjectCopier
