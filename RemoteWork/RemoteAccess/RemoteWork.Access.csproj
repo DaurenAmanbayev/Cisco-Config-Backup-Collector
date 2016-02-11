@@ -60,6 +60,14 @@
     <Compile Include="Migrations\201602090600330_fifth.Designer.cs">
       <DependentUpon>201602090600330_fifth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602110519565_order-add.cs" />
+    <Compile Include="Migrations\201602110519565_order-add.Designer.cs">
+      <DependentUpon>201602110519565_order-add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602110537092_unique-added.cs" />
+    <Compile Include="Migrations\201602110537092_unique-added.Designer.cs">
+      <DependentUpon>201602110537092_unique-added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RconfigContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +91,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602090600330_fifth.resx">
       <DependentUpon>201602090600330_fifth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602110519565_order-add.resx">
+      <DependentUpon>201602110519565_order-add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602110537092_unique-added.resx">
+      <DependentUpon>201602110537092_unique-added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
