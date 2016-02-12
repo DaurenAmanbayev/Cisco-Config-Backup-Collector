@@ -19,5 +19,5 @@ namespace RemoteWorkUtil
         public Favorite favorite;
         public List<string> commands;
         public RemoteTask task;
-    }
+    }   
 }

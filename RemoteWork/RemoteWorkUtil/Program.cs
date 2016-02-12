@@ -103,10 +103,15 @@ namespace RemoteWorkUtil
                     }
                     //мультипоточность
                     //устанавливаем соединение
-                    FavoriteConnect connect = new FavoriteConnect();
-                    connect.commands = commands;
-                    connect.favorite = fav;
-                    connect.task = task;
+                    FavoriteTask connect = new FavoriteTask();
+                    connect.Commands = commands;
+                    connect.FavoriteId = fav.Id;
+                    connect.TaskId = task.Id;
+
+                    //FavoriteConnect connect = new FavoriteConnect();
+                    //connect.commands = commands;
+                    //connect.favorite = fav;
+                    //connect.task = task;
 
                     Console.WriteLine("Connection started for {0} favorites...", countFav++);
                     ConnectionThread(connect, token);
@@ -126,12 +131,12 @@ namespace RemoteWorkUtil
                 }
 
                 //дожидаемся пока выполняться все задания
-                //foreach (Task taskRunner in taskRunnerManager)
-                //{
-                //    // ProgressStep();
-                //    taskRunner.Wait();
-                //    Console.WriteLine("Task {0} finished...", taskRunner.Id);
-                //}
+                foreach (Task taskRunner in taskRunnerManager)
+                {
+                    // ProgressStep();
+                    taskRunner.Wait();
+                    Console.WriteLine("Task {0} finished...", taskRunner.Id);
+                }
             }
             catch (Exception ex)
             {
@@ -146,69 +151,78 @@ namespace RemoteWorkUtil
         //проблема с многопоточностью
         //наверняка нужно создавать новый контекст для каждого потока
         //или опрашивать и сохранять данные локально с последующей выгрузкой в базу данных
-        private static void ConnectionThread(FavoriteConnect favConnect, CancellationToken ct)
+        private static void ConnectionThread(FavoriteTask favConnect, CancellationToken ct)
         {
             //token stopped!!
-            //if (ct.IsCancellationRequested)
-            //{
-            //    Console.WriteLine("Task was cancelled and not started!");
-            //    ct.ThrowIfCancellationRequested();
-            //}
-
-            RemoteTask task = favConnect.task;
-            List<string> commands = favConnect.commands;
-            Favorite fav = favConnect.favorite;
-            //данные для подключения к сетевому устройству
-            ConnectionData data = new ConnectionData();
-            data.address = fav.Address;
-            data.port = fav.Port;
-            data.username = fav.Credential.Username;
-            data.password = fav.Credential.Password;
-
-            //по типу протоколу выбираем требуемое подключение
-            string protocol = fav.Protocol.Name;
-            Expect expect;
-            switch (protocol)
+            if (ct.IsCancellationRequested)
             {
-                case "Telnet": expect = new TelnetMintExpect(data); break;
-                case "SSH": expect = new SshExpect(data); break;
-                //по умолчанию для сетевых устройств протокол Telnet
-                default: expect = new TelnetMintExpect(data); break;
+                Console.WriteLine("Task was cancelled and not started!");
+                ct.ThrowIfCancellationRequested();
             }
-
-            //token stopped!!
-            //if (ct.IsCancellationRequested)
-            //{
-            //    Console.WriteLine("Task was cancelled!");
-            //    ct.ThrowIfCancellationRequested();
-            //}
-
-
-            //если объект expect успешно создан
-            if (expect != null)
+            using (RconfigContext ctx = new RconfigContext())
             {
-                //выполняем список команд
-                expect.ExecuteCommands(commands);
-                string result = expect.GetResult();
-                bool success = expect.isSuccess;
-                string error = expect.GetError();
-                //если успешно сохраняем конфигурацию устройства
-                if (success)
+                var task = (from c in ctx.RemoteTasks
+                            where c.Id == favConnect.TaskId
+                            select c).Single();
+
+                List<string> commands = favConnect.Commands;
+
+                Favorite fav = (from c in ctx.Favorites
+                                where c.Id == favConnect.FavoriteId
+                                select c).Single();
+
+
+                //данные для подключения к сетевому устройству
+                ConnectionData data = new ConnectionData();
+                data.address = fav.Address;
+                data.port = fav.Port;
+                data.username = fav.Credential.Username;
+                data.password = fav.Credential.Password;
+
+                //по типу протоколу выбираем требуемое подключение
+                string protocol = fav.Protocol.Name;
+                Expect expect;
+                switch (protocol)
                 {
-                    Config config = new Config();
-                    config.Current = result;
-                    config.Date = DateTime.Now;
-                    fav.Configs.Add(config);
+                    case "Telnet": expect = new TelnetMintExpect(data); break;
+                    case "SSH": expect = new SshExpect(data); break;
+                    //по умолчанию для сетевых устройств протокол Telnet
+                    default: expect = new TelnetMintExpect(data); break;
                 }
-                //создаем отчет о проделанном задании
-                Report report = new Report();
-                report.Date = DateTime.Now;
-                report.Status = success;
-                report.Info = error;
-                report.Task = task;
-                report.Favorite = fav;
-                context.Reports.Add(report);
-                context.SaveChanges();
+
+                //token stopped!!
+                if (ct.IsCancellationRequested)
+                {
+                    Console.WriteLine("Task was cancelled!");
+                    ct.ThrowIfCancellationRequested();
+                }
+
+                //если объект expect успешно создан
+                if (expect != null)
+                {
+                    //выполняем список команд
+                    expect.ExecuteCommands(commands);
+                    string result = expect.GetResult();
+                    bool success = expect.isSuccess;
+                    string error = expect.GetError();
+                    //если успешно сохраняем конфигурацию устройства
+                    if (success)
+                    {
+                        Config config = new Config();
+                        config.Current = result;
+                        config.Date = DateTime.Now;
+                        fav.Configs.Add(config);
+                    }
+                    //создаем отчет о проделанном задании
+                    Report report = new Report();
+                    report.Date = DateTime.Now;
+                    report.Status = success;
+                    report.Info = error;
+                    report.Task = task;
+                    report.Favorite = fav;
+                    ctx.Reports.Add(report);
+                    ctx.SaveChanges();
+                }
             }
 
         }
