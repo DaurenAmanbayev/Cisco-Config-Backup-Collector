@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace RemoteWork
 {
-    public partial class RconfigSettings : Form
+    public partial class RconfigImporter : Form
     {
-        public RconfigSettings()
+        public RconfigImporter()
         {
             InitializeComponent();
+
         }
     }
 }

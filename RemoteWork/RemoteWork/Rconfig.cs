@@ -304,7 +304,7 @@ namespace RemoteWork
         //настройка конфигурации приложения
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RconfigSettings frm = new RconfigSettings();
+            RconfigImporter frm = new RconfigImporter();
             frm.ShowDialog();    
         }      
         //настройка отчетности по выполнению задач по сбору конфигурации
@@ -335,7 +335,7 @@ namespace RemoteWork
         //настройки приложения
         private void toolStripButtonSettings_Click(object sender, EventArgs e)
         {
-            RconfigSettings frm = new RconfigSettings();
+            RconfigImporter frm = new RconfigImporter();
             frm.ShowDialog();           
         }
         //отчетность о ходе выполнении задач

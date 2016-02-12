@@ -12,6 +12,7 @@ using System.Data.Entity;
 
 namespace RemoteWork.Managers
 {
+    //добавить дополнительные колонки для описания программного обеспечения
     public partial class Command_Manager : Form
     {
         RconfigContext context = new RconfigContext();
