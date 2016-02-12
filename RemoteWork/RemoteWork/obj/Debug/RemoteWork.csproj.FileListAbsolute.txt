@@ -144,3 +144,10 @@ Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Load_Config.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Progress.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigSettings.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigImporter.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\LinqToExcel.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\log4net.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Remotion.Data.Linq.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Remotion.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Remotion.Interfaces.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\LinqToExcel.xml
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\log4net.xml
