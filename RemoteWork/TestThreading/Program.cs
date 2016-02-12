@@ -23,7 +23,11 @@ namespace TestThreading
         private static void TaskUse()
         {
             int taskID = 5;
+            DateTime start = DateTime.Now;
             LoadConfigurationThread(taskID);
+            DateTime end = DateTime.Now;
+            TimeSpan diff = start - end;
+            Console.WriteLine("Finish"+diff);
             Console.ReadKey();
             
         }
@@ -192,6 +196,18 @@ namespace TestThreading
                 }
             }
 
+        }
+        #endregion
+
+
+        #region ADO.NET multihreading
+        private static void Manager()
+        {
+ 
+        }
+        private static void Connect()
+        {
+ 
         }
         #endregion
     }
