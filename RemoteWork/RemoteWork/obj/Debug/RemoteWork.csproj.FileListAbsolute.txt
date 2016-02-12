@@ -137,10 +137,10 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\Remo
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Configuration_Manager.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Load_Config.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Progress.resources
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigSettings.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Analytics.Analytic.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Config_Watcher.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Configuration_Manager.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Load_Config.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Progress.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigSettings.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigImporter.resources
