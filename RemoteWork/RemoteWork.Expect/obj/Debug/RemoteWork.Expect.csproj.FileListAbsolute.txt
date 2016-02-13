@@ -12,3 +12,10 @@ D:\Repository\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\Renci.SshNet.xml
 D:\Repository\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.csprojResolveAssemblyReference.cache
 D:\Repository\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.dll
 D:\Repository\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.pdb
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\RemoteWork.Expect.dll
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\RemoteWork.Expect.pdb
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\Renci.SshNet.dll
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\bin\Debug\Renci.SshNet.xml
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.csprojResolveAssemblyReference.cache
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.dll
+C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork.Expect\obj\Debug\RemoteWork.Expect.pdb

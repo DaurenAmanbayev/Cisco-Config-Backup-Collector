@@ -20,7 +20,7 @@ namespace RemoteWorkUtil
         static string logJournal = "rconfig-journal.log";
         static int TaskID;
         static void Main(string[] args)
-        {             
+        {
             //если первый аргумент 
             if (args.Length > 0)
             {
@@ -49,7 +49,7 @@ namespace RemoteWorkUtil
             else
             {
                 //записать в логи провал
-                Logging(string.Format("TASK failed!!! Argument is null!!"));            
+                Logging(string.Format("TASK failed!!! Argument is null!!"));
             }
         }
         //проверка наличия задачи в базе данных
