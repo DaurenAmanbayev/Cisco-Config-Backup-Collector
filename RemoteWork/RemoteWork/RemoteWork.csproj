@@ -31,7 +31,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Download-48.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DiffPlex, Version=1.2.0.0, Culture=neutral, PublicKeyToken=1d35e91d1bd7bc0f, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiffPlex.1.2.1\lib\portable-net40+sl50+win+wpa81+wp80\DiffPlex.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -86,6 +93,12 @@
     </Compile>
     <Compile Include="Config Watcher.Designer.cs">
       <DependentUpon>Config Watcher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigDiffer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigDiffer.Designer.cs">
+      <DependentUpon>ConfigDiffer.cs</DependentUpon>
     </Compile>
     <Compile Include="Configuration Manager.cs">
       <SubType>Form</SubType>
@@ -201,6 +214,9 @@
     <EmbeddedResource Include="Config Watcher.resx">
       <DependentUpon>Config Watcher.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConfigDiffer.resx">
+      <DependentUpon>ConfigDiffer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuration Manager.resx">
       <DependentUpon>Configuration Manager.cs</DependentUpon>
     </EmbeddedResource>
@@ -254,6 +270,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Rconfig.resx">
       <DependentUpon>Rconfig.cs</DependentUpon>
@@ -288,6 +305,9 @@
       <Project>{b53a97a9-f841-4a42-af2d-0c24424802aa}</Project>
       <Name>RemoteWork.Expect</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Download-48.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,7 +22,8 @@ namespace RemoteWork
        HostnameEmpty,
        HostnameNotUnique,
        AddressEmpty,
-       AddressNotParsed      
+       AddressNotParsed,
+       AddressNotUnique    
     }
     public partial class Favorite_Edit : Form
     {
@@ -169,6 +170,26 @@ namespace RemoteWork
                 });
             }
             return uniqueHostname;
+        }
+        //проверка уникальности адреса
+        //не используется!!!
+        private bool isUniqueAddress()
+        {
+            bool uniqueAddress = true;
+            string address = textBoxAddress.Text.Trim();
+            using (RconfigContext context = new RconfigContext())
+            {
+                context.Favorites.ToList().ForEach(fav =>
+                {
+                    if (fav.Address == address)
+                    {
+                        uniqueAddress = false;
+                        validateInput = FavoriteInputValidate.AddressNotUnique;
+                    }
+
+                });
+            }
+            return uniqueAddress;
         }
         //добавляем избранное в базу
         private void FavoriteAdd()

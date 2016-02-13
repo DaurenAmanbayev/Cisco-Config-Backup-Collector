@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Category_Manager));
             this.listBoxCategory = new System.Windows.Forms.ListBox();
             this.contextMenuStripCategory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +55,7 @@
             this.editCategoryToolStripMenuItem,
             this.deleteCategoryToolStripMenuItem});
             this.contextMenuStripCategory.Name = "contextMenuStripCategory";
-            this.contextMenuStripCategory.Size = new System.Drawing.Size(159, 92);
+            this.contextMenuStripCategory.Size = new System.Drawing.Size(159, 70);
             // 
             // addCategoryToolStripMenuItem
             // 
@@ -83,6 +84,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 332);
             this.Controls.Add(this.listBoxCategory);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Category_Manager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Category_Manager";

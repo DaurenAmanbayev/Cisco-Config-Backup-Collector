@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Location_Manager));
             this.listBoxLocations = new System.Windows.Forms.ListBox();
             this.contextMenuStripLocations = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +84,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 332);
             this.Controls.Add(this.listBoxLocations);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Location_Manager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Location_Manager";

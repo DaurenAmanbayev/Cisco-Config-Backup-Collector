@@ -13,6 +13,7 @@ using System.Data.Entity;
 using RemoteWork.Data;
 using RemoteWork.Expect;
 
+
 /*
 добавление устройств по аналогии с KeePass
  * добавить фильтр в репорт
@@ -37,10 +38,8 @@ namespace RemoteWork
         //стартовые настройки интерфейса
         private void StartConfiguration()
         {
-            //контекстное меню категории
-            addCategoryToolStripMenuItem.Visible = false;
-            editCategoryToolStripMenuItem.Visible = false;
-            deleteCategoryToolStripMenuItem.Visible = false; 
+            //контекстное меню категории           
+            addFavoriteToolStripMenuItem.Visible = false;         
          
         }
         //подгрузка данных о категории для отображения
@@ -113,10 +112,8 @@ namespace RemoteWork
             {
                 string category = treeViewFavorites.SelectedNode.Name.ToString();
                 LoadCategoryData(category);
-                //контекстное меню категории
-                addCategoryToolStripMenuItem.Visible = true;             
-                editCategoryToolStripMenuItem.Visible = true;
-                deleteCategoryToolStripMenuItem.Visible = true;
+                //контекстное меню категории                          
+                addFavoriteToolStripMenuItem.Visible = true;               
                 //контекстное меню избранного
                 //favoriteAddToolStripMenuItem.Visible = false;
                 //favoriteEditToolStripMenuItem.Visible = false;
@@ -212,9 +209,22 @@ namespace RemoteWork
                 frm.ShowDialog();
             }
         }
-       
         //добавление нового устройства
-        private void favoriteAddToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addFavoriteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewFavorites.SelectedNode != null)
+            {
+                string category = treeViewFavorites.SelectedNode.Text;
+                Favorite_Edit frm = new Favorite_Edit();
+                DialogResult result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    LoadCategoryData(category);
+                }
+            }
+        }
+        //добавление нового устройства
+        private void toolStripButtonAddFavorite_Click(object sender, EventArgs e)
         {
             if (treeViewFavorites.SelectedNode != null)
             {
@@ -283,16 +293,16 @@ namespace RemoteWork
      
         //опции главного меню
         #region TOOLSTRIP MENU
-        //управление данными приложения
-        private void managerToolStripMenuItem_Click(object sender, EventArgs e)
+        //управление данными приложения        
+        private void appManagementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Management frm = new Management();
             frm.ShowDialog();
             //отслеживаем изменялись ли категории и обновляем данные, если да
             if (frm.CategoryChanged)
-            {               
+            {
                 treeViewFavorites.Nodes.Clear();
-                LoadData();               
+                LoadData();
             }
         }
         //просмотр и управление конфигурациями
@@ -321,13 +331,14 @@ namespace RemoteWork
         //о программе
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            NotifyInfo("About Info");
+            NotifyInfo("Project on GitHub https://github.com/DaurenAmanbayev/RemoteWork");
         }
         //справочная информация
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NotifyInfo("Help Info!");
         }
+       
         #endregion
 
         //кнопки быстрого доступа
@@ -352,11 +363,104 @@ namespace RemoteWork
         }
         private void toolStripButtonAbout_Click(object sender, EventArgs e)
         {
-            NotifyInfo("About Info");
+            NotifyInfo("Project on GitHub https://github.com/DaurenAmanbayev/RemoteWork ");
         }
-        #endregion    
+        private void toolStripButtonInfo_Click(object sender, EventArgs e)
+        {
+            NotifyInfo("Help Info!");
+        }
 
-       
-       
+
+
+
+
+        #endregion
+
+        //поиск по указанному паттерну
+        #region SEARCH
+        //поиск избранного устройства
+        private void toolStripButtonSearch_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(toolStripComboBoxSearch.Text))
+            {
+                UseWaitCursor = true;
+                //MessageBox.Show(toolStripComboBoxSearch.Text);
+                using (RconfigContext context = new RconfigContext())
+                {
+                    bool isCleared = false;//для проверка очищался у нас listview
+                    string pattern = toolStripComboBoxSearch.Text.Trim();
+                    var queryFavorites = from c in context.Favorites
+                                         select c;
+                    //nested query
+                    var filterQuery = queryFavorites;
+
+                    if (byAddressToolStripMenuItem.CheckState == CheckState.Checked)//фильтр поиска
+                    {
+                        //ищем схожести по паттерну
+                        filterQuery = from c in queryFavorites
+                                      where c.Address.Contains(pattern) && c.Address.EndsWith(pattern)
+                                      select c;
+                        //если запрос не пустой
+                        if (filterQuery != null)
+                        {
+                            //делаем проверку очищался у нас listview
+                            if (!isCleared)
+                            {
+                                //если не очищался, очищаем
+                                listViewDetails.Items.Clear();
+                                isCleared = true;
+                            }
+                            //добавляем наши устройства
+                            AddFavoritesFromQuery(filterQuery);
+                        }
+                    }
+                    if (byHostnameToolStripMenuItem.CheckState == CheckState.Checked)//фильтр поиска
+                    {
+                        filterQuery = from c in queryFavorites
+                                      where c.Hostname.Contains(pattern) && c.Hostname.EndsWith(pattern)
+                                      select c;
+                        if (filterQuery != null)
+                        {
+                            if (!isCleared)
+                            {
+                                listViewDetails.Items.Clear();
+                                isCleared = true;
+                            }
+                            AddFavoritesFromQuery(filterQuery);
+                        }
+                    }
+                    if (byLocationToolStripMenuItem.CheckState == CheckState.Checked)//фильтр поиска
+                    {
+                        filterQuery = from c in queryFavorites
+                                      where c.Location.LocationName.Contains(pattern) && c.Location.LocationName.EndsWith(pattern)
+                                      select c;
+                        if (filterQuery != null)
+                        {
+                            if (!isCleared)
+                            {
+                                listViewDetails.Items.Clear();
+                                isCleared = true;
+                            }
+                            AddFavoritesFromQuery(filterQuery);
+                        }
+                    }
+                }
+                UseWaitCursor = false;
+            }
+        }
+        //добавить устройства из запроса
+        private void AddFavoritesFromQuery(IQueryable<Favorite> queryFavorites)
+        {
+            foreach (Favorite fav in queryFavorites)
+            {
+                var item = new ListViewItem(new[] { fav.Hostname,
+                                    fav.Address,
+                                    fav.Port.ToString(),
+                                    fav.Protocol.Name,
+                                    fav.Location.LocationName });
+                listViewDetails.Items.Add(item);
+            }
+        }     
+        #endregion
     }
 }

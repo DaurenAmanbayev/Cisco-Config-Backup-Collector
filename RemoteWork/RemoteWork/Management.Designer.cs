@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Management));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.managerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.commandManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.credentialManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.locationManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.taskManageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +45,6 @@
             this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.minimizeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.taskManageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,6 +100,13 @@
             this.locationManagerToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.locationManagerToolStripMenuItem.Text = "Location Manager";
             this.locationManagerToolStripMenuItem.Click += new System.EventHandler(this.locationManagerToolStripMenuItem_Click);
+            // 
+            // taskManageToolStripMenuItem
+            // 
+            this.taskManageToolStripMenuItem.Name = "taskManageToolStripMenuItem";
+            this.taskManageToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.taskManageToolStripMenuItem.Text = "Task Manager";
+            this.taskManageToolStripMenuItem.Click += new System.EventHandler(this.taskManageToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -163,19 +171,13 @@
             this.minimizeAllToolStripMenuItem.Text = "Minimize All";
             this.minimizeAllToolStripMenuItem.Click += new System.EventHandler(this.minimizeAllToolStripMenuItem_Click);
             // 
-            // taskManageToolStripMenuItem
-            // 
-            this.taskManageToolStripMenuItem.Name = "taskManageToolStripMenuItem";
-            this.taskManageToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.taskManageToolStripMenuItem.Text = "Task Manager";
-            this.taskManageToolStripMenuItem.Click += new System.EventHandler(this.taskManageToolStripMenuItem_Click);
-            // 
             // Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(560, 425);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Management";

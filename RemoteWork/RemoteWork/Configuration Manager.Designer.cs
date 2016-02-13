@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Configuration_Manager));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.checkBoxHostname = new System.Windows.Forms.CheckBox();
@@ -41,6 +42,7 @@
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripOpenConfig = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonCompare = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.contextMenuStripOpenConfig.SuspendLayout();
@@ -68,6 +70,7 @@
             this.flowLayoutPanel1.Controls.Add(this.buttonFind);
             this.flowLayoutPanel1.Controls.Add(this.dateTimePickerFilter);
             this.flowLayoutPanel1.Controls.Add(this.buttonFilter);
+            this.flowLayoutPanel1.Controls.Add(this.buttonCompare);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(465, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -159,13 +162,25 @@
             this.openConfigurationToolStripMenuItem.Text = "Open Configuration";
             this.openConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openConfigurationToolStripMenuItem_Click);
             // 
+            // buttonCompare
+            // 
+            this.buttonCompare.Location = new System.Drawing.Point(3, 155);
+            this.buttonCompare.Name = "buttonCompare";
+            this.buttonCompare.Size = new System.Drawing.Size(121, 32);
+            this.buttonCompare.TabIndex = 8;
+            this.buttonCompare.Text = "Compare 2 Configs";
+            this.buttonCompare.UseVisualStyleBackColor = true;
+            this.buttonCompare.Click += new System.EventHandler(this.buttonCompare_Click);
+            // 
             // Configuration_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 395);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Configuration_Manager";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Configurations";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -189,5 +204,6 @@
         private System.Windows.Forms.ToolStripMenuItem openConfigurationToolStripMenuItem;
         private System.Windows.Forms.DateTimePicker dateTimePickerFilter;
         private System.Windows.Forms.Button buttonFilter;
+        private System.Windows.Forms.Button buttonCompare;
     }
 }

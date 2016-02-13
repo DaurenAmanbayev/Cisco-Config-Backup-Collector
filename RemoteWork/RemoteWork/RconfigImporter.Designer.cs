@@ -32,7 +32,11 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.includeLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notCommonProtocolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewImport = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -46,10 +50,6 @@
             this.comboBoxProtocols = new System.Windows.Forms.ComboBox();
             this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             this.buttonImport = new System.Windows.Forms.Button();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.includeLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notCommonProtocolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewImport)).BeginInit();
@@ -82,9 +82,20 @@
             // 
             this.loadFileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("loadFileToolStripMenuItem.Image")));
             this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
-            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.loadFileToolStripMenuItem.Text = "Load Excel File";
             this.loadFileToolStripMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(147, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // exportToolStripMenuItem
             // 
@@ -94,6 +105,22 @@
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.exportToolStripMenuItem.Text = "Options";
+            // 
+            // includeLocationToolStripMenuItem
+            // 
+            this.includeLocationToolStripMenuItem.Checked = true;
+            this.includeLocationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.includeLocationToolStripMenuItem.Name = "includeLocationToolStripMenuItem";
+            this.includeLocationToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.includeLocationToolStripMenuItem.Text = "Use Common Location";
+            // 
+            // notCommonProtocolToolStripMenuItem
+            // 
+            this.notCommonProtocolToolStripMenuItem.Checked = true;
+            this.notCommonProtocolToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.notCommonProtocolToolStripMenuItem.Name = "notCommonProtocolToolStripMenuItem";
+            this.notCommonProtocolToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.notCommonProtocolToolStripMenuItem.Text = "Use Common Protocol";
             // 
             // tableLayoutPanel1
             // 
@@ -224,33 +251,7 @@
             this.buttonImport.TabIndex = 9;
             this.buttonImport.Text = "Import";
             this.buttonImport.UseVisualStyleBackColor = true;
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            // 
-            // includeLocationToolStripMenuItem
-            // 
-            this.includeLocationToolStripMenuItem.Checked = true;
-            this.includeLocationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.includeLocationToolStripMenuItem.Name = "includeLocationToolStripMenuItem";
-            this.includeLocationToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.includeLocationToolStripMenuItem.Text = "Use Common Location";
-            // 
-            // notCommonProtocolToolStripMenuItem
-            // 
-            this.notCommonProtocolToolStripMenuItem.Checked = true;
-            this.notCommonProtocolToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.notCommonProtocolToolStripMenuItem.Name = "notCommonProtocolToolStripMenuItem";
-            this.notCommonProtocolToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.notCommonProtocolToolStripMenuItem.Text = "Use Common Protocol";
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // RconfigImporter
             // 
@@ -259,9 +260,10 @@
             this.ClientSize = new System.Drawing.Size(691, 444);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "RconfigImporter";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "RconfigSettings";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

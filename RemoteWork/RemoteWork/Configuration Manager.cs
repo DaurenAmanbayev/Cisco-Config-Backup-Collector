@@ -246,6 +246,40 @@ namespace RemoteWork
             }
             useDateFilter = false;
         }
-     
+        //сравнение разницы
+        private void buttonCompare_Click(object sender, EventArgs e)
+        {
+            //чтобы сравнить необходимо выбрать две конфигурации
+            if (listViewConfig.SelectedItems.Count >= 0)//==2
+            {
+                var item1 = listViewConfig.SelectedItems[0];
+                int configId1 = Int32.Parse(item1.SubItems[0].Text);
+                var queryConfig1 = (from c in context.Configs
+                                    where c.Id == configId1
+                                    select c).FirstOrDefault();
+
+                var item2 = listViewConfig.SelectedItems[1];
+                int configId2 = Int32.Parse(item2.SubItems[1].Text);
+
+                var queryConfig2 = (from c in context.Configs
+                                    where c.Id == configId2
+                                    select c).FirstOrDefault();
+                //если конфигурации успешно подгружены
+                if (queryConfig1 != null && queryConfig2 != null)
+                {
+                    string config1 = queryConfig1.Current;
+                    string date1 = queryConfig1.Date.ToString();
+                    string config2 = queryConfig2.Current;
+                    string date2 = queryConfig2.Date.ToString();
+                    //отправляем данные на форму                  
+                    ConfigDiffer frm = new ConfigDiffer(config1, config2, date1, date2);
+                    frm.ShowDialog();
+                }
+            }
+            else
+            {
+                NotifyInfo("Please choose 2 config for compare!");
+            }
+        }
     }
 }
