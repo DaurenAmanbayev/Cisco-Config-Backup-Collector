@@ -235,6 +235,7 @@
             this.comboBoxProtocols.Name = "comboBoxProtocols";
             this.comboBoxProtocols.Size = new System.Drawing.Size(121, 21);
             this.comboBoxProtocols.TabIndex = 7;
+            this.comboBoxProtocols.SelectedIndexChanged += new System.EventHandler(this.comboBoxProtocol_SelectedIndexChanged);
             // 
             // numericUpDownPort
             // 

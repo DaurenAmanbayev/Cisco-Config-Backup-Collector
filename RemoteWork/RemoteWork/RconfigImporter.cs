@@ -215,6 +215,19 @@ namespace RemoteWork
                 }
 
             }
-        }       
+        }
+        //смена порта на порт по умолчанию для выбранного протокола
+        private void comboBoxProtocol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            using (RconfigContext context = new RconfigContext())
+            {
+                //подгружаем данные о портах по умолчанию для выбранного протокола
+                var queryPort = (from c in context.Protocols
+                                 where c.Name == comboBoxProtocols.SelectedValue.ToString()
+                                 select c).FirstOrDefault();
+                if (queryPort != null)
+                    numericUpDownPort.Value = queryPort.DefaultPort;
+            }
+        }
     }
 }

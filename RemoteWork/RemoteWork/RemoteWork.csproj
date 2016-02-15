@@ -106,13 +106,17 @@
     <Compile Include="Configuration Manager.Designer.cs">
       <DependentUpon>Configuration Manager.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Favorite Edit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Favorite Edit.Designer.cs">
       <DependentUpon>Favorite Edit.cs</DependentUpon>
     </Compile>
-    <Compile Include="FavoriteConnection.cs" />
+    <Compile Include="FavoriteConnect.cs" />
+    <Compile Include="FavoriteTask.cs" />
     <Compile Include="Load Config.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +211,7 @@
       <DependentUpon>RconfigImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="RegexExtract.cs" />
+    <Compile Include="Win32.cs" />
     <Compile Include="WindowsMode.cs" />
     <EmbeddedResource Include="Analytics\Analytic.resx">
       <DependentUpon>Analytic.cs</DependentUpon>

@@ -35,21 +35,22 @@
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButtonCompare = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.richTextBoxFirst = new System.Windows.Forms.RichTextBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.richTextBoxSecond = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.richTextBoxDiff = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.richTextBoxSecond = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.richTextBoxFirst = new System.Windows.Forms.RichTextBox();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -59,7 +60,8 @@
             this.toolStripLabel2,
             this.toolStripLabel3,
             this.toolStripLabel4,
-            this.toolStripLabel5});
+            this.toolStripLabel5,
+            this.toolStripButtonCompare});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(568, 25);
@@ -105,6 +107,17 @@
             this.toolStripLabel5.Size = new System.Drawing.Size(68, 22);
             this.toolStripLabel5.Text = "Unchanged";
             // 
+            // toolStripButtonCompare
+            // 
+            this.toolStripButtonCompare.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonCompare.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCompare.Image")));
+            this.toolStripButtonCompare.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCompare.Name = "toolStripButtonCompare";
+            this.toolStripButtonCompare.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonCompare.Text = "toolStripButton1";
+            this.toolStripButtonCompare.ToolTipText = "Compare files";
+            this.toolStripButtonCompare.Click += new System.EventHandler(this.toolStripButtonCompare_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
@@ -121,74 +134,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(568, 330);
             this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.richTextBoxFirst, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(183, 324);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Config 1:";
-            // 
-            // richTextBoxFirst
-            // 
-            this.richTextBoxFirst.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxFirst.Location = new System.Drawing.Point(3, 23);
-            this.richTextBoxFirst.Name = "richTextBoxFirst";
-            this.richTextBoxFirst.ReadOnly = true;
-            this.richTextBoxFirst.Size = new System.Drawing.Size(177, 298);
-            this.richTextBoxFirst.TabIndex = 1;
-            this.richTextBoxFirst.Text = "";
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.richTextBoxSecond, 0, 1);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(192, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(183, 324);
-            this.tableLayoutPanel3.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Config 2: ";
-            // 
-            // richTextBoxSecond
-            // 
-            this.richTextBoxSecond.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxSecond.Location = new System.Drawing.Point(3, 23);
-            this.richTextBoxSecond.Name = "richTextBoxSecond";
-            this.richTextBoxSecond.ReadOnly = true;
-            this.richTextBoxSecond.Size = new System.Drawing.Size(177, 298);
-            this.richTextBoxSecond.TabIndex = 1;
-            this.richTextBoxSecond.Text = "";
             // 
             // tableLayoutPanel4
             // 
@@ -224,6 +169,74 @@
             this.richTextBoxDiff.TabIndex = 1;
             this.richTextBoxDiff.Text = "";
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.richTextBoxSecond, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(192, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(183, 324);
+            this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Config 2: ";
+            // 
+            // richTextBoxSecond
+            // 
+            this.richTextBoxSecond.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxSecond.Location = new System.Drawing.Point(3, 23);
+            this.richTextBoxSecond.Name = "richTextBoxSecond";
+            this.richTextBoxSecond.ReadOnly = true;
+            this.richTextBoxSecond.Size = new System.Drawing.Size(177, 298);
+            this.richTextBoxSecond.TabIndex = 1;
+            this.richTextBoxSecond.Text = "";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.richTextBoxFirst, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(183, 324);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Config 1:";
+            // 
+            // richTextBoxFirst
+            // 
+            this.richTextBoxFirst.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxFirst.Location = new System.Drawing.Point(3, 23);
+            this.richTextBoxFirst.Name = "richTextBoxFirst";
+            this.richTextBoxFirst.ReadOnly = true;
+            this.richTextBoxFirst.Size = new System.Drawing.Size(177, 298);
+            this.richTextBoxFirst.TabIndex = 1;
+            this.richTextBoxFirst.Text = "";
+            // 
             // ConfigDiffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,12 +251,12 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,5 +280,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox richTextBoxFirst;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCompare;
     }
 }

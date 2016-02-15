@@ -16,7 +16,7 @@ using RemoteWork.Expect;
 
 /*
 добавление устройств по аналогии с KeePass
- * добавить фильтр в репорт
+добавить фильтр в репорт
 добавить функционал поиска по значению
 добавить ордер для команды
 добавить выбор категорий в задачи
@@ -31,6 +31,7 @@ namespace RemoteWork
             InitializeComponent();
             Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<RconfigContext, RemoteWork.Access.Migrations.Configuration>());
             StartConfiguration();
+            FirstInsert();
             LoadData();         
         }
         //дополнительные методы используемые в форме
@@ -39,7 +40,7 @@ namespace RemoteWork
         private void StartConfiguration()
         {
             //контекстное меню категории           
-            addFavoriteToolStripMenuItem.Visible = false;         
+            addFavoriteToolStripMenuItem.Visible = false;      
          
         }
         //подгрузка данных о категории для отображения
@@ -67,7 +68,92 @@ namespace RemoteWork
             //LoadChildData();
            
         }
+        //вставка данных по умолчанию
+        private void FirstInsert()
+        {
+            using (RconfigContext context = new RconfigContext())
+            {
+                //проверяем данные в БД
+                //если данных нет инициализируем их
+                if (context.Protocols.Count<Protocol>() == 0)
+                {
+                    MessageBox.Show("TTT");
+                    ////PROTOCOLS
+                    //context.Protocols.Add(new Protocol
+                    //{
+                    //    Name = "SSH",
+                    //    DefaultPort = 22
+                    //});
+                    //context.Protocols.Add(new Protocol
+                    //{
+                    //    Name = "Telnet",
+                    //    DefaultPort = 23
+                    //});
 
+                    ////CATEGORIES
+                    //Category routers = new Category
+                    //{
+                    //    CategoryName = "Routers"
+                    //};
+
+                    //Category switches = new Category
+                    //{
+                    //    CategoryName = "Switches"
+                    //};
+
+                    //Category servers = new Category
+                    //{
+                    //    CategoryName = "Servers"
+                    //};
+
+                    //context.Categories.Add(routers);
+                    //context.Categories.Add(switches);
+                    //context.Categories.Add(servers);
+
+                    ////COMMANDS
+                    //ICollection<Category> cisco = new HashSet<Category>();
+                    //cisco.Add(routers);
+                    //cisco.Add(switches);
+
+                    //context.Commands.Add(new Command
+                    //{
+                    //    Name = "terminal length 0",
+                    //    Order = 0,
+                    //    Categories = cisco
+                    //});
+
+                    //context.Commands.Add(new Command
+                    //{
+                    //    Name = "show running-config",
+                    //    Order = 1,
+                    //    Categories = cisco
+                    //});
+                    //ICollection<Category> vlan = new HashSet<Category>();
+                    //vlan.Add(switches);
+                    //context.Commands.Add(new Command
+                    //{
+                    //    Name = "show ip vlan brief",
+                    //    Order = 2,
+                    //    Categories = vlan
+                    //});
+
+                    ////CREDENTIALS
+                    //context.Credentials.Add(new Credential
+                    //{
+                    //    CredentialName = "Default",
+                    //    Username = "root",
+                    //    Domain = "domain.com",
+                    //    Password = "password"
+                    //});
+                    ////LOCATIONS
+                    //context.Locations.Add(new Location
+                    //{
+                    //    LocationName = "Syslocation"
+                    //});
+                    //context.SaveChanges();
+                }
+            }
+        }  
         //!!! не используется
         //подгружаем дочерние данные избранные
         private void LoadChildData()
@@ -369,11 +455,6 @@ namespace RemoteWork
         {
             NotifyInfo("Help Info!");
         }
-
-
-
-
-
         #endregion
 
         //поиск по указанному паттерну

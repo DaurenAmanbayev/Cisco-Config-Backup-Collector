@@ -66,99 +66,78 @@ namespace RemoteWorkUtil
                     return false;
             }
         }
-        //многопоточный вариант
-        //не реализован!!!!
-        #region TASK USE
-        private void TaskUse()
+        //многопоточный вариант обхода и сбора конфигураций с устройств по задаче
+        #region TASK PARALLEL USAGE     
+        //возможен конфликт при параллельной вставке данных
+        private static void LoadConfigurationThread(int taskId)
         {
-        }
-        //для подгрузки данных использовать ADO.NET и пул соединений
-        private static void LoadConfigurationThread(RemoteTask task)
-        {
-            CancellationToken token;
-
-            List<Task> taskRunnerManager = new List<Task>();
-            //LockForm();
-            var tokenSource = new CancellationTokenSource();
-            token = tokenSource.Token;
-            int countFav = 0;
-            //   ProgressInit(task.Favorites.Count);
-            try
+           // CancellationToken token;
+            using (RconfigContext context = new RconfigContext())
             {
-                foreach (Favorite fav in task.Favorites)
+                var task = (from c in context.RemoteTasks
+                            where c.Id == taskId
+                            select c).FirstOrDefault();
+
+                if (task != null)
                 {
-                    //STARTED
-                    Console.WriteLine("OPERATION started for {0}...", fav.Address);
-                    List<string> commands = new List<string>();
-                    //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
-                    foreach (Command command in task.Commands)
+                    List<Task> taskRunnerManager = new List<Task>();                   
+                    //var tokenSource = new CancellationTokenSource();
+                   // token = tokenSource.Token;
+                    //int countFav = 0;  //для логгирования???            
+                    try
                     {
-                        foreach (Category category in command.Categories)
+                        foreach (Favorite fav in task.Favorites)
                         {
-                            if (fav.Category.CategoryName == category.CategoryName)
+                            //STARTED
+                            //логгирование!!!
+                            //Console.WriteLine("OPERATION started for {0}...", fav.Address);
+                            List<string> commands = new List<string>();
+                            //проходим по списку команд, выявляем соответствие используемой команды и категории избранного               
+                            foreach (Command command in task.Commands.OrderBy(c => c.Order))
                             {
-                                commands.Add(command.Name);
+                                foreach (Category category in command.Categories)
+                                {
+                                    if (fav.Category.CategoryName == category.CategoryName)
+                                    {
+                                        commands.Add(command.Name);
+                                    }
+                                }
                             }
+                            //мультипоточность
+                            //устанавливаем соединение
+                            FavoriteTask connect = new FavoriteTask();
+                            connect.Commands = commands;
+                            connect.FavoriteId = fav.Id;
+                            connect.TaskId = task.Id;
+                         
+                            //логгирование !!!
+                            //Console.WriteLine("Connection started for {0} favorites...", countFav++);        
+                           
+                            //создаем задачу и добавляем ее в менеджер
+                            Task taskRunner = Task.Factory.StartNew(() =>
+                                ConnectionThread(connect));                            
+                        }
+
+                        //дожидаемся пока выполняться все задания
+                        foreach (Task taskRunner in taskRunnerManager)
+                        {                           
+                            taskRunner.Wait();
+                           // Console.WriteLine("Task {0} finished...", taskRunner.Id);
                         }
                     }
-                    //мультипоточность
-                    //устанавливаем соединение
-                    FavoriteTask connect = new FavoriteTask();
-                    connect.Commands = commands;
-                    connect.FavoriteId = fav.Id;
-                    connect.TaskId = task.Id;
-
-                    //FavoriteConnect connect = new FavoriteConnect();
-                    //connect.commands = commands;
-                    //connect.favorite = fav;
-                    //connect.task = task;
-
-                    Console.WriteLine("Connection started for {0} favorites...", countFav++);
-                    ConnectionThread(connect, token);
-                    //Многопоточный вариант отпадает в связи с ограничением работы EF с потоками
-                    //
-                    //Task taskRunner = Task.Factory.StartNew(() =>
-                    //    Connection(connect, token), token
-                    //);
-                    /*
-                     t = Task.Factory.StartNew(() => DoSomeWork(1, token), token)
-                     Console.WriteLine("Task {0} executing", t.Id);
-                     tasks.Add(t);
-                     */
-                    //Console.WriteLine("Task {0} started...", taskRunner.Id);
-                    // taskRunnerManager.Add(taskRunner);
-                    //Connection(fav, commands, task);
+                    catch (Exception ex)
+                    {
+                        //Console.ForegroundColor = ConsoleColor.Red;
+                       // Console.WriteLine(ex.Message);
+                        //логгирование
+                    }
                 }
-
-                //дожидаемся пока выполняться все задания
-                foreach (Task taskRunner in taskRunnerManager)
-                {
-                    // ProgressStep();
-                    taskRunner.Wait();
-                    Console.WriteLine("Task {0} finished...", taskRunner.Id);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(ex.Message);
-            }
-
-            //LockForm();
-            // NotifyInfo("Success!");
-            //  ProgressClear();
+            }            
         }
         //проблема с многопоточностью
-        //наверняка нужно создавать новый контекст для каждого потока
-        //или опрашивать и сохранять данные локально с последующей выгрузкой в базу данных
-        private static void ConnectionThread(FavoriteTask favConnect, CancellationToken ct)
+        //создаем новый контекст для каждого потока
+        private static void ConnectionThread(FavoriteTask favConnect)
         {
-            //token stopped!!
-            if (ct.IsCancellationRequested)
-            {
-                Console.WriteLine("Task was cancelled and not started!");
-                ct.ThrowIfCancellationRequested();
-            }
             using (RconfigContext ctx = new RconfigContext())
             {
                 var task = (from c in ctx.RemoteTasks
@@ -190,13 +169,6 @@ namespace RemoteWorkUtil
                     default: expect = new TelnetMintExpect(data); break;
                 }
 
-                //token stopped!!
-                if (ct.IsCancellationRequested)
-                {
-                    Console.WriteLine("Task was cancelled!");
-                    ct.ThrowIfCancellationRequested();
-                }
-
                 //если объект expect успешно создан
                 if (expect != null)
                 {
@@ -222,14 +194,16 @@ namespace RemoteWorkUtil
                     report.Favorite = fav;
                     ctx.Reports.Add(report);
                     ctx.SaveChanges();
+
+                    //логгирование!!!
                 }
             }
 
         }
         #endregion
 
-        //вариант прохождения в цикле
-        #region LOOP USE
+        //вариант прохождения в цикле обхода и сбора конфигураций с устройств по задаче
+        #region LOOP USAGE
         private static void LoopMethod(int TaskID)
         {           
             context = new RconfigContext();
@@ -395,7 +369,7 @@ namespace RemoteWorkUtil
         {
             using (RconfigContext context = new RconfigContext())
             {
-                //PROTOCOL
+                //PROTOCOLS
                 context.Protocols.Add(new Protocol
                 {
                     Name = "SSH",
@@ -407,7 +381,7 @@ namespace RemoteWorkUtil
                     DefaultPort = 23
                 });
 
-                //Categories
+                //CATEGORIES
                 Category routers = new Category
                 {
                     CategoryName = "Routers"
@@ -434,7 +408,15 @@ namespace RemoteWorkUtil
 
                 context.Commands.Add(new Command
                 {
+                    Name = "terminal length 0",
+                    Order = 0,
+                    Categories = cisco
+                });
+
+                context.Commands.Add(new Command
+                {
                     Name = "show running-config",
+                    Order=1,
                     Categories = cisco
                 });
                 ICollection<Category> vlan = new HashSet<Category>();
@@ -442,6 +424,7 @@ namespace RemoteWorkUtil
                 context.Commands.Add(new Command
                 {
                     Name = "show ip vlan brief",
+                    Order=2,
                     Categories = vlan
                 });
 
@@ -451,23 +434,16 @@ namespace RemoteWorkUtil
                     CredentialName = "Default",
                     Username = "root",
                     Domain = "domain.com",
-                    Password = "toor"
+                    Password = "password"
                 });
-
-                context.SaveChanges();
-            }
-        }
-        static void SecondInsert()
-        {
-            using (RconfigContext context = new RconfigContext())
-            {
+                //LOCATIONS
                 context.Locations.Add(new Location
                 {
-                    LocationName="Syslocation"
+                    LocationName = "Syslocation"
                 });
                 context.SaveChanges();
             }
-        }
+        }       
         #endregion
 
         //логгирование процедуры
