@@ -86,6 +86,7 @@ namespace RemoteWorkUtil
                     //int countFav = 0;  //для логгирования???            
                     try
                     {
+                        Logging(string.Format("TASK {0} started...", TaskID));
                         foreach (Favorite fav in task.Favorites)
                         {
                             //STARTED
@@ -130,6 +131,7 @@ namespace RemoteWorkUtil
                         //Console.ForegroundColor = ConsoleColor.Red;
                        // Console.WriteLine(ex.Message);
                         //логгирование
+                        Logging(string.Format("TASK {0} started...", TaskID));
                     }
                 }
             }            
@@ -184,6 +186,11 @@ namespace RemoteWorkUtil
                         config.Current = result;
                         config.Date = DateTime.Now;
                         fav.Configs.Add(config);
+                        Logging(string.Format("TASK {0} : success connection for {0} {1}", TaskID, fav.Hostname, fav.Address));
+                    }
+                    else
+                    {
+                        Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", TaskID, fav.Hostname, fav.Address));
                     }
                     //создаем отчет о проделанном задании
                     Report report = new Report();
