@@ -77,80 +77,79 @@ namespace RemoteWork
                 //если данных нет инициализируем их
                 if (context.Protocols.Count<Protocol>() == 0)
                 {
-                    MessageBox.Show("TTT");
-                    ////PROTOCOLS
-                    //context.Protocols.Add(new Protocol
-                    //{
-                    //    Name = "SSH",
-                    //    DefaultPort = 22
-                    //});
-                    //context.Protocols.Add(new Protocol
-                    //{
-                    //    Name = "Telnet",
-                    //    DefaultPort = 23
-                    //});
+                    //PROTOCOLS
+                    context.Protocols.Add(new Protocol
+                    {
+                        Name = "SSH",
+                        DefaultPort = 22
+                    });
+                    context.Protocols.Add(new Protocol
+                    {
+                        Name = "Telnet",
+                        DefaultPort = 23
+                    });
 
-                    ////CATEGORIES
-                    //Category routers = new Category
-                    //{
-                    //    CategoryName = "Routers"
-                    //};
+                    //CATEGORIES
+                    Category routers = new Category
+                    {
+                        CategoryName = "Routers"
+                    };
 
-                    //Category switches = new Category
-                    //{
-                    //    CategoryName = "Switches"
-                    //};
+                    Category switches = new Category
+                    {
+                        CategoryName = "Switches"
+                    };
 
-                    //Category servers = new Category
-                    //{
-                    //    CategoryName = "Servers"
-                    //};
+                    Category servers = new Category
+                    {
+                        CategoryName = "Servers"
+                    };
 
-                    //context.Categories.Add(routers);
-                    //context.Categories.Add(switches);
-                    //context.Categories.Add(servers);
+                    context.Categories.Add(routers);
+                    context.Categories.Add(switches);
+                    context.Categories.Add(servers);
 
-                    ////COMMANDS
-                    //ICollection<Category> cisco = new HashSet<Category>();
-                    //cisco.Add(routers);
-                    //cisco.Add(switches);
+                    //COMMANDS
+                    ICollection<Category> cisco = new HashSet<Category>();
+                    cisco.Add(routers);
+                    cisco.Add(switches);
 
-                    //context.Commands.Add(new Command
-                    //{
-                    //    Name = "terminal length 0",
-                    //    Order = 0,
-                    //    Categories = cisco
-                    //});
+                    context.Commands.Add(new Command
+                    {
+                        Name = "terminal length 0",
+                        Order = 0,
+                        Categories = cisco
+                    });
 
-                    //context.Commands.Add(new Command
-                    //{
-                    //    Name = "show running-config",
-                    //    Order = 1,
-                    //    Categories = cisco
-                    //});
-                    //ICollection<Category> vlan = new HashSet<Category>();
-                    //vlan.Add(switches);
-                    //context.Commands.Add(new Command
-                    //{
-                    //    Name = "show ip vlan brief",
-                    //    Order = 2,
-                    //    Categories = vlan
-                    //});
+                    context.Commands.Add(new Command
+                    {
+                        Name = "show running-config",
+                        Order = 1,
+                        Categories = cisco
+                    });
+                    ICollection<Category> vlan = new HashSet<Category>();
+                    vlan.Add(switches);
+                    context.Commands.Add(new Command
+                    {
+                        Name = "show ip vlan brief",
+                        Order = 2,
+                        Categories = vlan
+                    });
 
-                    ////CREDENTIALS
-                    //context.Credentials.Add(new Credential
-                    //{
-                    //    CredentialName = "Default",
-                    //    Username = "root",
-                    //    Domain = "domain.com",
-                    //    Password = "password"
-                    //});
-                    ////LOCATIONS
-                    //context.Locations.Add(new Location
-                    //{
-                    //    LocationName = "Syslocation"
-                    //});
-                    //context.SaveChanges();
+                    //CREDENTIALS
+                    context.Credentials.Add(new Credential
+                    {
+                        CredentialName = "Default",
+                        Username = "root",
+                        Domain = "domain.com",
+                        Password = "password"
+                    });
+                    //LOCATIONS
+                    context.Locations.Add(new Location
+                    {
+                        LocationName = "Syslocation"
+                    });
+                    context.SaveChanges();
                 }
             }
         }  
