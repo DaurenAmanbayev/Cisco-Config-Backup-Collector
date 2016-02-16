@@ -30,7 +30,6 @@ namespace RemoteWork.Managers
         {
             InitializeComponent();
         }
-
         public Category_Edit(string category)
         {
             InitializeComponent();
@@ -42,10 +41,16 @@ namespace RemoteWork.Managers
         //подгрузка требуемых данных
         private async void LoadData()
         {
-            var queryCategory=await (from c in context.Categories
-                              where c.CategoryName==prevCategory
-                              select c).FirstOrDefaultAsync();
+            var queryCategory = await (from c in context.Categories
+                                       where c.CategoryName == prevCategory
+                                       select c).FirstOrDefaultAsync();
             currentCategory = queryCategory;
+            //проверка на режим доступа
+            if (currentCategory.EnableModeRequired)
+                checkBoxEnableMode.CheckState = CheckState.Checked;
+            else
+                checkBoxEnableMode.CheckState = CheckState.Unchecked;
+
         }
         //проверка на уникальность устройства
         private bool isUnique(string category)
@@ -86,11 +91,27 @@ namespace RemoteWork.Managers
                     case WindowsMode.ADD:
                         currentCategory = new Category();
                         currentCategory.CategoryName = textBoxCategory.Text.Trim();
+                        if (checkBoxEnableMode.CheckState == CheckState.Checked)
+                        {
+                            currentCategory.EnableModeRequired = true;
+                        }
+                        else
+                        {
+                            currentCategory.EnableModeRequired = false;
+                        }
                         context.Categories.Add(currentCategory);
                         context.SaveChanges();
                         break;
                     case WindowsMode.EDIT:
                         currentCategory.CategoryName = textBoxCategory.Text.Trim();
+                        if (checkBoxEnableMode.CheckState == CheckState.Checked)
+                        {
+                            currentCategory.EnableModeRequired = true;
+                        }
+                        else
+                        {
+                            currentCategory.EnableModeRequired = false;
+                        }
                         context.Entry(currentCategory).State = System.Data.Entity.EntityState.Modified;
                         context.SaveChanges();
                         break;

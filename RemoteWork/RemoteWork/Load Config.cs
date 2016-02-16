@@ -95,7 +95,8 @@ namespace RemoteWork
                     data.port = fav.Port;
                     data.username = fav.Credential.Username;
                     data.password = fav.Credential.Password;
-
+                    data.enableMode = fav.Category.EnableModeRequired;
+                    data.enablePassword = fav.Credential.EnablePassword;
                     //по типу протоколу выбираем требуемое подключение
                     string protocol = fav.Protocol.Name;
                     Expect.Expect expect;

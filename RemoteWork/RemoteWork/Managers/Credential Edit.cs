@@ -19,7 +19,8 @@ namespace RemoteWork.Managers
         CredentialNameEmpty,
         CredentialNotUnique,
         UsernameEmpty,
-        PasswordEmpty
+        PasswordEmpty,
+        EnablePasswordEmpty
     }
     public partial class Credential_Edit : Form
     {
@@ -51,6 +52,7 @@ namespace RemoteWork.Managers
             textBoxUsername.Text = queryCredential.Username;
             textBoxDomain.Text = queryCredential.Domain;
             textBoxPaassword.Text = queryCredential.Password;
+            textBoxEnablePassword.Text = queryCredential.EnablePassword;
         }
         //проверка на уникальность
         private bool isUnique(string credential)
@@ -90,6 +92,11 @@ namespace RemoteWork.Managers
                 validateInput = CredentialInputValidate.PasswordEmpty;
                 return false;
             }
+            if (string.IsNullOrWhiteSpace(textBoxEnablePassword.Text.Trim()))
+            {
+                validateInput = CredentialInputValidate.EnablePasswordEmpty;
+                return false;
+            }
             return isUnique(textBoxCredName.Text.Trim());
         }
         //подтверждение операции
@@ -105,6 +112,7 @@ namespace RemoteWork.Managers
                         currentCredential.Username = textBoxUsername.Text.Trim();
                         currentCredential.Domain = textBoxDomain.Text.Trim();
                         currentCredential.Password = textBoxPaassword.Text.Trim();
+                        currentCredential.EnablePassword = textBoxEnablePassword.Text.Trim();
                         context.Credentials.Add(currentCredential);
                         context.SaveChanges();
                         break;
@@ -113,6 +121,7 @@ namespace RemoteWork.Managers
                         currentCredential.Username = textBoxUsername.Text.Trim();
                         currentCredential.Domain = textBoxDomain.Text.Trim();
                         currentCredential.Password = textBoxPaassword.Text.Trim();
+                        currentCredential.EnablePassword = textBoxEnablePassword.Text.Trim();
                         context.Entry(currentCredential).State = System.Data.Entity.EntityState.Modified;
                         context.SaveChanges();
                         break;
@@ -149,6 +158,6 @@ namespace RemoteWork.Managers
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        }       
     }
 }

@@ -17,6 +17,7 @@ namespace RemoteWork
     {
         string oldText;
         string newText;
+        CustomRichTextBox richTextBoxDiff = new CustomRichTextBox();
         public ConfigDiffer(string fConfig, string sConfig, string date1, string date2)
         {
             InitializeComponent();
@@ -26,8 +27,12 @@ namespace RemoteWork
             label2.Text += date2;
             richTextBoxFirst.Text = fConfig;
             richTextBoxSecond.Text = sConfig;
-           // this.Shown += Differ;
-        }
+            //создаем третий richtextbox с улучшенной производительностью
+            richTextBoxDiff.ReadOnly = true;
+            richTextBoxDiff.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Controls.Add(richTextBoxDiff);
+           // this.Shown += Differ;            
+        }   
         //сравнение
         private void Differ()
         {

@@ -39,7 +39,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.richTextBoxDiff = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxSecond = new System.Windows.Forms.RichTextBox();
@@ -140,7 +139,6 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.richTextBoxDiff, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(381, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -158,16 +156,6 @@
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "Difference";
-            // 
-            // richTextBoxDiff
-            // 
-            this.richTextBoxDiff.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxDiff.Location = new System.Drawing.Point(3, 23);
-            this.richTextBoxDiff.Name = "richTextBoxDiff";
-            this.richTextBoxDiff.ReadOnly = true;
-            this.richTextBoxDiff.Size = new System.Drawing.Size(178, 298);
-            this.richTextBoxDiff.TabIndex = 1;
-            this.richTextBoxDiff.Text = "";
             // 
             // tableLayoutPanel3
             // 
@@ -273,7 +261,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RichTextBox richTextBoxDiff;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox richTextBoxSecond;

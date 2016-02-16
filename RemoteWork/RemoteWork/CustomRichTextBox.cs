@@ -10,6 +10,7 @@ namespace RemoteWork
     class CustomRichTextBox:RichTextBox
     {
         //fastest richtextbox
+        //использует другую версию реализации WordPad  с улучшенной производительностью
         protected override CreateParams CreateParams
         {
             get

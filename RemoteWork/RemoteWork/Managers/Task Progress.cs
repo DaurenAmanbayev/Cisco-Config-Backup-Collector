@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
 using System.Threading;
+using RemoteWork.CommandUsage;
 
 namespace RemoteWork.Managers
 {
@@ -20,11 +21,11 @@ namespace RemoteWork.Managers
         RconfigContext context;
         int max = 0;
         int current = 0;
-        int TaskID;
+        int taskId;
         public Task_Progress(int TaskID)
         {
             InitializeComponent();
-            this.TaskID = TaskID;
+            this.taskId = TaskID;
            
         }
         //инициализация прогресс бара
@@ -49,7 +50,9 @@ namespace RemoteWork.Managers
         //запуск прогресс бара
         private void ProgressStart()
         {
-            LoopMethod(TaskID);
+            //LoopMethod(TaskID);
+            CommandUsageMode mode=CommandUsageMode.LoopUsage;
+            CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);
         }
         //обход и сбор конфигурации с устройств по задаче в цикле
         #region LOOP USAGE
