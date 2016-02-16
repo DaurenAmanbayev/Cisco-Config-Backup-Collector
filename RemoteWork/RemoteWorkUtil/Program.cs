@@ -11,6 +11,7 @@ using System.Threading;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using RemoteWork.CommandUsage;
 
 namespace RemoteWorkUtil
 {
@@ -18,27 +19,19 @@ namespace RemoteWorkUtil
     {
         static RconfigContext context;
         static string logJournal = "rconfig-journal.log";
-        static int TaskID;
+        static int taskId;
         static void Main(string[] args)
         {
             //если первый аргумент 
             if (args.Length > 0)
             {
                 //спарсить первый аргумент 
-                if (Int32.TryParse(args[0], out TaskID))
-                {
-                    //проверить первый аргумент на наличие идентификатора задачи в базе данных
-                    if (CheckTask(TaskID))
-                    {
-                        //если задача имеется запустить
-                        LoopMethod(TaskID);
-                    }
-                    else
-                    {
-                        //записать в логи провал
-                        Logging(string.Format("TASK {0} failed!!! Not correct task ID!!!", TaskID));
-                    }
-
+                if (Int32.TryParse(args[0], out taskId))
+                {   
+                    //если успешно проиницилизировать задачу
+                    CommandUsage comm = new CommandUsage(taskId, CommandUsageMode.LoopUsage);
+                    //запустить выполнение
+                    comm.Dispatcher();
                 }
                 else
                 {
@@ -52,6 +45,8 @@ namespace RemoteWorkUtil
                 Logging(string.Format("TASK failed!!! Argument is null!!"));
             }
         }
+        //черновик методов
+        #region DRAFT
         //проверка наличия задачи в базе данных
         private static bool CheckTask(int TaskID)
         {
@@ -86,7 +81,7 @@ namespace RemoteWorkUtil
                     //int countFav = 0;  //для логгирования???            
                     try
                     {
-                        Logging(string.Format("TASK {0} started...", TaskID));
+                        Logging(string.Format("TASK {0} started...", taskId));
                         foreach (Favorite fav in task.Favorites)
                         {
                             //STARTED
@@ -131,7 +126,7 @@ namespace RemoteWorkUtil
                         //Console.ForegroundColor = ConsoleColor.Red;
                        // Console.WriteLine(ex.Message);
                         //логгирование
-                        Logging(string.Format("TASK {0} started...", TaskID));
+                        Logging(string.Format("TASK {0} started...", taskId));
                     }
                 }
             }            
@@ -159,7 +154,8 @@ namespace RemoteWorkUtil
                 data.port = fav.Port;
                 data.username = fav.Credential.Username;
                 data.password = fav.Credential.Password;
-
+                data.enableMode = fav.Category.EnableModeRequired;
+                data.enablePassword = fav.Credential.EnablePassword;
                 //по типу протоколу выбираем требуемое подключение
                 string protocol = fav.Protocol.Name;
                 Expect expect;
@@ -186,11 +182,11 @@ namespace RemoteWorkUtil
                         config.Current = result;
                         config.Date = DateTime.Now;
                         fav.Configs.Add(config);
-                        Logging(string.Format("TASK {0} : success connection for {0} {1}", TaskID, fav.Hostname, fav.Address));
+                        Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));
                     }
                     else
                     {
-                        Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", TaskID, fav.Hostname, fav.Address));
+                        Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", taskId, fav.Hostname, fav.Address));
                     }
                     //создаем отчет о проделанном задании
                     Report report = new Report();
@@ -272,7 +268,7 @@ namespace RemoteWorkUtil
             catch (Exception ex)
             {
                //записать в логи!!!
-                Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", TaskID, ex.Message));
+                Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", taskId, ex.Message));
             }
             
         }
@@ -291,7 +287,8 @@ namespace RemoteWorkUtil
             data.port = fav.Port;
             data.username = fav.Credential.Username;
             data.password = fav.Credential.Password;
-
+            data.enableMode = fav.Category.EnableModeRequired;
+            data.enablePassword = fav.Credential.EnablePassword;
             //по типу протоколу выбираем требуемое подключение
             string protocol = fav.Protocol.Name;
             Expect expect;
@@ -319,11 +316,11 @@ namespace RemoteWorkUtil
                     config.Current = result;
                     config.Date = DateTime.Now;
                     fav.Configs.Add(config);
-                    Logging(string.Format("TASK {0} : success connection for {0} {1}", TaskID, fav.Hostname, fav.Address));
+                    Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));
                 }
                 else
                 {
-                    Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", TaskID, fav.Hostname, fav.Address));
+                    Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", taskId, fav.Hostname, fav.Address));
                 }
                 //создаем отчет о проделанном задании
                 Report report = new Report();
@@ -338,6 +335,7 @@ namespace RemoteWorkUtil
         }
         #endregion
 
+        #endregion
         //тестовые методы приложения
         #region TEST METHODS
         //тестовые методы

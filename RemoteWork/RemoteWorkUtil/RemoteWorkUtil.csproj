@@ -50,8 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FavoriteConnect.cs" />
-    <Compile Include="FavoriteTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,6 +65,10 @@
     <ProjectReference Include="..\RemoteData\RemoteWork.Data.csproj">
       <Project>{8a2522fb-f15f-4151-a6cf-8ff011f94386}</Project>
       <Name>RemoteWork.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteWork.CommandUsage\RemoteWork.CommandUsage.csproj">
+      <Project>{8203e6c2-6129-4846-be7d-8c6bc41edabb}</Project>
+      <Name>RemoteWork.CommandUsage</Name>
     </ProjectReference>
     <ProjectReference Include="..\RemoteWork.Expect\RemoteWork.Expect.csproj">
       <Project>{b53a97a9-f841-4a42-af2d-0c24424802aa}</Project>
