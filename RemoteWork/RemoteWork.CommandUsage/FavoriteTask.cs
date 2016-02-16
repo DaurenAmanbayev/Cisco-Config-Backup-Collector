@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RemoteWorkUtil
+namespace RemoteWork.CommandUsage
 {
-    struct FavoriteTask
+    //используется в TASK PARALLEL USAGE
+    public struct FavoriteTask
     {
         public List<string> Commands;
         public int TaskId;

@@ -67,7 +67,7 @@ namespace RemoteWork.Expect
         {
             StringBuilder result = new StringBuilder(buffSize);
             string temp = string.Empty;
-            DateTime current = DateTime.Now.AddSeconds(second);
+            DateTime current = DateTime.Now.AddSeconds(second); //DateTime p = DateTime.Now.AddMilliseconds(second); уменьшение интервала
             do
             {
                 temp = ReceiveData();//принимаем данные

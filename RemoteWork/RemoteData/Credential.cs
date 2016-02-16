@@ -13,11 +13,14 @@ namespace RemoteWork.Data
         public int Id { get; set; }
         [Required]
         public string CredentialName { get; set; }
-        [Required]
+        [Required, MaxLength(255)]
         public string Username { get; set; }
+        [MaxLength(255)]
         public string Domain { get; set; }
-        [Required]
+        [Required, MaxLength(255)]
         public string Password { get; set; }
+        [MaxLength(255)]
+        public string EnablePassword { get; set; }
 
     }
 }

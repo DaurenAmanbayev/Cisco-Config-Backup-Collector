@@ -201,3 +201,5 @@ C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\Remo
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\DiffPlex.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.ConfigDiffer.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\DiffPlex.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.CommandUsage.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.CommandUsage.pdb

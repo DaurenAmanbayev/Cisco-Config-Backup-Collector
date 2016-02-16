@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //не используется!!!
     public class TelnetExpect : Expect
     {
         Telnet client;

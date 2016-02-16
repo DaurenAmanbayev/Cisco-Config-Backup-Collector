@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Expect
 {
+    //не используется!!!
     //проблема с сетевыми устройствами, не успевает возвращать строку ответа
     //с сервером телнет проблем нет
     public class Telnet

@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWorkUtil", "RemoteWor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork.Expect", "RemoteWork.Expect\RemoteWork.Expect.csproj", "{B53A97A9-F841-4A42-AF2D-0C24424802AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWorkThreading", "TestThreading\RemoteWorkThreading.csproj", "{E5E304F4-5D12-4745-A746-E9893B57265F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteWork.CommandUsage", "RemoteWork.CommandUsage\RemoteWork.CommandUsage.csproj", "{8203E6C2-6129-4846-BE7D-8C6BC41EDABB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B53A97A9-F841-4A42-AF2D-0C24424802AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5E304F4-5D12-4745-A746-E9893B57265F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5E304F4-5D12-4745-A746-E9893B57265F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5E304F4-5D12-4745-A746-E9893B57265F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5E304F4-5D12-4745-A746-E9893B57265F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8203E6C2-6129-4846-BE7D-8C6BC41EDABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8203E6C2-6129-4846-BE7D-8C6BC41EDABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8203E6C2-6129-4846-BE7D-8C6BC41EDABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8203E6C2-6129-4846-BE7D-8C6BC41EDABB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

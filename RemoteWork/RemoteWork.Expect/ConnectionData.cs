@@ -13,5 +13,8 @@ namespace RemoteWork.Expect
         public string username;
         public string password;
         public int port;
+        //данные для привилегированного режима
+        public bool enableMode;
+        public string enablePassword;
     }
 }

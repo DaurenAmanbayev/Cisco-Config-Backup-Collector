@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RemoteWork
+namespace RemoteWork.CommandUsage
 {
-    //структура для запуска задачи
-    struct FavoriteConnect
+    //Используется в LOOP USAGE
+    public struct FavoriteConnect
     {
         public Favorite favorite;
         public List<string> commands;
         public RemoteTask task;
-    }
+    }   
 }

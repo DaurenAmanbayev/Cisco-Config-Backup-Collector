@@ -40,8 +40,15 @@ namespace RemoteWork.Expect
                 rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
                 client.SendData(host.username);
                 rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                client.SendData(host.password);
-                rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                client.SendData(host.password);               
+                //если требуется привилегированный режим
+                if (host.enableMode)
+                {
+                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                    client.SendData(host.enablePassword);
+                }
+                //режим входа
+                 rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
                 //использование команды
                 client.SendData(command);
                 rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
@@ -67,6 +74,13 @@ namespace RemoteWork.Expect
                 client.SendData(host.username);
                 rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
                 client.SendData(host.password);
+                //если требуется привилегированный режим
+                if (host.enableMode)
+                {
+                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                    client.SendData(host.enablePassword);
+                }
+                //режим входа
                 rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
                 //использование команды
                 foreach (string command in commands)

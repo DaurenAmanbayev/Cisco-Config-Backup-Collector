@@ -91,3 +91,4 @@ C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\Re
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.enableMode.resources
