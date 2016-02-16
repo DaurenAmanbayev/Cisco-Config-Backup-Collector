@@ -142,7 +142,6 @@ Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Config_Watcher.resource
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Configuration_Manager.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Load_Config.resources
 Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Progress.resources
-Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigSettings.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigImporter.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\LinqToExcel.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\log4net.dll
@@ -201,5 +200,18 @@ C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\Remo
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\DiffPlex.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.ConfigDiffer.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\DiffPlex.dll
+<<<<<<< HEAD
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.CommandUsage.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.CommandUsage.pdb
+=======
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\DiffPlex.dll
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\LinqToExcel.dll
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\log4net.dll
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Remotion.Data.Linq.dll
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Remotion.dll
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\Remotion.Interfaces.dll
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\LinqToExcel.xml
+Z:\RemoteWork\RemoteWork\RemoteWork\bin\Debug\log4net.xml
+Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.ConfigDiffer.resources
+Z:\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigImporter.resources
+>>>>>>> origin/master

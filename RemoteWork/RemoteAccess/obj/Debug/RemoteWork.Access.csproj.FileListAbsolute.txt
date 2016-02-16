@@ -91,4 +91,9 @@ C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\Re
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
+<<<<<<< HEAD
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.enableMode.resources
+=======
+Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
+Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources
+>>>>>>> origin/master
