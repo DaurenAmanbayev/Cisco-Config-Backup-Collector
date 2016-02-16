@@ -12,9 +12,9 @@ namespace RemoteWork.Access
     public class RconfigContext: DbContext
     {
         public RconfigContext() :
-            base(@"data source=(localdb)\v11.0;initial catalog=RemoteWorkDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework")
+            base(@"data source=.\SQLEXPRESS;initial catalog=RemoteWorkDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework")
         {
- 
+            //@"data source=(localdb)\v11.0;initial catalog=RemoteWorkDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

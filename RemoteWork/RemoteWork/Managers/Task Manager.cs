@@ -50,7 +50,7 @@ namespace RemoteWork.Managers
                 }
             }
         }
-        //удалить тестовый метод
+        //!!!!удалить тестовый метод
         private void TaskAddTest()
         {
             var item = new ListViewItem(new[] { 
@@ -116,16 +116,19 @@ namespace RemoteWork.Managers
                 var item = listViewDetails.SelectedItems[0];
                 int taskId = Int32.Parse(item.SubItems[0].Text);
                 //MessageBox.Show(taskId.ToString());
-                var queryTask=(from c in context.RemoteTasks
-                              where c.Id==taskId
-                              select c).FirstOrDefault();
-
-                if (queryTask != null)
+                using (context = new RconfigContext())
                 {
-                    context.RemoteTasks.Remove(queryTask);
-                    context.SaveChanges();
-                    listViewDetails.Items.Clear();
-                    LoadData();
+                    var queryTask = (from c in context.RemoteTasks
+                                     where c.Id == taskId
+                                     select c).FirstOrDefault();
+
+                    if (queryTask != null)
+                    {
+                        context.RemoteTasks.Remove(queryTask);
+                        context.SaveChanges();
+                        listViewDetails.Items.Clear();
+                        LoadData();
+                    }
                 }
             }
         }

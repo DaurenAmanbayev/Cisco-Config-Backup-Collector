@@ -187,21 +187,21 @@
             this.byHostnameToolStripMenuItem.CheckOnClick = true;
             this.byHostnameToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.byHostnameToolStripMenuItem.Name = "byHostnameToolStripMenuItem";
-            this.byHostnameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.byHostnameToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.byHostnameToolStripMenuItem.Text = "By Hostname";
             // 
             // byAddressToolStripMenuItem
             // 
             this.byAddressToolStripMenuItem.CheckOnClick = true;
             this.byAddressToolStripMenuItem.Name = "byAddressToolStripMenuItem";
-            this.byAddressToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.byAddressToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.byAddressToolStripMenuItem.Text = "By Address";
             // 
             // byLocationToolStripMenuItem
             // 
             this.byLocationToolStripMenuItem.CheckOnClick = true;
             this.byLocationToolStripMenuItem.Name = "byLocationToolStripMenuItem";
-            this.byLocationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.byLocationToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.byLocationToolStripMenuItem.Text = "By Location";
             // 
             // aboutToolStripMenuItem
@@ -445,7 +445,6 @@
             this.listViewDetails.ContextMenuStrip = this.contextMenuStripFavs;
             this.listViewDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewDetails.FullRowSelect = true;
-            this.listViewDetails.HoverSelection = true;
             this.listViewDetails.Location = new System.Drawing.Point(3, 3);
             this.listViewDetails.Name = "listViewDetails";
             this.listViewDetails.Size = new System.Drawing.Size(392, 346);

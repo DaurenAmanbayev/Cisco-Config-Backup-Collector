@@ -30,6 +30,7 @@ namespace RemoteWork.Data
         public virtual Category Category { get; set; }
         [Required]
         public virtual Credential Credential { get; set; }
+        //public virtual ICollection<RemoteTask> RemoteTasks { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
         public override string ToString()
         {

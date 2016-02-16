@@ -150,8 +150,12 @@ namespace RemoteWork.Managers
             CheckState state = checkBoxPassword.CheckState;
             switch (state)
             {
-                case CheckState.Checked: textBoxPaassword.UseSystemPasswordChar = false; break;
-                case CheckState.Unchecked: textBoxPaassword.UseSystemPasswordChar = true; break;
+                case CheckState.Checked: textBoxPaassword.UseSystemPasswordChar = false;
+                    textBoxEnablePassword.UseSystemPasswordChar = false;
+                    break;
+                case CheckState.Unchecked: textBoxPaassword.UseSystemPasswordChar = true;
+                    textBoxEnablePassword.UseSystemPasswordChar = true;
+                    break;
             }
         }
         //уведомление 
