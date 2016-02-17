@@ -265,7 +265,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "RconfigImporter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "RconfigSettings";
+            this.Text = "Importer";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);

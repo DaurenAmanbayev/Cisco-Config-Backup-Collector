@@ -43,8 +43,8 @@
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonRunTask = new System.Windows.Forms.Button();
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProgressBarCurrent = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabelRun = new System.Windows.Forms.ToolStripStatusLabel();
+            this.checkBoxThreading = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.statusStripInfo.SuspendLayout();
@@ -64,7 +64,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(667, 413);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(657, 413);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // listViewDetails
@@ -78,11 +78,10 @@
             this.columnHeaderDate});
             this.listViewDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewDetails.FullRowSelect = true;
-            this.listViewDetails.HoverSelection = true;
             this.listViewDetails.Location = new System.Drawing.Point(3, 3);
             this.listViewDetails.MultiSelect = false;
             this.listViewDetails.Name = "listViewDetails";
-            this.listViewDetails.Size = new System.Drawing.Size(571, 387);
+            this.listViewDetails.Size = new System.Drawing.Size(561, 387);
             this.listViewDetails.TabIndex = 0;
             this.listViewDetails.UseCompatibleStateImageBehavior = false;
             this.listViewDetails.View = System.Windows.Forms.View.Details;
@@ -122,8 +121,9 @@
             this.flowLayoutPanel1.Controls.Add(this.buttonEdit);
             this.flowLayoutPanel1.Controls.Add(this.buttonDelete);
             this.flowLayoutPanel1.Controls.Add(this.buttonRunTask);
+            this.flowLayoutPanel1.Controls.Add(this.checkBoxThreading);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(580, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(570, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(84, 387);
             this.flowLayoutPanel1.TabIndex = 1;
@@ -171,30 +171,34 @@
             // statusStripInfo
             // 
             this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelInfo,
-            this.toolStripProgressBarCurrent});
+            this.toolStripStatusLabelRun});
             this.statusStripInfo.Location = new System.Drawing.Point(0, 393);
             this.statusStripInfo.Name = "statusStripInfo";
-            this.statusStripInfo.Size = new System.Drawing.Size(577, 20);
+            this.statusStripInfo.Size = new System.Drawing.Size(567, 20);
             this.statusStripInfo.TabIndex = 2;
             this.statusStripInfo.Text = "statusStrip1";
             // 
-            // toolStripStatusLabelInfo
+            // toolStripStatusLabelRun
             // 
-            this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
-            this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(58, 15);
-            this.toolStripStatusLabelInfo.Text = "Task Info:";
+            this.toolStripStatusLabelRun.Name = "toolStripStatusLabelRun";
+            this.toolStripStatusLabelRun.Size = new System.Drawing.Size(97, 15);
+            this.toolStripStatusLabelRun.Text = "Task not running";
             // 
-            // toolStripProgressBarCurrent
+            // checkBoxThreading
             // 
-            this.toolStripProgressBarCurrent.Name = "toolStripProgressBarCurrent";
-            this.toolStripProgressBarCurrent.Size = new System.Drawing.Size(100, 14);
+            this.checkBoxThreading.AutoSize = true;
+            this.checkBoxThreading.Location = new System.Drawing.Point(3, 163);
+            this.checkBoxThreading.Name = "checkBoxThreading";
+            this.checkBoxThreading.Size = new System.Drawing.Size(72, 17);
+            this.checkBoxThreading.TabIndex = 4;
+            this.checkBoxThreading.Text = "MultiTask";
+            this.checkBoxThreading.UseVisualStyleBackColor = true;
             // 
             // Task_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 413);
+            this.ClientSize = new System.Drawing.Size(657, 413);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Task_Manager";
@@ -203,6 +207,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.statusStripInfo.ResumeLayout(false);
             this.statusStripInfo.PerformLayout();
             this.ResumeLayout(false);
@@ -225,7 +230,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderDate;
         private System.Windows.Forms.Button buttonRunTask;
         private System.Windows.Forms.StatusStrip statusStripInfo;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInfo;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarCurrent;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelRun;
+        private System.Windows.Forms.CheckBox checkBoxThreading;
     }
 }

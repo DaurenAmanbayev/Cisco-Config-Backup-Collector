@@ -22,12 +22,31 @@ namespace RemoteWorkUtil
         static int taskId;
         static void Main(string[] args)
         {
+            //ConnectionData data = new ConnectionData();
+            //data.address = "172.21.145.254";
+            //data.enableMode = true;
+            //data.enablePassword = "cisco";
+            //data.password = "cisco";
+            //data.username = "cisco";
+            //data.port = 23;
+            //TelnetMintExpect expect = new TelnetMintExpect(data);
+            //List<string> commands=new List<string>
+            //{
+            //    "terminal length 0",
+            //    "show run"
+            //};
+            //expect.ExecuteCommands(commands);
+            //Console.WriteLine(expect.GetResult());
+            //Console.WriteLine(expect.GetError());
+            //Console.WriteLine(expect.isSuccess.ToString());
+            //Console.WriteLine("FINISH");
+            //Console.ReadKey();
             //если первый аргумент 
             if (args.Length > 0)
             {
                 //спарсить первый аргумент 
                 if (Int32.TryParse(args[0], out taskId))
-                {   
+                {
                     //если успешно проиницилизировать задачу
                     CommandUsage comm = new CommandUsage(taskId, CommandUsageMode.LoopUsage);
                     //запустить выполнение
@@ -155,6 +174,7 @@ namespace RemoteWorkUtil
                 data.username = fav.Credential.Username;
                 data.password = fav.Credential.Password;
                 data.enableMode = fav.Category.EnableModeRequired;
+                Console.WriteLine(data.enableMode.ToString());
                 data.enablePassword = fav.Credential.EnablePassword;
                 //по типу протоколу выбираем требуемое подключение
                 string protocol = fav.Protocol.Name;
@@ -179,7 +199,7 @@ namespace RemoteWorkUtil
                     if (success)
                     {
                         Config config = new Config();
-                        config.Current = result;
+                        config.Current = result ?? "Empty";                        
                         config.Date = DateTime.Now;
                         fav.Configs.Add(config);
                         Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));

@@ -52,7 +52,6 @@ namespace RemoteWork.Access
         public DbSet<Protocol> Protocols { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Command> Commands { get; set; }
-        public DbSet<Location> Locations { get; set; }
-    
+        public DbSet<Location> Locations { get; set; }    
     }
 }

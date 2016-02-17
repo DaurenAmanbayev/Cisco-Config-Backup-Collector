@@ -61,7 +61,7 @@ namespace RemoteWork.CommandUsage
                     List<Task> taskRunnerManager = new List<Task>();        
                     try
                     {
-                        Logging(string.Format("TASK {0} started...", taskId));
+                        Logging(string.Format("TASK {0} started... THREADING", taskId));
                         foreach (Favorite fav in task.Favorites)
                         {                            
                             List<string> commands = new List<string>();
@@ -155,7 +155,7 @@ namespace RemoteWork.CommandUsage
                     if (success)
                     {
                         Config config = new Config();
-                        config.Current = result;
+                        config.Current = result ?? "Empty";
                         config.Date = DateTime.Now;
                         fav.Configs.Add(config);
                         Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));
@@ -180,6 +180,9 @@ namespace RemoteWork.CommandUsage
         #endregion
 
         //вариант прохождения в цикле обхода и сбора конфигураций с устройств по задаче
+        //проверяется корректность идентификатора задачи
+        //затем собираются данные по командам доступные для устройства
+        //затем запускается сбор конфигураций
         #region LOOP USAGE
         //метод опроса в цикле
         private void LoopMethod(int taskId)
@@ -188,12 +191,11 @@ namespace RemoteWork.CommandUsage
 
             var queryTask = (from c in context.RemoteTasks
                              where c.Id == taskId
-
                              select c).FirstOrDefault();
             //записать в логи операция началась
             if (queryTask != null)
             {
-                Logging(string.Format("TASK {0} started...", taskId));
+                Logging(string.Format("TASK {0} started... LOOP METHOD ", taskId));
                 LoadConfiguration(queryTask);
                 //записать в логи успешное завершение
                 Logging(string.Format("TASK {0} finished...", taskId));
@@ -206,12 +208,10 @@ namespace RemoteWork.CommandUsage
         }
         //сбор данных задачи для исполнения команд
         private void LoadConfiguration(RemoteTask task)
-        {
-            try
-            {
+        {              
+               //  Logging("STARTED");
                 foreach (Favorite fav in task.Favorites)
                 {
-
                     List<string> commands = new List<string>();
                     //проходим по списку команд, выявляем соответствие используемой команды и категории избранного 
                     //в сортированном списке по ордеру
@@ -230,16 +230,18 @@ namespace RemoteWork.CommandUsage
                     connect.commands = commands;
                     connect.favorite = fav;
                     connect.task = task;
-                    Connection(connect);
-                }
-            }
-            catch (Exception ex)
-            {
-                //записать в логи!!!
-                Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", taskId, ex.Message));
-            }
+                    try
+                    {
+                        Connection(connect);
+                    }
+                    catch (Exception ex)
+                    {
+                        //записать в логи!!!
+                        Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", taskId, ex.Message));
+                    }                
+            }          
 
-        }     
+        }    
         //исполнение команды для устройства
         private void Connection(FavoriteConnect favConnect)
         {          
@@ -252,7 +254,7 @@ namespace RemoteWork.CommandUsage
             data.port = fav.Port;
             data.username = fav.Credential.Username;
             data.password = fav.Credential.Password;
-            data.enableMode = fav.Category.EnableModeRequired;
+            data.enableMode = fav.Category.EnableModeRequired;           
             data.enablePassword = fav.Credential.EnablePassword;
             //по типу протоколу выбираем требуемое подключение
             string protocol = fav.Protocol.Name;
@@ -265,20 +267,20 @@ namespace RemoteWork.CommandUsage
                 default: expect = new TelnetMintExpect(data); break;
             }
 
-
             //если объект expect успешно создан
             if (expect != null)
             {
                 //выполняем список команд
                 expect.ExecuteCommands(commands);
-                string result = expect.GetResult();
+                //если возвращает пустую строку, то выдает исключение
+                string result = expect.GetResult();               
                 bool success = expect.isSuccess;
-                string error = expect.GetError();
+                string error =expect.GetError();
                 //если успешно сохраняем конфигурацию устройства
                 if (success)
                 {
-                    Config config = new Config();
-                    config.Current = result;
+                    Config config = new Config();                   
+                    config.Current = result ?? "Empty";//если строка пустая, вернуть Empty
                     config.Date = DateTime.Now;
                     fav.Configs.Add(config);
                     Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));

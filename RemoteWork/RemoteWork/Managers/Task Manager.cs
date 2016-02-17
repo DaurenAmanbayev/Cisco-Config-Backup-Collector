@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
 using RemoteWork.Expect;
+using RemoteWork.CommandUsage;
+using System.Threading;
 
 namespace RemoteWork.Managers
 {
@@ -140,12 +142,40 @@ namespace RemoteWork.Managers
             {
                 var item = listViewDetails.SelectedItems[0];
                 int taskId = Int32.Parse(item.SubItems[0].Text);
-                Task_Progress frm = new Task_Progress(taskId);
-                DialogResult result = frm.ShowDialog();
-                if (result == DialogResult.OK)
+                toolStripStatusLabelRun.Text = "Task in progress and still doing some times... Please Wait!";
+                this.Parent.UseWaitCursor = true;          
+                this.Enabled = false;
+                DateTime start = DateTime.Now;
+                //ПРОБЛЕМА!!!!                
+                CommandUsageMode mode = CommandUsageMode.LoopUsage;
+                switch (checkBoxThreading.CheckState)
                 {
-                    frm.Close();//прогресс бар
-                }                
+                    case CheckState.Checked: mode = CommandUsageMode.TaskParallelUsage; break;
+                    case CheckState.Unchecked: mode = CommandUsageMode.LoopUsage; break;
+                }
+                CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);
+                comm.Dispatcher();
+                TimeSpan diff = DateTime.Now - start;               
+               // Thread.Sleep(2500);             
+                this.Enabled = true;             
+                toolStripStatusLabelRun.Text = string.Format("Task finished in {0} seconds", diff.ToString());
+
+                //MessageBox.Show("Операция может занять несколько минут!");
+                //UseWaitCursor = true;               
+                //DateTime start = DateTime.Now;
+                ////ПРОБЛЕМА!!!!
+                //CommandUsageMode mode = CommandUsageMode.LoopUsage;
+                //CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);
+                //comm.Dispatcher();
+                //TimeSpan diff = DateTime.Now - start;
+                //UseWaitCursor = false;
+                //MessageBox.Show("Время затраченная на операцию {0}", diff.ToString());
+                //Task_Progress frm = new Task_Progress(taskId);
+                //DialogResult result = frm.ShowDialog();
+                //if (result == DialogResult.OK)
+                //{
+                //    frm.Close();//прогресс бар
+                //}                
             }
         }
     }

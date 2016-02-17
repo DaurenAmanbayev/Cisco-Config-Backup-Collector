@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201602160508506_enableMode.Designer.cs">
       <DependentUpon>201602160508506_enableMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602170318270_tasksmanytomany.cs" />
+    <Compile Include="Migrations\201602170318270_tasksmanytomany.Designer.cs">
+      <DependentUpon>201602170318270_tasksmanytomany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RconfigContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602160508506_enableMode.resx">
       <DependentUpon>201602160508506_enableMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602170318270_tasksmanytomany.resx">
+      <DependentUpon>201602170318270_tasksmanytomany.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

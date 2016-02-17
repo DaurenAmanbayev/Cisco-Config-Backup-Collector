@@ -52,11 +52,15 @@ namespace RemoteWork.Managers
         {
             //LoopMethod(TaskID);
             DateTime start = DateTime.Now;
-            CommandUsageMode mode=CommandUsageMode.LoopUsage;
+            CommandUsageMode mode=CommandUsageMode.TaskParallelUsage;
+            UseWaitCursor = true;
             CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);
-            comm.Dispatcher();
+            Task runner=Task.Factory.StartNew(()=> comm.Dispatcher());
+            runner.Wait();
+            UseWaitCursor = false;
             TimeSpan diff = DateTime.Now - start;
             MessageBox.Show(diff.ToString());
+            this.DialogResult = DialogResult.OK;
         }
         //обход и сбор конфигурации с устройств по задаче в цикле
         #region LOOP USAGE

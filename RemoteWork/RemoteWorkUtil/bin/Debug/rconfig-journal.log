@@ -3,3 +3,92 @@
 11.02.2016 12:40:22 => TASK 5 : success connection for 5 proxySQUID
 11.02.2016 12:40:23 => TASK 5 : success connection for 5 CiscoASR
 11.02.2016 12:40:23 => TASK 5 finished...
+17.02.2016 11:35:03 => TASK 1 started... LOOP! 
+17.02.2016 11:35:03 => STARTED
+17.02.2016 11:35:03 => TrueCisco
+17.02.2016 11:35:03 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 11:35:04 => TASK 1 finished...
+17.02.2016 11:39:07 => TASK 1 started... LOOP! 
+17.02.2016 11:39:07 => STARTED
+17.02.2016 11:39:07 => TrueCisco
+17.02.2016 11:39:07 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 11:39:07 => TASK 1 finished...
+17.02.2016 11:40:07 => TASK 1 started... LOOP! 
+17.02.2016 11:40:07 => STARTED
+17.02.2016 11:40:08 => TrueCisco
+17.02.2016 11:40:08 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 11:40:08 => TASK 1 finished...
+17.02.2016 11:41:16 => TASK 1 started... LOOP! 
+17.02.2016 11:41:16 => STARTED
+17.02.2016 11:41:16 => TrueCisco
+17.02.2016 11:41:17 => 
+17.02.2016 11:41:17 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 11:41:17 => TASK 1 finished...
+17.02.2016 12:20:23 => TASK 1 started... LOOP! 
+17.02.2016 12:20:23 => STARTED
+17.02.2016 12:20:23 => TrueCisco
+17.02.2016 12:20:23 => 
+17.02.2016 12:20:23 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 12:20:23 => TrueCisco
+17.02.2016 12:20:25 => 
+17.02.2016 12:20:25 => TASK 1 : success connection for 1 3560v2_677km
+17.02.2016 12:20:25 => TASK 1 finished...
+17.02.2016 12:23:40 => TASK 1 started... LOOP! 
+17.02.2016 12:23:40 => STARTED
+17.02.2016 12:23:40 => TrueCisco
+17.02.2016 12:23:40 => 
+17.02.2016 12:23:40 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 12:23:40 => TrueCisco
+17.02.2016 12:23:42 => 
+17.02.2016 12:23:42 => TASK 1 : success connection for 1 3560v2_677km
+17.02.2016 12:23:42 => TASK 1 finished...
+17.02.2016 12:26:24 => TASK 1 started... LOOP! 
+17.02.2016 12:26:24 => STARTED
+17.02.2016 12:26:24 => TrueCisco
+17.02.2016 12:26:27 => show running-config
+Building configuration...
+
+Current configuration:
+!
+! No configuration change since last restart
+!
+version 12.0
+no service pad
+service timestamps debug datetime localtime
+service timestamps log datetime localtime
+no service password-encryption
+!
+hostname 2924_BPTOK
+!
+enable password cisco
+!
+!
+!
+!
+!
+clock timezone Astana 6
+!
+ip subnet-zero
+!
+ --More-- 
+17.02.2016 12:26:28 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 12:26:28 => TrueCisco
+17.02.2016 12:26:33 => 
+% Login invalid
+
+Username: cisco
+Password: 
+17.02.2016 12:26:33 => TASK 1 : success connection for 1 3560v2_677km
+17.02.2016 12:26:33 => TASK 1 finished...
+17.02.2016 12:30:42 => TASK 1 started... THREADING
+17.02.2016 12:33:10 => TASK 1 started... THREADING
+17.02.2016 12:34:08 => TASK 1 started... LOOP! 
+17.02.2016 12:34:08 => STARTED
+17.02.2016 12:34:10 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 12:34:14 => TASK 1 : success connection for 1 3560v2_677km
+17.02.2016 12:34:14 => TASK 1 finished...
+17.02.2016 12:35:51 => TASK 1 started... LOOP! 
+17.02.2016 12:35:51 => STARTED
+17.02.2016 12:35:53 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 12:35:57 => TASK 1 : success connection for 1 3560v2_677km
+17.02.2016 12:35:57 => TASK 1 finished...

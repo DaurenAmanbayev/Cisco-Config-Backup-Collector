@@ -18,6 +18,7 @@ namespace RemoteWork.Data
         public int Id { get; set; }
         [Required, MinLength(3), MaxLength(50)]
         public string CategoryName { get; set; }
+        [Required]
         public bool EnableModeRequired { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Command> Commands { get; set; }

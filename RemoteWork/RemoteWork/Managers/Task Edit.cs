@@ -24,9 +24,11 @@ namespace RemoteWork.Managers
     public partial class Task_Edit : Form
     {
         RconfigContext context = new RconfigContext();
+        List<string> favList = new List<string>();
         WindowsMode mode = WindowsMode.ADD;
         TaskInputValidate validateInput = TaskInputValidate.TaskNameIsEmpty;
         RemoteTask currentTask;
+        bool byFavorite = true;        
         int prevTaskId;
         public Task_Edit()
         {
@@ -38,18 +40,19 @@ namespace RemoteWork.Managers
             InitializeComponent();
             mode = WindowsMode.EDIT;
             prevTaskId = taskId;
-            LoadData();
-            //LoadPrevData();//реализовать!!!
+            LoadData();           
         }
         //подгрузка данных
         private async void LoadData()
         {
             var queryFavs=await (from c in context.Favorites
-                          select c).ToListAsync();
+                          select c.Hostname).ToListAsync();
 
-            foreach (Favorite fav in queryFavs)
+            foreach (string fav in queryFavs)
             {
-                checkedListBoxFavorites.Items.Add(fav.Hostname);
+                checkedListBoxFavorites.Items.Add(fav);
+                //запоминаем список устройств для избежания повторной подгрузки
+                favList.Add(fav);
             }
 
             var queryCommands = await (from c in context.Commands
@@ -72,9 +75,29 @@ namespace RemoteWork.Managers
             if (queryRemoteTask != null)
             {
                 currentTask = queryRemoteTask;
+                textBoxName.Text = currentTask.TaskName;
+                textBoxDesc.Text = currentTask.Description;
+                //указываем выбранные ранее устройства
+                foreach (Favorite fav in queryRemoteTask.Favorites)
+                {
+                    int index = checkedListBoxFavorites.Items.IndexOf(fav.Hostname);
+
+                    if (index >= 0)
+                    {
+                        checkedListBoxFavorites.SetItemChecked(index, true);
+                    }
+                }
+                //указываем ранее выбранные команды
+                foreach (Command command in queryRemoteTask.Commands)
+                {
+                    int index = checkedListBoxCommands.Items.IndexOf(command.Name);
+                    if (index >= 0)
+                    {
+                        checkedListBoxCommands.SetItemChecked(index, true);
+                    }
+                }
             }
-            textBoxName.Text = currentTask.TaskName;
-            textBoxDesc.Text = currentTask.Description;
+            
         }
         //проверка данных пользователя
         private bool CheckData()
@@ -104,15 +127,38 @@ namespace RemoteWork.Managers
             currentTask.Date = DateTime.UtcNow;
 
             HashSet<Favorite> favs = new HashSet<Favorite>();
-            foreach (var item in checkedListBoxFavorites.CheckedItems)
+            //если устройства выбраны по устройствам
+            if (byFavorite)
             {
-                string favorite = item.ToString();
-                var queryFav=(from c in context.Favorites
-                             where c.Hostname==favorite
-                             select c).FirstOrDefault();
+                foreach (var item in checkedListBoxFavorites.CheckedItems)
+                {
+                    string favorite = item.ToString();
+                    var queryFav = (from c in context.Favorites
+                                    where c.Hostname == favorite
+                                    select c).FirstOrDefault();
 
-                if (queryFav != null)
-                    favs.Add(queryFav);
+                    if (queryFav != null)
+                        favs.Add(queryFav);
+                }
+            }
+            //по категориям устройств
+            else
+            {
+                foreach (var item in checkedListBoxFavorites.CheckedItems)
+                {
+                    string category = item.ToString();
+                    var queryCategory = (from c in context.Categories
+                                    where c.CategoryName == category
+                                    select c).FirstOrDefault();
+
+                    if (queryCategory != null)
+                    {
+                        foreach (Favorite fav in queryCategory.Favorites)
+                        {
+                            favs.Add(fav);
+                        }
+                    }
+                }
             }
             currentTask.Favorites = favs;
             HashSet<Command> commands = new HashSet<Command>();
@@ -138,15 +184,38 @@ namespace RemoteWork.Managers
             currentTask.Date = DateTime.UtcNow;
 
             HashSet<Favorite> favs = new HashSet<Favorite>();
-            foreach (var item in checkedListBoxFavorites.CheckedItems)
+            //если устройства выбраны по устройствам
+            if (byFavorite)
             {
-                string favorite = item.ToString();
-                var queryFav = (from c in context.Favorites
-                                where c.Hostname == favorite
-                                select c).FirstOrDefault();
+                foreach (var item in checkedListBoxFavorites.CheckedItems)
+                {
+                    string favorite = item.ToString();
+                    var queryFav = (from c in context.Favorites
+                                    where c.Hostname == favorite
+                                    select c).FirstOrDefault();
 
-                if (queryFav != null)
-                    favs.Add(queryFav);
+                    if (queryFav != null)
+                        favs.Add(queryFav);
+                }
+            }
+            //по категориям устройств
+            else
+            {
+                foreach (var item in checkedListBoxFavorites.CheckedItems)
+                {
+                    string category = item.ToString();
+                    var queryCategory = (from c in context.Categories
+                                         where c.CategoryName == category
+                                         select c).FirstOrDefault();
+
+                    if (queryCategory != null)
+                    {
+                        foreach (Favorite fav in queryCategory.Favorites)
+                        {
+                            favs.Add(fav);
+                        }
+                    }
+                }
             }
             currentTask.Favorites = favs;
             HashSet<Command> commands = new HashSet<Command>();
@@ -195,6 +264,55 @@ namespace RemoteWork.Managers
         private void NotifyWarning(string warning)
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        //выбрать все опции
+        private void checkBoxCheckAll_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (checkBoxCheckAll.CheckState == CheckState.Checked)
+            {
+                for (int i = 0; i < checkedListBoxFavorites.Items.Count; i++)
+                {                  
+                      checkedListBoxFavorites.SetItemChecked(i, true);                   
+                }
+               // checkBoxCheckAll.Text = "Uncheck All";
+            }
+            else
+            {
+                for (int i = 0; i < checkedListBoxFavorites.Items.Count; i++)
+                {
+                    checkedListBoxFavorites.SetItemChecked(i, false);
+                }
+            }
+        }
+        //выбор опции подгрузки данных
+        private void checkBoxByFavorite_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (checkBoxByCategory.CheckState == CheckState.Checked)
+            {
+                byFavorite = false;
+                labelCategory.Text = "Selected Categories";
+                var queryCategories=(from c in context.Categories
+                                    select c.CategoryName).ToList();
+                if (queryCategories != null)
+                {
+                    checkedListBoxFavorites.Items.Clear();
+                    foreach (string category in queryCategories)
+                    {
+                        checkedListBoxFavorites.Items.Add(category);
+                    }
+                }
+            }
+            else
+            {
+                byFavorite = true;
+                labelCategory.Text = "Selected Favorites";
+                checkedListBoxFavorites.Items.Clear();
+                foreach (string fav in favList)
+                {
+                    checkedListBoxFavorites.Items.Add(fav);
+                }
+                LoadPrevData();
+            }
         }
 
        

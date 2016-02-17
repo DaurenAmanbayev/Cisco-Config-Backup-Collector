@@ -28,8 +28,7 @@ namespace RemoteWork
     public partial class Favorite_Edit : Form
     {
         FavoriteInputValidate validateInput = FavoriteInputValidate.HostnameEmpty;
-        WindowsMode mode = WindowsMode.ADD;
-        RconfigContext context;
+        WindowsMode mode = WindowsMode.ADD;     
         IPAddress address;
         Favorite currentFavorite;
         string prevFavName;
@@ -109,8 +108,7 @@ namespace RemoteWork
 
                     comboBoxCredential.SelectedItem = credential;
                     comboBoxLocation.SelectedItem = location;
-                    comboBoxProtocol.SelectedItem = protocol;
-                   
+                    comboBoxProtocol.SelectedItem = protocol;                   
                     comboBoxCategory.SelectedItem = category;
                   
                 }
@@ -241,13 +239,14 @@ namespace RemoteWork
         {
             using (RconfigContext context = new RconfigContext())
             {
+                context.Favorites.Attach(currentFavorite); 
+                //данные по категории
                 string category = comboBoxCategory.SelectedValue.ToString();
                 var queryCategory = (from c in context.Categories
                                      where c.CategoryName == category
                                      select c).FirstOrDefault();
                 currentFavorite.Category = queryCategory;
-
-
+                //-----------------------------------------------------
                 currentFavorite.Hostname = textBoxHostname.Text.Trim();
                 currentFavorite.Address = textBoxAddress.Text.Trim();
                 currentFavorite.Port = (int)numericUpDownPort.Value;
@@ -274,7 +273,10 @@ namespace RemoteWork
                                      select c).FirstOrDefault();
                 //проверка
                 currentFavorite.Protocol = queryProtocol;
-                //сохраняем изменения
+              //  MessageBox.Show(queryCategory.CategoryName+ queryProtocol.Name+ queryCredential.CredentialName+ queryLocation.LocationName);
+              //  MessageBox.Show("RCONFIG"+currentFavorite.Category.CategoryName);
+                //не изменяется проблема!!!!
+                //сохраняем изменения                             
                 context.Entry(currentFavorite).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }

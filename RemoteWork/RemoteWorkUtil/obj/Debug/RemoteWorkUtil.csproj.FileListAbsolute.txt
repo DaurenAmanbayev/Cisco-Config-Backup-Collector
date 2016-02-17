@@ -80,3 +80,5 @@ C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\Renci.SshNet.xml
 C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\obj\Debug\RemoteWorkUtil.csprojResolveAssemblyReference.cache
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.CommandUsage.dll
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWorkUtil\bin\Debug\RemoteWork.CommandUsage.pdb

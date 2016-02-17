@@ -97,3 +97,4 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\Re
 Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
 Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources
 >>>>>>> origin/master
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.tasksmanytomany.resources
