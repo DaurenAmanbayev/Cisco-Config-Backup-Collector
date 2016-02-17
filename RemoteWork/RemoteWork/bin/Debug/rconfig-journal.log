@@ -1,0 +1,24 @@
+
+17.02.2016 16:49:42 => TASK 1 started... LOOP METHOD 
+17.02.2016 16:49:45 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 16:49:56 => TASK 1 : success connection for 1 6floor.sw.kto
+17.02.2016 16:49:59 => TASK 1 : success connection for 1 5.Floor_Offc2_3750
+17.02.2016 16:50:01 => TASK 1 : success connection for 1 ABK_ANU_3
+17.02.2016 16:50:02 => TASK 1 : success connection for 1 ABK_ANU_5
+17.02.2016 16:50:13 => TASK 1 : success connection for 1 1.floor_oil_sw_2950
+17.02.2016 16:50:14 => TASK 1 : success connection for 1 ABK_ANU_2
+17.02.2016 16:50:16 => TASK 1 : success connection for 1 ABK_ANU_4
+17.02.2016 16:50:18 => TASK 1 : success connection for 1 ABK_ANU_1
+17.02.2016 16:50:28 => TASK 1 : success connection for 1 3560v2_677km
+17.02.2016 16:50:28 => TASK 1 finished...
+17.02.2016 16:55:33 => TASK 1 started... THREADING
+17.02.2016 16:55:35 => TASK 1 : success connection for 1 ABK_ANU_3
+17.02.2016 16:55:36 => TASK 1 : success connection for 1 5.Floor_Offc2_3750
+17.02.2016 16:55:37 => TASK 1 : success connection for 1 2924_BPTOK
+17.02.2016 16:55:37 => TASK 1 : success connection for 1 ABK_ANU_5
+17.02.2016 16:55:39 => TASK 1 : success connection for 1 ABK_ANU_4
+17.02.2016 16:55:39 => TASK 1 : success connection for 1 ABK_ANU_2
+17.02.2016 16:55:41 => TASK 1 : success connection for 1 ABK_ANU_1
+17.02.2016 16:55:43 => TASK 1 : success connection for 1 6floor.sw.kto
+17.02.2016 16:55:46 => TASK 1 : success connection for 1 1.floor_oil_sw_2950
+17.02.2016 16:55:50 => TASK 1 : success connection for 1 3560v2_677km
