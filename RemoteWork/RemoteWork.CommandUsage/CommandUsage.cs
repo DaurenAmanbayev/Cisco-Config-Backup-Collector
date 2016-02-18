@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RemoteWork.CommandUsage
@@ -15,12 +16,15 @@ namespace RemoteWork.CommandUsage
         int taskId;
         string logJournal = "rconfig-journal.log";
         CommandUsageMode mode=CommandUsageMode.LoopUsage;
-        RconfigContext context;
+        RconfigContext context;        
         public CommandUsage(int taskId, CommandUsageMode mode)
         {
             this.taskId = taskId;
             this.mode = mode;
         }
+        //для уведмоления о том, что все запущенные задачи выполнены
+        public delegate void TaskReport();
+        public event TaskReport taskCompleted;
         //основной метод для вызова выполнения задачи
         public void Dispatcher()
         {
@@ -62,6 +66,8 @@ namespace RemoteWork.CommandUsage
                     try
                     {
                         Logging(string.Format("TASK {0} started... THREADING", taskId));
+                        //если количество избранных равна нулю коэффициент ожидания равен 1
+                        //int waiter = (task.Favorites.Count>0) ? task.Favorites.Count : 1;
                         foreach (Favorite fav in task.Favorites)
                         {                            
                             List<string> commands = new List<string>();
@@ -86,13 +92,13 @@ namespace RemoteWork.CommandUsage
                             //создаем задачу и добавляем ее в менеджер
                             Task taskRunner = Task.Factory.StartNew(() =>
                                 ConnectionThread(connect));
-                        }
-
-                        //дожидаемся пока выполняться все задания
-                        foreach (Task taskRunner in taskRunnerManager)
-                        {
-                            taskRunner.Wait();                        
-                        }
+                            taskRunnerManager.Add(taskRunner);
+                        }                        
+                        //дожидаемся пока выполняться все задания                       
+                        Task.WaitAll(taskRunnerManager.ToArray());
+                        //************************************************************
+                        //создаем событие и уведомляем о том, что все задачи выполнены
+                        taskCompleted();
                     }
                     catch (Exception ex)
                     {
@@ -110,9 +116,9 @@ namespace RemoteWork.CommandUsage
         //проблема с многопоточностью
         //создаем новый контекст для каждого потока
         private void ConnectionThread(FavoriteTask favConnect)
-        {
+        {          
             using (RconfigContext ctx = new RconfigContext())
-            {
+            {               
                 var task = (from c in ctx.RemoteTasks
                             where c.Id == favConnect.TaskId
                             select c).Single();
@@ -208,40 +214,42 @@ namespace RemoteWork.CommandUsage
         }
         //сбор данных задачи для исполнения команд
         private void LoadConfiguration(RemoteTask task)
-        {              
-               //  Logging("STARTED");
-                foreach (Favorite fav in task.Favorites)
+        {
+            //  Logging("STARTED");
+            foreach (Favorite fav in task.Favorites)
+            {
+                List<string> commands = new List<string>();
+                //проходим по списку команд, выявляем соответствие используемой команды и категории избранного 
+                //в сортированном списке по ордеру
+                foreach (Command command in task.Commands.OrderBy(c => c.Order))
                 {
-                    List<string> commands = new List<string>();
-                    //проходим по списку команд, выявляем соответствие используемой команды и категории избранного 
-                    //в сортированном списке по ордеру
-                    foreach (Command command in task.Commands.OrderBy(c => c.Order))
+                    foreach (Category category in command.Categories)
                     {
-                        foreach (Category category in command.Categories)
+                        if (fav.Category.CategoryName == category.CategoryName)
                         {
-                            if (fav.Category.CategoryName == category.CategoryName)
-                            {
-                                commands.Add(command.Name);
-                            }
+                            commands.Add(command.Name);
                         }
                     }
-                    //устанавливаем соединение
-                    FavoriteConnect connect = new FavoriteConnect();
-                    connect.commands = commands;
-                    connect.favorite = fav;
-                    connect.task = task;
-                    try
-                    {
-                        Connection(connect);
-                    }
-                    catch (Exception ex)
-                    {
-                        //записать в логи!!!
-                        Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", taskId, ex.Message));
-                    }                
-            }          
-
-        }    
+                }
+                //устанавливаем соединение
+                FavoriteConnect connect = new FavoriteConnect();
+                connect.commands = commands;
+                connect.favorite = fav;
+                connect.task = task;
+                try
+                {
+                    Connection(connect);
+                }
+                catch (Exception ex)
+                {
+                    //записать в логи!!!
+                    Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", taskId, ex.Message));
+                }
+            }
+            //************************************************************
+            //создаем событие и уведомляем о том, что все задачи выполнены
+            taskCompleted();
+        }   
         //исполнение команды для устройства
         private void Connection(FavoriteConnect favConnect)
         {          
@@ -304,6 +312,7 @@ namespace RemoteWork.CommandUsage
 
         //логгирование процедуры
         #region LOGGING
+        static object lockedObj = new object();
         private void Logging(string log)
         {
             string[] content = new string[1] { "**** Logging data ****" };
@@ -322,7 +331,10 @@ namespace RemoteWork.CommandUsage
         {
             try
             {
-                content = File.ReadAllLines(targetPath);
+                lock (lockedObj)
+                {
+                    content = File.ReadAllLines(targetPath);
+                }
             }
             catch (Exception)
             {

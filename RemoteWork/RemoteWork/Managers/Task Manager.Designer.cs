@@ -42,9 +42,9 @@
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonRunTask = new System.Windows.Forms.Button();
+            this.checkBoxThreading = new System.Windows.Forms.CheckBox();
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelRun = new System.Windows.Forms.ToolStripStatusLabel();
-            this.checkBoxThreading = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.statusStripInfo.SuspendLayout();
@@ -168,6 +168,18 @@
             this.buttonRunTask.UseVisualStyleBackColor = true;
             this.buttonRunTask.Click += new System.EventHandler(this.buttonRunTask_Click);
             // 
+            // checkBoxThreading
+            // 
+            this.checkBoxThreading.AutoSize = true;
+            this.checkBoxThreading.Checked = true;
+            this.checkBoxThreading.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxThreading.Location = new System.Drawing.Point(3, 163);
+            this.checkBoxThreading.Name = "checkBoxThreading";
+            this.checkBoxThreading.Size = new System.Drawing.Size(72, 17);
+            this.checkBoxThreading.TabIndex = 4;
+            this.checkBoxThreading.Text = "MultiTask";
+            this.checkBoxThreading.UseVisualStyleBackColor = true;
+            // 
             // statusStripInfo
             // 
             this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -183,16 +195,6 @@
             this.toolStripStatusLabelRun.Name = "toolStripStatusLabelRun";
             this.toolStripStatusLabelRun.Size = new System.Drawing.Size(97, 15);
             this.toolStripStatusLabelRun.Text = "Task not running";
-            // 
-            // checkBoxThreading
-            // 
-            this.checkBoxThreading.AutoSize = true;
-            this.checkBoxThreading.Location = new System.Drawing.Point(3, 163);
-            this.checkBoxThreading.Name = "checkBoxThreading";
-            this.checkBoxThreading.Size = new System.Drawing.Size(72, 17);
-            this.checkBoxThreading.TabIndex = 4;
-            this.checkBoxThreading.Text = "MultiTask";
-            this.checkBoxThreading.UseVisualStyleBackColor = true;
             // 
             // Task_Manager
             // 

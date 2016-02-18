@@ -19,7 +19,7 @@ namespace RemoteWork.Managers
     public partial class Task_Manager : Form
     {
         RconfigContext context;
-
+        DateTime start;
         public Task_Manager()
         {
             InitializeComponent();
@@ -143,9 +143,10 @@ namespace RemoteWork.Managers
                 var item = listViewDetails.SelectedItems[0];
                 int taskId = Int32.Parse(item.SubItems[0].Text);
                 toolStripStatusLabelRun.Text = "Task in progress and still doing some times... Please Wait!";
-                this.Parent.UseWaitCursor = true;          
-                this.Enabled = false;
-                DateTime start = DateTime.Now;
+                //this.Parent.UseWaitCursor = true;          
+                //this.Enabled = false;
+                this.MdiParent.Enabled = false;
+                start = DateTime.Now;
                 //ПРОБЛЕМА!!!!                
                 CommandUsageMode mode = CommandUsageMode.LoopUsage;
                 switch (checkBoxThreading.CheckState)
@@ -153,13 +154,13 @@ namespace RemoteWork.Managers
                     case CheckState.Checked: mode = CommandUsageMode.TaskParallelUsage; break;
                     case CheckState.Unchecked: mode = CommandUsageMode.LoopUsage; break;
                 }
-                CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);
+                CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);               
+                //подписываемся на событие о, том что задачи завершены
+                comm.taskCompleted += this.UnlockApplicationAfterComplete;
+                //вызываем задачу
                 comm.Dispatcher();
-                TimeSpan diff = DateTime.Now - start;               
-               // Thread.Sleep(2500);             
-                this.Enabled = true;             
-                toolStripStatusLabelRun.Text = string.Format("Task finished in {0} seconds", diff.ToString());
 
+                #region CHILD TASK PROGRESS
                 //MessageBox.Show("Операция может занять несколько минут!");
                 //UseWaitCursor = true;               
                 //DateTime start = DateTime.Now;
@@ -175,8 +176,17 @@ namespace RemoteWork.Managers
                 //if (result == DialogResult.OK)
                 //{
                 //    frm.Close();//прогресс бар
-                //}                
+                //}    
+                #endregion
             }
+        }
+        private void UnlockApplicationAfterComplete()
+        {
+            TimeSpan diff = DateTime.Now - start;
+            // Thread.Sleep(2500);             
+            //this.Enabled = true;
+            this.MdiParent.Enabled = true;
+            toolStripStatusLabelRun.Text = string.Format("Task finished in {0} seconds", diff.ToString());
         }
     }
 }

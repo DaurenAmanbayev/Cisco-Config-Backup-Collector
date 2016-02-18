@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork
 {
-    //для импорта из таблицы excel
+    //класс описание структуры данных для импорта из таблицы excel
     class Network
     {
         public string Address { get; set; }

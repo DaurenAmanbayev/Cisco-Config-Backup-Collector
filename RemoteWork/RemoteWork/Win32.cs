@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace RemoteWork
 {
+    //испольльзуется для подгрузки более проиводительной версии richtextbox
     class Win32
     {
         [DllImport("kernel32.dll", EntryPoint = "LoadLibraryW", CharSet = CharSet.Unicode, SetLastError = true)]

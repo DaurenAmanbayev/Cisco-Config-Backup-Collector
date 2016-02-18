@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace RemoteWork
 {
     //класс для извлечения данных по указанному паттерну
+    //планировалось использовать для массового импорта данных
     class RegexExtract
     {
         private RegexExtract() { }
