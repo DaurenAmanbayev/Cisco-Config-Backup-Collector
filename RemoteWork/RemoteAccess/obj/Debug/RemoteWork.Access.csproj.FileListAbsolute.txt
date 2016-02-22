@@ -1,56 +1,3 @@
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.dll
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.dll
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.dll
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.InitialCreate.resources
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
-c:\users\аманбаевд\documents\visual studio 2013\Projects\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.idchange.resources
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.dll
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.dll
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.dll
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
-E:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.dll
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.dll
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.dll
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
-Z:\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.dll
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.dll
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.dll
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.third.resources
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
-D:\Repository\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
@@ -62,39 +9,12 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\En
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.third.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fourth.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.enableMode.resources
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.tasksmanytomany.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.third.resources
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fourth.resources
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fourth.resources
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll.config
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.dll
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Access.pdb
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.dll
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.dll
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\RemoteWork.Data.pdb
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.xml
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csprojResolveAssemblyReference.cache
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.third.resources
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fourth.resources
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.fifth.resources
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.csproj.GenerateResource.Cache
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.dll
-C:\Users\Lighto\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.pdb
-<<<<<<< HEAD
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.enableMode.resources
-=======
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.orderadd.resources
-Z:\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.uniqueadded.resources
->>>>>>> origin/master
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteAccess\obj\Debug\RemoteWork.Access.Migrations.tasksmanytomany.resources
