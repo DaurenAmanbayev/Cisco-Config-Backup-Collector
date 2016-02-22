@@ -35,38 +35,46 @@ namespace RemoteWork.Expect
             success = true;
             try
             {
-                //change Username and Password for regex pattern with login Login: and other modification---
-                //аутентификация                                          
-                //если требуется привилегированный режим
-                if (host.enableMode)
+                if (client.isConnected)
                 {
-                    //алгоритм работы
-                    //password: отправляется пароль
-                    //enable отправляется команда для перехода на привилегированный режим
-                    //password: отправляет пароль привилегированного режима
-                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                    client.SendData(host.password);
-                    client.SendData("enable");
-                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                    client.SendData(host.enablePassword);
+                    //change Username and Password for regex pattern with login Login: and other modification---
+                    //аутентификация                                          
+                    //если требуется привилегированный режим
+                    if (host.enableMode)
+                    {
+                        //алгоритм работы
+                        //password: отправляется пароль
+                        //enable отправляется команда для перехода на привилегированный режим
+                        //password: отправляет пароль привилегированного режима
+                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                        client.SendData(host.password);
+                        client.SendData("enable");
+                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                        client.SendData(host.enablePassword);
+                    }
+                    //если не требуется
+                    else
+                    {
+                        //login:
+                        //password: 
+                        rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
+                        client.SendData(host.username);
+                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                        client.SendData(host.password);
+                    }
+                    //режим входа
+                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                    //использование команды
+                    client.SendData(command);
+                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                    listResult.Add(rcvStr);
+                    client.Close();
                 }
-                //если не требуется
                 else
                 {
-                    //login:
-                    //password: 
-                    rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-                    client.SendData(host.username);
-                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                    client.SendData(host.password);
+                    success = false;
+                    listError.Add("Network error: Connection timed out!");
                 }
-                //режим входа
-                 rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
-                //использование команды
-                client.SendData(command);
-                rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
-                listResult.Add(rcvStr);
-                client.Close();
             }
             catch (Exception ex)
             {
@@ -81,42 +89,50 @@ namespace RemoteWork.Expect
             success = true;
             try
             {
-                //change Username and Password for regex pattern with login Login: and other modification---
-                //аутентификация
-                //если требуется привилегированный режим
-                if (host.enableMode)
+                if (client.isConnected)
                 {
-                    //алгоритм работы
-                    //password: отправляется пароль
-                    //enable отправляется команда для перехода на привилегированный режим
-                    //password: отправляем пароль привилегированного режима                   
-                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                    client.SendData(host.password);
+                    //change Username and Password for regex pattern with login Login: and other modification---
+                    //аутентификация
+                    //если требуется привилегированный режим
+                    if (host.enableMode)
+                    {
+                        //алгоритм работы
+                        //password: отправляется пароль
+                        //enable отправляется команда для перехода на привилегированный режим
+                        //password: отправляем пароль привилегированного режима                   
+                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                        client.SendData(host.password);
+                        rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                        client.SendData("enable");
+                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                        client.SendData(host.enablePassword);
+                    }
+                    //если не требуется
+                    else if (!host.enableMode)
+                    {
+                        //login:
+                        //password:                   
+                        rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
+                        client.SendData(host.username);
+                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
+                        client.SendData(host.password);
+                    }
+                    //режим входа
                     rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
-                    client.SendData("enable");
-                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                    client.SendData(host.enablePassword);
+                    //использование команды
+                    foreach (string command in commands)
+                    {
+                        client.SendData(command);
+                        rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut + 2);//увеличил таймаут
+                        listResult.Add(rcvStr);
+                    }
+                    client.Close();
                 }
-                //если не требуется
-                else if(!host.enableMode)
+                else
                 {
-                    //login:
-                    //password:                   
-                    rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-                    client.SendData(host.username);
-                    rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                    client.SendData(host.password);
+                    success = false;
+                    listError.Add("Network error: Connection timed out!");
                 }
-                //режим входа
-                rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);         
-                //использование команды
-                foreach (string command in commands)
-                {                   
-                    client.SendData(command);
-                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut + 2);//увеличил таймаут
-                    listResult.Add(rcvStr);                   
-                }
-                client.Close();
             }
             catch (Exception ex)
             {

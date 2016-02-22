@@ -17,6 +17,7 @@ namespace RemoteWork.Expect
         IPEndPoint remote;//данные о подключении
         NetworkStream networkStream;//поток
         int buffSize = 256;//буфер
+        public bool isConnected = true;
         public string ENTER
         {
             get
@@ -36,8 +37,15 @@ namespace RemoteWork.Expect
             remote = new IPEndPoint(ip, port);
             client = new TcpClient();
             //подключаемся
-            client.Connect(remote);
-            networkStream = client.GetStream();
+            try
+            {
+                client.Connect(remote);
+                networkStream = client.GetStream();
+            }
+            catch (Exception)
+            {
+                isConnected=client.Connected;
+            }
 
         }
         //конструктор по умолчанию
