@@ -62,7 +62,9 @@ namespace RemoteWork.CommandUsage
 
                 if (task != null)
                 {
-                    List<Task> taskRunnerManager = new List<Task>();        
+                    List<Task> taskRunnerManager = new List<Task>();
+                    //таймер
+                    DateTime starTime = DateTime.Now;
                     try
                     {
                         Logging(string.Format("TASK {0} started... THREADING", taskId));
@@ -87,8 +89,8 @@ namespace RemoteWork.CommandUsage
                             FavoriteTask connect = new FavoriteTask();
                             connect.Commands = commands;
                             connect.FavoriteId = fav.Id;
-                            connect.TaskId = task.Id; 
-
+                            connect.TaskId = task.Id;
+                            
                             //создаем задачу и добавляем ее в менеджер
                             Task taskRunner = Task.Factory.StartNew(() =>
                                 ConnectionThread(connect));
@@ -96,14 +98,21 @@ namespace RemoteWork.CommandUsage
                         }                        
                         //дожидаемся пока выполняться все задания                       
                         Task.WaitAll(taskRunnerManager.ToArray());
-                        //************************************************************
-                        //создаем событие и уведомляем о том, что все задачи выполнены
-                        taskCompleted();
                     }
                     catch (Exception ex)
                     {
                         //логгирование
-                        Logging(string.Format("TASK {0} failed!!! Exception: {1}", taskId, ex.Message));
+                        Logging(string.Format("TASK {0} failed!!! Exception: {1}", taskId, ex.StackTrace));
+                    }
+                    finally
+                    {
+                        //таймер
+                        DateTime endTime = DateTime.Now;
+                        TimeSpan diffSpan = starTime - endTime;
+                        Logging(string.Format("TASK {0} finished in {1} seconds ", taskId, diffSpan.Seconds));
+                        //************************************************************
+                        //создаем событие и уведомляем о том, что все задачи выполнены
+                        taskCompleted();
                     }
                 }
                 else
@@ -116,70 +125,86 @@ namespace RemoteWork.CommandUsage
         //проблема с многопоточностью
         //создаем новый контекст для каждого потока
         private void ConnectionThread(FavoriteTask favConnect)
-        {          
-            using (RconfigContext ctx = new RconfigContext())
-            {               
-                var task = (from c in ctx.RemoteTasks
-                            where c.Id == favConnect.TaskId
-                            select c).Single();
-
-                List<string> commands = favConnect.Commands;
-
-                Favorite fav = (from c in ctx.Favorites
-                                where c.Id == favConnect.FavoriteId
-                                select c).Single();
-
-
-                //данные для подключения к сетевому устройству
-                ConnectionData data = new ConnectionData();
-                data.address = fav.Address;
-                data.port = fav.Port;
-                data.username = fav.Credential.Username;
-                data.password = fav.Credential.Password;
-                data.enableMode = fav.Category.EnableModeRequired;
-                data.enablePassword = fav.Credential.EnablePassword;
-                //по типу протоколу выбираем требуемое подключение
-                string protocol = fav.Protocol.Name;
-                Expect.Expect expect;
-                switch (protocol)
+        {
+            try
+            {
+                using (RconfigContext ctx = new RconfigContext())
                 {
-                    case "Telnet": expect = new TelnetMintExpect(data); break;
-                    case "SSH": expect = new SshExpect(data); break;
-                    //по умолчанию для сетевых устройств протокол Telnet
-                    default: expect = new TelnetMintExpect(data); break;
-                }
+                    var task = (from c in ctx.RemoteTasks
+                        where c.Id == favConnect.TaskId
+                        select c).Single();
 
-                //если объект expect успешно создан
-                if (expect != null)
-                {
-                    //выполняем список команд
-                    expect.ExecuteCommands(commands);
-                    string result = expect.GetResult();
-                    bool success = expect.isSuccess;
-                    string error = expect.GetError();
-                    //если успешно сохраняем конфигурацию устройства
-                    if (success)
+                    List<string> commands = favConnect.Commands;
+
+                    Favorite fav = (from c in ctx.Favorites
+                        where c.Id == favConnect.FavoriteId
+                        select c).Single();
+
+
+                    //данные для подключения к сетевому устройству
+                    ConnectionData data = new ConnectionData();
+                    data.address = fav.Address;
+                    data.port = fav.Port;
+                    data.username = fav.Credential.Username;
+                    data.password = fav.Credential.Password;
+                    data.enableMode = fav.Category.EnableModeRequired;
+                    data.enablePassword = fav.Credential.EnablePassword;
+                    //по типу протоколу выбираем требуемое подключение
+                    string protocol = fav.Protocol.Name;
+                    Expect.Expect expect;
+                    switch (protocol)
                     {
-                        Config config = new Config();
-                        config.Current = result ?? "Empty";
-                        config.Date = DateTime.Now;
-                        fav.Configs.Add(config);
-                        Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));
+                        case "Telnet":
+                            expect = new TelnetMintExpect(data);
+                            break;
+                        case "SSH":
+                            expect = new SshExpect(data);
+                            break;
+                        //по умолчанию для сетевых устройств протокол Telnet
+                        default:
+                            expect = new TelnetMintExpect(data);
+                            break;
                     }
-                    else
+
+                    //если объект expect успешно создан
+                    if (expect != null)
                     {
-                        Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", taskId, fav.Hostname, fav.Address));
+                        //выполняем список команд
+                        expect.ExecuteCommands(commands);
+                        string result = expect.GetResult();
+                        bool success = expect.isSuccess;
+                        string error = expect.GetError();
+                        //если успешно сохраняем конфигурацию устройства
+                        if (success)
+                        {
+                            Config config = new Config();
+                            config.Current = result ?? "Empty";
+                            config.Date = DateTime.Now;
+                            fav.Configs.Add(config);
+                            Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname,
+                                fav.Address));
+                        }
+                        else
+                        {
+                            Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", taskId, fav.Hostname,
+                                fav.Address));
+                        }
+                        //создаем отчет о проделанном задании
+                        Report report = new Report();
+                        report.Date = DateTime.Now;
+                        report.Status = success;
+                        report.Info = error;
+                        report.Task = task;
+                        report.Favorite = fav;
+                        ctx.Reports.Add(report);
+                        ctx.SaveChanges();
                     }
-                    //создаем отчет о проделанном задании
-                    Report report = new Report();
-                    report.Date = DateTime.Now;
-                    report.Status = success;
-                    report.Info = error;
-                    report.Task = task;
-                    report.Favorite = fav;
-                    ctx.Reports.Add(report);
-                    ctx.SaveChanges();
                 }
+            }
+            catch (Exception ex)
+            {
+                //логгирование
+                Logging(string.Format("TASK {0} failed!!! Exception: {1}", taskId, ex.StackTrace));
             }
 
         }
