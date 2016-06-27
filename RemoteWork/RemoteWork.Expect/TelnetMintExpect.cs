@@ -97,12 +97,15 @@ namespace RemoteWork.Expect
                     if (host.enableMode)
                     {
                         //алгоритм работы
+                        //login: отправляется логин
+                        rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
+                        client.SendData(host.username);
                         //password: отправляется пароль
-                        //enable отправляется команда для перехода на привилегированный режим
-                        //password: отправляем пароль привилегированного режима                   
                         rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
                         client.SendData(host.password);
                         rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                        //enable отправляется команда для перехода на привилегированный режим
+                        //password: отправляем пароль привилегированного режима   
                         client.SendData("enable");
                         rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
                         client.SendData(host.enablePassword);
