@@ -16,14 +16,15 @@ namespace RemoteWork
 {
     public partial class Load_Config : Form
     {
-        string favName;
-        string category;
+        //
+        string _favName;
+        string _category;
       
         public Load_Config(string favName, string category)
         {
             InitializeComponent();
-            this.favName = favName;
-            this.category = category;
+            this._favName = favName;
+            this._category = category;
             labelFav.Text = favName;
             LoadData();
         }
@@ -33,7 +34,7 @@ namespace RemoteWork
             using(RconfigContext context=new RconfigContext())
             {
                 var queryCategory=(from c in context.Categories
-                                  where c.CategoryName==category
+                                  where c.CategoryName==_category
                                   select c).Single();
                 if (queryCategory != null)
                 {
@@ -44,7 +45,7 @@ namespace RemoteWork
                     {
                         foreach (Category category in command.Categories)
                         {
-                            if (category.CategoryName == this.category)
+                            if (category.CategoryName == this._category)
                             {
                                 checkedListBoxCommand.Items.Add(command.Name);
                             }
@@ -70,6 +71,7 @@ namespace RemoteWork
                         string command = item.ToString();
                         commands.Add(command);
                     }
+                    
                     //передаем наш список для сбора конфигурации
                     Connection(commands);
                 }
@@ -82,51 +84,64 @@ namespace RemoteWork
         //подключение к сетевому устройству
         private void Connection(List<string> commands)
         {
-            using (RconfigContext context = new RconfigContext())
+            try
             {
-                var fav=(from c in context.Favorites
-                        where c.Hostname==favName
-                        select c).Single();
-                if (fav != null)
+                using (RconfigContext context = new RconfigContext())
                 {
-                    //данные для подключения к сетевому устройству
-                    ConnectionData data = new ConnectionData();
-                    data.address = fav.Address;
-                    data.port = fav.Port;
-                    data.username = fav.Credential.Username;
-                    data.password = fav.Credential.Password;
-                    data.enableMode = fav.Category.EnableModeRequired;
-                    data.enablePassword = fav.Credential.EnablePassword;
-                    //по типу протоколу выбираем требуемое подключение
-                    string protocol = fav.Protocol.Name;
-                    Expect.Expect expect;
-                    switch (protocol)
+                    var fav = (from c in context.Favorites
+                        where c.Hostname == _favName
+                        select c).Single();
+                    if (fav != null)
                     {
-                        case "Telnet": expect = new TelnetMintExpect(data); break;
-                        case "SSH": expect = new SshExpect(data); break;
-                        //по умолчанию для сетевых устройств протокол Telnet
-                        default: expect = new TelnetMintExpect(data); break;
-                    }
-
-                    //если объект expect успешно создан
-                    if (expect != null)
-                    {
-                        //выполняем список команд
-                        expect.ExecuteCommands(commands);
-                        string result = expect.GetResult();
-                        bool success = expect.isSuccess;
-                        string error = expect.GetError();
-                        //если успешно сохраняем конфигурацию устройства
-                        if (success)
+                        //данные для подключения к сетевому устройству
+                        ConnectionData data = new ConnectionData();
+                        data.address = fav.Address;
+                        data.port = fav.Port;
+                        data.username = fav.Credential.Username;
+                        data.password = fav.Credential.Password;
+                        data.enableMode = fav.Category.EnableModeRequired;
+                        data.enablePassword = fav.Credential.EnablePassword;
+                        //по типу протоколу выбираем требуемое подключение
+                        string protocol = fav.Protocol.Name;
+                        Expect.Expect expect;
+                        switch (protocol)
                         {
-                            richTextBoxConfig.Text = result;
+                            case "Telnet":
+                                expect = new TelnetMintExpect(data);
+                                break;
+                            case "SSH":
+                                expect = new SshExpect(data);
+                                break;
+                            //по умолчанию для сетевых устройств протокол Telnet
+                            default:
+                                expect = new TelnetMintExpect(data);
+                                break;
                         }
-                        else
+
+                        //если объект expect успешно создан
+                        if (expect != null)
                         {
-                            richTextBoxConfig.Text = error;
+                            //выполняем список команд
+                            expect.ExecuteCommands(commands);
+                            string result = expect.GetResult();
+                            bool success = expect.isSuccess;
+                            string error = expect.GetError();
+                            //если успешно сохраняем конфигурацию устройства
+                            if (success)
+                            {
+                                richTextBoxConfig.Text = result;
+                            }
+                            else
+                            {
+                                richTextBoxConfig.Text = error;
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                richTextBoxConfig.Text = e.StackTrace;
             }
         }       
     }
