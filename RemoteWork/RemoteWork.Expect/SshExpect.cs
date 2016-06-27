@@ -33,12 +33,12 @@ namespace RemoteWork.Expect
                     Execute(sshclient, command);
                     sshclient.Disconnect();
                 }
-                success = true;
+                _success = true;
             }
             catch (Exception ex)//заменить на проброс исключения
             {
-                success = false;
-                listError.Add(ex.Message);
+                _success = false;
+                _listError.Add(ex.Message);
             }
         }
         //выполнение списка команд
@@ -50,7 +50,7 @@ namespace RemoteWork.Expect
                 {
                     sshclient.Connect();
                     //если требуется привилегированный режим
-                    if (host.enableMode)
+                    if (_host.enableMode)
                     {
                         ExecuteEnableModeCommands(sshclient, commands);
                     }
@@ -64,12 +64,12 @@ namespace RemoteWork.Expect
                     }
                     sshclient.Disconnect();
                 }
-                success = true;
+                _success = true;
             }
             catch (Exception ex)//заменить на проброс исключения
             {
-                success = false;
-                listError.Add(ex.Message);
+                _success = false;
+                _listError.Add(ex.Message);
             }
 
         }
@@ -79,10 +79,10 @@ namespace RemoteWork.Expect
             using (var cmd = client.CreateCommand(command))
             {
                 cmd.Execute();
-                listResult.Add(cmd.Result);
+                _listResult.Add(cmd.Result);
                 if (cmd.Error.Length != 0)
                 {
-                    listError.Add(cmd.Error);
+                    _listError.Add(cmd.Error);
                 }
 
             }
@@ -93,10 +93,10 @@ namespace RemoteWork.Expect
             using (ShellStream client = sshClient.CreateShellStream("terminal", 80, 24, 800, 600, 1024))
             {
                 SendCommandLF("enable", client);//переходим в привилегированный режим
-                SendCommand(host.enablePassword, client);//подтверждаем наши права
+                SendCommand(_host.enablePassword, client);//подтверждаем наши права
                 foreach (string command in commands)
                 {
-                    listResult.Add(SendCommand(command, client));
+                    _listResult.Add(SendCommand(command, client));
                 }
                 //Console.WriteLine("4 [" + SendCommand("terminal pager 0", client) + "]");
                 //Console.WriteLine("3 [" + SendCommand("show version", client) + "]");

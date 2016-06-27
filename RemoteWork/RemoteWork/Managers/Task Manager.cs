@@ -138,6 +138,7 @@ namespace RemoteWork.Managers
         //запуск задачи
         private void buttonRunTask_Click(object sender, EventArgs e)
         {
+            //проверить корректность работы
             if (listViewDetails.SelectedItems.Count != 0)
             {
                 var item = listViewDetails.SelectedItems[0];

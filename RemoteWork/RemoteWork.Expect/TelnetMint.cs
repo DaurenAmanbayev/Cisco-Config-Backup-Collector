@@ -13,11 +13,11 @@ namespace RemoteWork.Expect
     //ожидает возврата требуемой строки с указанным таймаутом для каждой строки
     public class TelnetMint
     {
-        TcpClient client;//клиент
-        IPEndPoint remote;//данные о подключении
-        NetworkStream networkStream;//поток
-        int buffSize = 256;//буфер
-        public bool isConnected = true;
+        TcpClient _client;//клиент
+        IPEndPoint _remote;//данные о подключении
+        NetworkStream _networkStream;//поток
+        int _buffSize = 256;//буфер
+        public bool _isConnected = true;
         public string ENTER
         {
             get
@@ -34,17 +34,17 @@ namespace RemoteWork.Expect
                 throw new Exception("Invalid port!");
             }
             IPAddress ip = System.Net.Dns.GetHostAddresses(host)[0];
-            remote = new IPEndPoint(ip, port);
-            client = new TcpClient();
+            _remote = new IPEndPoint(ip, port);
+            _client = new TcpClient();
             //подключаемся
             try
             {
-                client.Connect(remote);
-                networkStream = client.GetStream();
+                _client.Connect(_remote);
+                _networkStream = _client.GetStream();
             }
             catch (Exception)
             {
-                isConnected=client.Connected;
+                _isConnected=_client.Connected;
             }
 
         }
@@ -56,11 +56,11 @@ namespace RemoteWork.Expect
         //закрыть подключение клиента
         public void Close()
         {
-            client.Close();
+            _client.Close();
         }
          ~TelnetMint()
         {
-            client.Close(); 
+            _client.Close(); 
         }     
         //отправка сообщения      
         public void SendData(string command)
@@ -68,12 +68,12 @@ namespace RemoteWork.Expect
             if (!command.EndsWith(ENTER))
                 command += ENTER;
             byte[] data = System.Text.Encoding.Default.GetBytes(command);
-            networkStream.Write(data, 0, data.Length);
+            _networkStream.Write(data, 0, data.Length);
         }
        //вернуть информацию, если строка имеет совпадения по паттерну регулярных выражений за промежуток времени
         public string ReceiveDataWaitWord(Regex msg, int second)
         {
-            StringBuilder result = new StringBuilder(buffSize);
+            StringBuilder result = new StringBuilder(_buffSize);
             string temp = string.Empty;
             DateTime current = DateTime.Now.AddSeconds(second); //DateTime p = DateTime.Now.AddMilliseconds(second); уменьшение интервала
             do
@@ -91,7 +91,7 @@ namespace RemoteWork.Expect
         //вернуть информацию, если строка имеет совпадения по строке за промежуток времени
         public string ReceiveDataWaitWord(string msg, int second)
         {
-            StringBuilder result = new StringBuilder(buffSize);
+            StringBuilder result = new StringBuilder(_buffSize);
             string temp = string.Empty;
             DateTime current = DateTime.Now.AddSeconds(second);
             do
@@ -109,19 +109,19 @@ namespace RemoteWork.Expect
         //вернуть полученные данные
         public string ReceiveData()
         {
-            byte[] tempData = new byte[buffSize];
+            byte[] tempData = new byte[_buffSize];
             List<byte> data = new List<byte>();
             int count = 0;
             do
             {
-                if (!networkStream.DataAvailable)//пока подключение доступно
+                if (!_networkStream.DataAvailable)//пока подключение доступно
                 {
                     //если нет данных вернуть пустую строку
                     return "";
                 }
-                count = networkStream.Read(tempData, 0, tempData.Length);
+                count = _networkStream.Read(tempData, 0, tempData.Length);
                 data.AddRange(tempData.Take(count));//добавляем данные 
-            } while (count == buffSize);
+            } while (count == _buffSize);
             return Negotiate(data.ToArray()); //возвращаем
         }
         //обработать корректность данных???
@@ -146,7 +146,7 @@ namespace RemoteWork.Expect
                 }
             }
             byte[] sendByte = sendData.ToArray();
-            networkStream.Write(sendByte, 0, sendByte.Length);
+            _networkStream.Write(sendByte, 0, sendByte.Length);
             if (sendByte.Length == data.Length)
             {
                 //вернуть полученные данные

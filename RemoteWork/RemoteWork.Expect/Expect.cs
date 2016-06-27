@@ -9,13 +9,13 @@ namespace RemoteWork.Expect
     //абстрактный класс для автоматизации процесса подключения и сбора конфигурации
     public abstract class Expect
     {
-        protected ConnectionData host;        
-        protected bool success = false;//статус подключения, работы
-        protected List<string> listError = new List<string>();//список ошибок
-        protected List<string> listResult = new List<string>();//список строк результатов
+        protected ConnectionData _host;        
+        protected bool _success = false;//статус подключения, работы
+        protected List<string> _listError = new List<string>();//список ошибок
+        protected List<string> _listResult = new List<string>();//список строк результатов
         public Expect(ConnectionData host)
         {
-            this.host = host;
+            this._host = host;
         }
         //использование одной команды
         public abstract void ExecuteCommand(string command);
@@ -24,17 +24,17 @@ namespace RemoteWork.Expect
         //вернуть результат
         public string GetResult()
         {
-            return string.Join(Environment.NewLine,listResult.ToArray());
+            return string.Join(Environment.NewLine,_listResult.ToArray());
         }
         //вернуть ошибку
         public string GetError()
         {
-            return string.Join(Environment.NewLine, listError.ToArray());
+            return string.Join(Environment.NewLine, _listError.ToArray());
         }
         //удачное подключение или нет?
         public bool isSuccess
         {
-            get { return success; }
+            get { return _success; }
         }
     }
 }

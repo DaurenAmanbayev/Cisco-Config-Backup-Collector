@@ -16,6 +16,7 @@ using RemoteWork.CommandUsage;
 
 namespace RemoteWork.Managers
 {
+    /*НЕ ИСПОЛЬЗУЕТСЯ!!!*/
     public partial class Task_Progress : Form
     {
         RconfigContext context;

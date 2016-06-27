@@ -16,14 +16,14 @@ namespace RemoteWork.Expect
             : base(host)
         {
             client = new Telnet(host.address, host.port);
-            this.host = host;
+            this._host = host;
         }
         //используем команду
         public override void ExecuteCommand(string command)
         {
             try
             {
-                string loginStatus = client.Login(host.username, host.password, timeOut);
+                string loginStatus = client.Login(_host.username, _host.password, timeOut);
                 string prompt = loginStatus.TrimEnd();
                 prompt = loginStatus.Substring(prompt.Length - 1, 1);
                 //!!!! clear all console commands
@@ -34,14 +34,14 @@ namespace RemoteWork.Expect
 
                 client.WriteLine(command);
                 prompt = client.Read();
-                listResult.Add(prompt);
+                _listResult.Add(prompt);
                 client.Disconnect();
 
             }
             catch (Exception ex)//заменить проброс исключения, или использовать список проблем
             {
-                success = false;
-                listError.Add(ex.Message);
+                _success = false;
+                _listError.Add(ex.Message);
             }
         }
         //используем команды
@@ -49,7 +49,7 @@ namespace RemoteWork.Expect
         {
             try
             {
-                string loginStatus = client.Login(host.username, host.password, timeOut);
+                string loginStatus = client.Login(_host.username, _host.password, timeOut);
                 string prompt = loginStatus.TrimEnd();
                 prompt = loginStatus.Substring(prompt.Length - 1, 1);
                 //результат возвращаемый соединением               
@@ -62,15 +62,15 @@ namespace RemoteWork.Expect
                 {
                     client.WriteLine(command);
                     prompt = client.Read();
-                    listResult.Add(prompt);
+                    _listResult.Add(prompt);
                 }
                 client.Disconnect();
 
             }
             catch (Exception ex)//заменить проброс исключения
             {
-                success = false;
-                listError.Add(ex.Message);
+                _success = false;
+                _listError.Add(ex.Message);
             }
         }
     }

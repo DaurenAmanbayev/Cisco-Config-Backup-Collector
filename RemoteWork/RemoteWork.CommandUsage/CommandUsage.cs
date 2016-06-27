@@ -13,14 +13,14 @@ namespace RemoteWork.CommandUsage
 {
     public class CommandUsage
     {
-        int taskId;
-        string logJournal = "rconfig-journal.log";
-        CommandUsageMode mode=CommandUsageMode.LoopUsage;
-        RconfigContext context;        
+        int _taskId;
+        string _logJournal = "rconfig-journal.log";
+        CommandUsageMode _mode=CommandUsageMode.LoopUsage;
+        RconfigContext _context;        
         public CommandUsage(int taskId, CommandUsageMode mode)
         {
-            this.taskId = taskId;
-            this.mode = mode;
+            this._taskId = taskId;
+            this._mode = mode;
         }
         //для уведмоления о том, что все запущенные задачи выполнены
         public delegate void TaskReport();
@@ -28,10 +28,10 @@ namespace RemoteWork.CommandUsage
         //основной метод для вызова выполнения задачи
         public void Dispatcher()
         {
-            switch (mode)
+            switch (_mode)
             {
-                case CommandUsageMode.LoopUsage: LoopMethod(taskId); break;
-                case CommandUsageMode.TaskParallelUsage: LoadConfigurationThread(taskId); break;
+                case CommandUsageMode.LoopUsage: LoopMethod(_taskId); break;
+                case CommandUsageMode.TaskParallelUsage: LoadConfigurationThread(_taskId); break;
             }
         }
         //проверка валидности идентификатора задачи
@@ -108,7 +108,7 @@ namespace RemoteWork.CommandUsage
                     {
                         //таймер
                         DateTime endTime = DateTime.Now;
-                        TimeSpan diffSpan = starTime - endTime;
+                        TimeSpan diffSpan = endTime-starTime;
                         Logging(string.Format("TASK {0} finished in {1} seconds ", taskId, diffSpan.Seconds));
                         //************************************************************
                         //создаем событие и уведомляем о том, что все задачи выполнены
@@ -181,12 +181,12 @@ namespace RemoteWork.CommandUsage
                             config.Current = result ?? "Empty";
                             config.Date = DateTime.Now;
                             fav.Configs.Add(config);
-                            Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname,
+                            Logging(string.Format("TASK {0} : success connection for {0} {1}", _taskId, fav.Hostname,
                                 fav.Address));
                         }
                         else
                         {
-                            Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", taskId, fav.Hostname,
+                            Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", _taskId, fav.Hostname,
                                 fav.Address));
                         }
                         //создаем отчет о проделанном задании
@@ -204,7 +204,7 @@ namespace RemoteWork.CommandUsage
             catch (Exception ex)
             {
                 //логгирование
-                Logging(string.Format("TASK {0} failed!!! Exception: {1}", taskId, ex.StackTrace));
+                Logging(string.Format("TASK {0} failed!!! Exception: {1}", _taskId, ex.StackTrace));
             }
 
         }
@@ -218,9 +218,9 @@ namespace RemoteWork.CommandUsage
         //метод опроса в цикле
         private void LoopMethod(int taskId)
         {
-            context = new RconfigContext();
+            _context = new RconfigContext();
 
-            var queryTask = (from c in context.RemoteTasks
+            var queryTask = (from c in _context.RemoteTasks
                              where c.Id == taskId
                              select c).FirstOrDefault();
             //записать в логи операция началась
@@ -268,7 +268,7 @@ namespace RemoteWork.CommandUsage
                 catch (Exception ex)
                 {
                     //записать в логи!!!
-                    Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", taskId, ex.Message));
+                    Logging(string.Format("TASK {0} failed!!! Exception: {1}!!!", _taskId, ex.Message));
                 }
             }
             //************************************************************
@@ -316,11 +316,11 @@ namespace RemoteWork.CommandUsage
                     config.Current = result ?? "Empty";//если строка пустая, вернуть Empty
                     config.Date = DateTime.Now;
                     fav.Configs.Add(config);
-                    Logging(string.Format("TASK {0} : success connection for {0} {1}", taskId, fav.Hostname, fav.Address));
+                    Logging(string.Format("TASK {0} : success connection for {0} {1}", _taskId, fav.Hostname, fav.Address));
                 }
                 else
                 {
-                    Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", taskId, fav.Hostname, fav.Address));
+                    Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", _taskId, fav.Hostname, fav.Address));
                 }
                 //создаем отчет о проделанном задании
                 Report report = new Report();
@@ -329,8 +329,8 @@ namespace RemoteWork.CommandUsage
                 report.Info = error;
                 report.Task = task;
                 report.Favorite = fav;
-                context.Reports.Add(report);
-                context.SaveChanges();
+                _context.Reports.Add(report);
+                _context.SaveChanges();
             }
         }
         #endregion
@@ -341,16 +341,16 @@ namespace RemoteWork.CommandUsage
         private void Logging(string log)
         {
             string[] content = new string[1] { "**** Logging data ****" };
-            FileInfo fileInf = new FileInfo(logJournal);
+            FileInfo fileInf = new FileInfo(_logJournal);
             if (fileInf.Exists && fileInf.Length < 4000000)//если размер не превышает 4 Мб, прочитать и дополнить данные лога
             {
-                FileRead(logJournal, ref content);
+                FileRead(_logJournal, ref content);
             }
             string buffer = string.Join("\n", content);
             string line = "\n";
             string space = " => ";
             string date = DateTime.Now.ToString();
-            WriteCharacters(buffer + line + date + space + log, logJournal);
+            WriteCharacters(buffer + line + date + space + log, _logJournal);
         }
         private void FileRead(string targetPath, ref string[] content)
         {

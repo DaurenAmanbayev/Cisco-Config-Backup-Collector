@@ -16,7 +16,7 @@ namespace RemoteWork
 {
     public partial class Load_Config : Form
     {
-        //
+        //проверить, почему устройства не отзывает конфигурацию
         string _favName;
         string _category;
       
