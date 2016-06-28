@@ -84,6 +84,10 @@ namespace RemoteWork.Expect
         
         }
         //используем список команд
+        /*
+         * придумать решение для устройств, требующие для аутентификации лишь пароль
+         * проверка возвращаемой строки на содержание %Authentication failed%
+         */
         public override void ExecuteCommands(List<string> commands)
         {
             _success = true;
