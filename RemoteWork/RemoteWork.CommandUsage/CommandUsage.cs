@@ -84,7 +84,7 @@ namespace RemoteWork.CommandUsage
                                     }
                                 }
                             }
-                            //мультипоточность
+                            //многопоточность
                             //устанавливаем соединение
                             FavoriteTask connect = new FavoriteTask();
                             connect.Commands = commands;
