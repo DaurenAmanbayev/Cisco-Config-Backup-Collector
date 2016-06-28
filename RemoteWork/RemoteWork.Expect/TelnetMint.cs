@@ -18,6 +18,8 @@ namespace RemoteWork.Expect
         NetworkStream _networkStream;//поток
         int _buffSize = 256;//буфер
         public bool _isConnected = true;
+        //требуется ли? если строка не соответсвует, то выкидывать исключение???
+        public bool _isReceiveWordHasMatched = false;
         public string ENTER
         {
             get
@@ -44,6 +46,7 @@ namespace RemoteWork.Expect
             }
             catch (Exception)
             {
+                //указываем состояние клиента, подключено или нет
                 _isConnected=_client.Connected;
             }
 
@@ -58,6 +61,7 @@ namespace RemoteWork.Expect
         {
             _client.Close();
         }
+        //деструктор
          ~TelnetMint()
         {
             _client.Close(); 
@@ -82,10 +86,12 @@ namespace RemoteWork.Expect
                 result.Append(temp);//добавляем принятые данные в строку
                 if (msg.Match(temp).Success)//если паттерн сравнения работает
                 {
+                    //_isReceiveWordHasMatched = true;//указываем, что мы получили ожидаемую строку
                     return result.ToString();//возвращаем результат
                 }
 
             } while (DateTime.Now < current);
+            //возвращаем полученный результат, который не совпадает с ожидаемой строкой
             return result.ToString();
         }
         //вернуть информацию, если строка имеет совпадения по строке за промежуток времени
@@ -100,10 +106,12 @@ namespace RemoteWork.Expect
                 result.Append(temp);
                 if (temp.TrimEnd().EndsWith(msg))//если строка оканчивается на ожидаемую строку
                 {
+                   // _isReceiveWordHasMatched = true;//указываем, что мы получили ожидаемую строку
                     return result.ToString();//возвращаем строку
                 }
 
             } while (DateTime.Now < current);
+            //возвращаем полученный результат, который не совпадает с ожидаемой строкой
             return result.ToString();
         }
         //вернуть полученные данные
