@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace WebAppRemoteConfig.Controllers
 {
-    /*
-     * веб оболочка для системы сбора конфигураций с устройств
-     * возможно для более корректного сбора конфигураций, посмотреть имплементации коллекторов на других языках
-     */
-    public class HomeController: Controller
+    public class HomeController : Controller
     {
-
+        // GET: Home
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }
