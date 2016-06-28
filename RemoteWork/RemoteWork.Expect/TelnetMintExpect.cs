@@ -11,13 +11,13 @@ namespace RemoteWork.Expect
     //итоговая версия
     public class TelnetMintExpect: Expect
     {
-        TelnetMint client;
-        string rcvStr;
-        int timeOut=1;//1 секунда таймаут
+        TelnetMint _client;
+        string _rcvStr;
+        int _timeOut=1;//1 секунда таймаут
         //при авторизации запрос имени пользователя или логина
         //username string should be Username: or Login: not case sensitive
-        Regex regexUsername = new Regex("Username:|Login:", RegexOptions.IgnoreCase);
-        Regex regexPassword = new Regex("Password:", RegexOptions.IgnoreCase);
+        Regex _regexUsername = new Regex("Username:|Login:", RegexOptions.IgnoreCase);
+        Regex _regexPassword = new Regex("Password:", RegexOptions.IgnoreCase);
         //проверка данных с помощью регулярных выражений
         //last input should be one of these variants
         //: or > or $ or #
@@ -26,7 +26,7 @@ namespace RemoteWork.Expect
         public TelnetMintExpect(ConnectionData host)
             : base(host)
         {
-            client = new TelnetMint(host.address, host.port);
+            _client = new TelnetMint(host.address, host.port);
             this._host = host;
         }
         //используем команду
@@ -35,7 +35,7 @@ namespace RemoteWork.Expect
             _success = true;
             try
             {
-                if (client._isConnected)
+                if (_client._isConnected)
                 {
                     //change Username and Password for regex pattern with login Login: and other modification---
                     //аутентификация                                          
@@ -46,29 +46,29 @@ namespace RemoteWork.Expect
                         //password: отправляется пароль
                         //enable отправляется команда для перехода на привилегированный режим
                         //password: отправляет пароль привилегированного режима
-                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                        client.SendData(_host.password);
-                        client.SendData("enable");
-                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                        client.SendData(_host.enablePassword);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        _client.SendData(_host.password);
+                        _client.SendData("enable");
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        _client.SendData(_host.enablePassword);
                     }
                     //если не требуется
                     else
                     {
                         //login:
                         //password: 
-                        rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-                        client.SendData(_host.username);
-                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                        client.SendData(_host.password);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexUsername, _timeOut);
+                        _client.SendData(_host.username);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        _client.SendData(_host.password);
                     }
                     //режим входа
-                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                    _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut);
                     //использование команды
-                    client.SendData(command);
-                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
-                    _listResult.Add(rcvStr);
-                    client.Close();
+                    _client.SendData(command);
+                    _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut);
+                    _listResult.Add(_rcvStr);
+                    _client.Close();
                 }
                 else
                 {
@@ -89,7 +89,10 @@ namespace RemoteWork.Expect
             _success = true;
             try
             {
-                if (client._isConnected)
+                /*
+                 * проблема, что делать с входом, где не требуется логин, а только пароль
+                 */
+                if (_client._isConnected)
                 {
                     //change Username and Password for regex pattern with login Login: and other modification---
                     //аутентификация
@@ -98,38 +101,43 @@ namespace RemoteWork.Expect
                     {
                         //алгоритм работы
                         //login: отправляется логин
-                        rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-                        client.SendData(_host.username);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexUsername, _timeOut);
+                        //CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.username);
                         //password: отправляется пароль
-                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                        client.SendData(_host.password);
-                        rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        //CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.password);
+                        _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut);
                         //enable отправляется команда для перехода на привилегированный режим
                         //password: отправляем пароль привилегированного режима   
-                        client.SendData("enable");
-                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                        client.SendData(_host.enablePassword);
+                        _client.SendData("enable");
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        //CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.enablePassword);
                     }
                     //если не требуется
                     else if (!_host.enableMode)
                     {
                         //login:
                         //password:                   
-                        rcvStr = client.ReceiveDataWaitWord(regexUsername, timeOut);
-                        client.SendData(_host.username);
-                        rcvStr = client.ReceiveDataWaitWord(regexPassword, timeOut);
-                        client.SendData(_host.password);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexUsername, _timeOut);
+                       // CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.username);
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                       // CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.password);
                     }
                     //режим входа
-                    rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut);
+                    _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut);
                     //использование команды
                     foreach (string command in commands)
                     {
-                        client.SendData(command);
-                        rcvStr = client.ReceiveDataWaitWord(regexUseMode, timeOut + 2);//увеличил таймаут
-                        _listResult.Add(rcvStr);
+                        _client.SendData(command);
+                        _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut + 2);//увеличил таймаут
+                        _listResult.Add(_rcvStr);
                     }
-                    client.Close();
+                    _client.Close();
                 }
                 else
                 {
@@ -142,6 +150,13 @@ namespace RemoteWork.Expect
                 _success = false;
                 _listError.Add(ex.Message);
             }
+        }
+        //проверить как отразиться на производительности опроса
+        private void CheckIsReceiveWordMatched(string msg)
+        {
+            //если строка подключения не соответствует ожидаемому, выбросить исключение с несоответствующей строкой
+            if(!_client._isReceiveWordHasMatched)
+                throw new Exception(msg);
         }
     }
 }
