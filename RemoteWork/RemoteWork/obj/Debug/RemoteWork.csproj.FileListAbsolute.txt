@@ -41,7 +41,6 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\Remo
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Location_Manager.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Edit.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Manager.resources
-C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Managers.Task_Progress.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Properties.Resources.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.Rconfig.resources
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.RconfigImporter.resources
