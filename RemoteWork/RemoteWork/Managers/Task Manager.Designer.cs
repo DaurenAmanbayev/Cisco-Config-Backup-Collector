@@ -42,7 +42,6 @@
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonRunTask = new System.Windows.Forms.Button();
-            this.checkBoxThreading = new System.Windows.Forms.CheckBox();
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelRun = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
@@ -121,7 +120,6 @@
             this.flowLayoutPanel1.Controls.Add(this.buttonEdit);
             this.flowLayoutPanel1.Controls.Add(this.buttonDelete);
             this.flowLayoutPanel1.Controls.Add(this.buttonRunTask);
-            this.flowLayoutPanel1.Controls.Add(this.checkBoxThreading);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(570, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -168,18 +166,6 @@
             this.buttonRunTask.UseVisualStyleBackColor = true;
             this.buttonRunTask.Click += new System.EventHandler(this.buttonRunTask_Click);
             // 
-            // checkBoxThreading
-            // 
-            this.checkBoxThreading.AutoSize = true;
-            this.checkBoxThreading.Checked = true;
-            this.checkBoxThreading.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxThreading.Location = new System.Drawing.Point(3, 163);
-            this.checkBoxThreading.Name = "checkBoxThreading";
-            this.checkBoxThreading.Size = new System.Drawing.Size(72, 17);
-            this.checkBoxThreading.TabIndex = 4;
-            this.checkBoxThreading.Text = "MultiTask";
-            this.checkBoxThreading.UseVisualStyleBackColor = true;
-            // 
             // statusStripInfo
             // 
             this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -209,7 +195,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.statusStripInfo.ResumeLayout(false);
             this.statusStripInfo.PerformLayout();
             this.ResumeLayout(false);
@@ -233,6 +218,5 @@
         private System.Windows.Forms.Button buttonRunTask;
         private System.Windows.Forms.StatusStrip statusStripInfo;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelRun;
-        private System.Windows.Forms.CheckBox checkBoxThreading;
     }
 }
