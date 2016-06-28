@@ -133,7 +133,7 @@ namespace RemoteWork
                             }
                             else
                             {
-                                richTextBoxConfig.Text = error;
+                                richTextBoxConfig.Text = "Something wrong in connection: "+error;
                             }
                         }
                     }
