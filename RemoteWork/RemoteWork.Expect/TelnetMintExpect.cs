@@ -98,10 +98,11 @@ namespace RemoteWork.Expect
                  */
                 if (_client._isConnected)
                 {
+                    //заменить на switch
                     //change Username and Password for regex pattern with login Login: and other modification---
                     //аутентификация
                     //если требуется привилегированный режим
-                    if (_host.enableMode)
+                    if (_host.enableMode && !_host.anonymousLogin)
                     {
                         //алгоритм работы
                         //login: отправляется логин
@@ -121,7 +122,7 @@ namespace RemoteWork.Expect
                         _client.SendData(_host.enablePassword);
                     }
                     //если не требуется
-                    else if (!_host.enableMode)
+                    else if (!_host.enableMode && !_host.anonymousLogin)
                     {
                         //login:
                         //password:                   
@@ -132,6 +133,29 @@ namespace RemoteWork.Expect
                        // CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
                         _client.SendData(_host.password);
                     }
+                    //АНОНИМНЫЙ ВХОД НА УСТРОЙСТВО, когда не требуется ввод пользователя
+                    else if(_host.enableMode && _host.anonymousLogin)
+                    {
+                        //password: отправляется пароль
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        //CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.password);
+                        _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut);
+                        //enable отправляется команда для перехода на привилегированный режим
+                        //password: отправляем пароль привилегированного режима   
+                        _client.SendData("enable");
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        //CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.enablePassword);
+                    }
+                    //АНОНИМНЫЙ ВХОД НА УСТРОЙСТВО, когда не требуется ввод пользователя
+                    else if (!_host.enableMode && _host.anonymousLogin)
+                    {
+                        //password: отправляется пароль
+                        _rcvStr = _client.ReceiveDataWaitWord(_regexPassword, _timeOut);
+                        //CheckIsReceiveWordMatched(_rcvStr);//CHECKOUT WITH EXCEPTIONS
+                        _client.SendData(_host.password);
+                    }
                     //режим входа
                     _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut);
                     //использование команды
@@ -139,6 +163,7 @@ namespace RemoteWork.Expect
                     {
                         _client.SendData(command);
                         _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut + 2);//увеличил таймаут
+                        //попробовать увеличить таймаут, если строка не найдена
                         _listResult.Add(_rcvStr);
                     }
                     _client.Close();
