@@ -19,7 +19,7 @@ namespace RemoteWork
         //проверить, почему устройства не отзывает конфигурацию
         private string _favName;
         private string _category;
-       // private string _result;
+        private string _result;
       
         public Load_Config(string favName, string category)
         {
@@ -60,16 +60,10 @@ namespace RemoteWork
         {
             if (checkedListBoxCommand.CheckedItems.Count != 0)
             {
-                //создаем список команд
-                List<string> commands = new List<string>();
-                foreach (var item in checkedListBoxCommand.CheckedItems)
-                {
-                    string command = item.ToString();
-                    commands.Add(command);
-                }
-                richTextBoxConfig.Text = "Connection testing started for device " + _favName + "... Please wait!" +Environment.NewLine;
-                //передаем наш список для сбора конфигурации
-                Connection(commands);
+                object collectorResult = WaitWindow.Show(this.CollectorMethod);
+                _result = collectorResult.ToString();
+                richTextBoxConfig.Text = collectorResult.ToString(); 
+                SaveConfiguration();
             }
             else
             {
@@ -77,9 +71,23 @@ namespace RemoteWork
             }
         }
 
-        //подключение к сетевому устройству
-        private void Connection(List<string> commands)
+        private void CollectorMethod(object sender, WaitWindowEventArgs e)
         {
+            //создаем список команд
+            List<string> commands = new List<string>();
+            foreach (var item in checkedListBoxCommand.CheckedItems)
+            {
+                string command = item.ToString();
+                commands.Add(command);
+            }
+            //передаем наш список для сбора конфигурации
+            e.Result=Connection(commands);
+        }
+
+        //подключение к сетевому устройству
+        private string Connection(List<string> commands)
+        {
+            string resultStr = string.Empty;
             try
             {
                 using (RconfigContext context = new RconfigContext())
@@ -114,7 +122,7 @@ namespace RemoteWork
                                 expect = new TelnetMintExpect(data);
                                 break;
                         }
-                        richTextBoxConfig.Text += "Device configuration checked..."+Environment.NewLine;
+                        // richTextBoxConfig.Text += "Device configuration checked..."+Environment.NewLine;
                         //если объект expect успешно создан
                         if (expect != null)
                         {
@@ -124,25 +132,68 @@ namespace RemoteWork
                             bool success = expect.isSuccess;
                             string error = expect.GetError();
                             //если успешно сохраняем конфигурацию устройства
-                            if (success)
+                            if (success && !string.IsNullOrWhiteSpace(result))
                             {
-                                richTextBoxConfig.Text += "SUCCESS: " + result;
-                                DialogResult dialogResult = MessageBox.Show("Do you want to save this configuration to database?!","Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                                //предупредить пользователя, что единовременный сбор конфигурации не будет храниться в базе данных
-                                //затем сделать сбор конфигурации
-                                if (dialogResult == DialogResult.OK)
-                                {
-                                    Config config = new Config();
-                                    config.Current = result ?? "Empty";
-                                    config.Date = DateTime.Now;
-                                    fav.Configs.Add(config);
-                                    context.SaveChanges();
-                                }
+                                //richTextBoxConfig.Text= "SUCCESS: " + result;
+                                //DialogResult dialogResult = MessageBox.Show("Do you want to save this configuration to database?!","Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                ////предупредить пользователя, что единовременный сбор конфигурации не будет храниться в базе данных
+                                ////затем сделать сбор конфигурации
+                                //if (dialogResult == DialogResult.OK)
+                                //{
+                                //    Config config = new Config();
+                                //    config.Current = result ?? "Empty";
+                                //    config.Date = DateTime.Now;
+                                //    fav.Configs.Add(config);
+                                //    context.SaveChanges();
+                                //}
+                                return result;
+                            }
+                            else if (success && string.IsNullOrWhiteSpace(result))
+                            {
+                                //richTextBoxConfig.Text= "Output is empty! Something wrong with device configuration. Please check!";
+                                return "Output is empty! Something wrong with device configuration. Please check!";
                             }
                             else
                             {
-                                richTextBoxConfig.Text += "FAILED: " + error;
+                                //richTextBoxConfig.Text= "FAILED: " + error;
+                                return "FAILED: " + error;
                             }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return e.StackTrace;
+            }
+            return resultStr;
+        }
+
+        //метод для сохранения конфигурации
+        private void SaveConfiguration()
+        {
+            try
+            {
+
+                using (RconfigContext context = new RconfigContext())
+                {
+                    var fav = (from c in context.Favorites
+                        where c.Hostname == _favName
+                        select c).Single();
+                    if (fav != null)
+                    {
+                        DialogResult dialogResult =
+                            MessageBox.Show("Do you want to save output to database as configuration?!", "Confirmation",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        //предупредить пользователя, что единовременный сбор конфигурации не будет храниться в базе данных
+                        //затем сделать сбор конфигурации
+                        if (dialogResult == DialogResult.OK)
+                        {
+                            Config config = new Config();
+                            config.Current = _result ?? "Empty";
+                            config.Date = DateTime.Now;
+                            fav.Configs.Add(config);
+                            context.SaveChanges();
                         }
                     }
                 }
@@ -151,6 +202,6 @@ namespace RemoteWork
             {
                 richTextBoxConfig.Text = e.StackTrace;
             }
-        }       
+        }
     }
 }
