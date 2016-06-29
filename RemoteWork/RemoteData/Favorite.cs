@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace RemoteWork.Data
 {
+    //возможно добавить поле проверка
+    //при запуске тестового подключения, подтверждать, что устройство имеет правильные учетные данные
     public class Favorite
     {
         public Favorite()

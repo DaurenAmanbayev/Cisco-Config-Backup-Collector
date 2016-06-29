@@ -20,6 +20,9 @@ namespace RemoteWork.Data
         public string CategoryName { get; set; }
         [Required]
         public bool EnableModeRequired { get; set; }
+        //анонимный вход на устройство, когда не требуется вводить пользователя, а лишь пароль
+        [Required]
+        public bool AnonymousLogin { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Command> Commands { get; set; }
     }
