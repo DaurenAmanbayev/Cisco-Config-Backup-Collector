@@ -25,7 +25,10 @@ namespace RemoteWork
 {   
     public partial class Rconfig : Form
     {
-        RconfigContext context=new RconfigContext();     
+        RconfigContext context=new RconfigContext();   
+        //реализовать проверку, что база данных уже была создана
+        //переписать кастомный метод логгирования на стандартный метод
+        //добавить гибкий поиск по устройствам, с помощью гибких параметризированных запросов
         public Rconfig()
         {
             InitializeComponent();
