@@ -203,6 +203,14 @@
       <DependentUpon>RconfigImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="RegexExtract.cs" />
+    <Compile Include="WaitWindow.cs" />
+    <Compile Include="WaitWindowEventArgs.cs" />
+    <Compile Include="WaitWindowGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitWindowGUI.designer.cs">
+      <DependentUpon>WaitWindowGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Win32.cs" />
     <Compile Include="WindowsMode.cs" />
     <EmbeddedResource Include="Analytics\Analytic.resx">
@@ -271,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RconfigImporter.resx">
       <DependentUpon>RconfigImporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitWindowGUI.resx">
+      <DependentUpon>WaitWindowGUI.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
