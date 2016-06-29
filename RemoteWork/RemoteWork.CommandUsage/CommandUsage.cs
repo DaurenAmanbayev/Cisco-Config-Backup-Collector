@@ -187,7 +187,7 @@ namespace RemoteWork.CommandUsage
                         }
                         else
                         {
-                            Logging(string.Format("TASK {0} : failed connection for {0} {1}!!!", _taskId, fav.Hostname,
+                            Logging(string.Format("TASK {0} : failed connection for {0}: {1}", _taskId, fav.Hostname,
                                 fav.Address));
                         }
                         //создаем отчет о проделанном задании
