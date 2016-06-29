@@ -7,3 +7,4 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\Enti
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.dll
 C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.pdb
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteData\obj\Debug\RemoteWork.Data.csprojResolveAssemblyReference.cache

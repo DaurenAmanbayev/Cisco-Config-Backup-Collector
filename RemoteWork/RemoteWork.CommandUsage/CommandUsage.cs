@@ -149,6 +149,7 @@ namespace RemoteWork.CommandUsage
                     data.password = fav.Credential.Password;
                     data.enableMode = fav.Category.EnableModeRequired;
                     data.enablePassword = fav.Credential.EnablePassword;
+                    data.anonymousLogin = fav.Category.AnonymousLogin;
                     //по типу протоколу выбираем требуемое подключение
                     string protocol = fav.Protocol.Name;
                     Expect.Expect expect;
@@ -289,6 +290,7 @@ namespace RemoteWork.CommandUsage
             data.password = fav.Credential.Password;
             data.enableMode = fav.Category.EnableModeRequired;           
             data.enablePassword = fav.Credential.EnablePassword;
+            data.anonymousLogin = fav.Category.AnonymousLogin;
             //по типу протоколу выбираем требуемое подключение
             string protocol = fav.Protocol.Name;
             Expect.Expect expect;

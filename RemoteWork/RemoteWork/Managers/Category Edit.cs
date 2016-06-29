@@ -51,6 +51,12 @@ namespace RemoteWork.Managers
             else
                 checkBoxEnableMode.CheckState = CheckState.Unchecked;
 
+            //проверка на анонимный вход
+            if (currentCategory.AnonymousLogin)
+                checkBoxAnonymLogin.Checked = true;
+            else
+                checkBoxAnonymLogin.Checked = false;
+
         }
         //проверка на уникальность устройства
         private bool isUnique(string category)
@@ -91,27 +97,32 @@ namespace RemoteWork.Managers
                     case WindowsMode.ADD:
                         currentCategory = new Category();
                         currentCategory.CategoryName = textBoxCategory.Text.Trim();
-                        if (checkBoxEnableMode.CheckState == CheckState.Checked)
-                        {
-                            currentCategory.EnableModeRequired = true;
-                        }
-                        else
-                        {
-                            currentCategory.EnableModeRequired = false;
-                        }
+                        currentCategory.EnableModeRequired = checkBoxEnableMode.Checked;
+                        currentCategory.AnonymousLogin = checkBoxAnonymLogin.Checked;
+                        //if (checkBoxEnableMode.CheckState == CheckState.Checked)
+                        //{
+                        //    currentCategory.EnableModeRequired = true;
+                        //}
+                        //else
+                        //{
+                        //    currentCategory.EnableModeRequired = false;
+                        //}
                         context.Categories.Add(currentCategory);
                         context.SaveChanges();
                         break;
                     case WindowsMode.EDIT:
                         currentCategory.CategoryName = textBoxCategory.Text.Trim();
-                        if (checkBoxEnableMode.CheckState == CheckState.Checked)
-                        {
-                            currentCategory.EnableModeRequired = true;
-                        }
-                        else
-                        {
-                            currentCategory.EnableModeRequired = false;
-                        }
+                        currentCategory.EnableModeRequired = checkBoxEnableMode.Checked;
+                        currentCategory.AnonymousLogin = checkBoxAnonymLogin.Checked;
+                        //if (checkBoxEnableMode.CheckState == CheckState.Checked)
+                        //{
+                        //    currentCategory.EnableModeRequired = true;
+                        //}
+                        //else
+                        //{
+                        //    currentCategory.EnableModeRequired = false;
+                        //}
+                        
                         context.Entry(currentCategory).State = System.Data.Entity.EntityState.Modified;
                         context.SaveChanges();
                         break;
@@ -137,5 +148,7 @@ namespace RemoteWork.Managers
         {
             MessageBox.Show(warning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        
     }
 }
