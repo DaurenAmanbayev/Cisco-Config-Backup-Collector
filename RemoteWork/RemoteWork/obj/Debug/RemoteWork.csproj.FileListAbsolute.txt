@@ -50,3 +50,4 @@ C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\Remo
 C:\Users\ЫстыбаеваА\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\bin\Debug\RemoteWork.exe.config
 C:\Users\ЫстыбаеваА\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.exe
 C:\Users\ЫстыбаеваА\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.pdb
+C:\Users\ktoloc\Documents\GitHub\RemoteWork\RemoteWork\RemoteWork\obj\Debug\RemoteWork.WaitWindowGUI.resources

@@ -1,2 +1,5 @@
 **** Logging data ****
 27.06.2016 17:26:25 => TASK 3 finished in -38 seconds 
+29.06.2016 17:11:59 => TASK 4 started... THREADING
+29.06.2016 17:12:22 => TASK 4 : failed connection for 4: SQUIDproxy
+29.06.2016 17:12:22 => TASK 4 finished in 22 seconds 
