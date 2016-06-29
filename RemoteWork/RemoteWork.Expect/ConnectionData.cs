@@ -15,6 +15,8 @@ namespace RemoteWork.Expect
         public int port;
         //данные для привилегированного режима
         public bool enableMode;
+        //анонимный вход в устройство
+        public bool anonymousLogin;
         public string enablePassword;
     }
 }
