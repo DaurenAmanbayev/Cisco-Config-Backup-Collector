@@ -18,9 +18,10 @@ namespace RemoteWork.Managers
 {
     public partial class Task_Manager : Form
     {
-        RconfigContext _context;
-        DateTime _start;
-
+        private RconfigContext _context;
+        private DateTime _start;
+        private int _taskId;
+        public static ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
         public Task_Manager()
         {
             InitializeComponent();
@@ -53,35 +54,6 @@ namespace RemoteWork.Managers
                     }
                 }
             }
-        }
-        //!!!!удалить тестовый метод
-        private void TaskAddTest()
-        {
-            var item = new ListViewItem(new[] { 
-                    "1",
-                    "LoadConf",
-                    "Cherry",
-                    "show run",
-                    "25",
-                    DateTime.UtcNow.ToString()});
-
-            listViewDetails.Items.Add(item);
-            var item2 = new ListViewItem(new[] { 
-                    "2",
-                    "LoadConf",
-                    "Cherry",
-                    "show run",
-                    "25",
-                    DateTime.UtcNow.ToString()});
-            listViewDetails.Items.Add(item2);
-            var item3 = new ListViewItem(new[] { 
-                    "3",
-                    "LoadConf",
-                    "Cherry",
-                    "show run",
-                    "25",
-                    DateTime.UtcNow.ToString()});
-            listViewDetails.Items.Add(item3);
         }
         //создание, редактирования и удаление задач
         #region MANAGE
@@ -137,37 +109,47 @@ namespace RemoteWork.Managers
             }
         }
         #endregion
-
-        //запуск задачи
+       //запуск задачи
         private void buttonRunTask_Click(object sender, EventArgs e)
         {
             //проверить корректность работы!!
             if (listViewDetails.SelectedItems.Count != 0)
             {
                 var item = listViewDetails.SelectedItems[0];
-                int taskId = Int32.Parse(item.SubItems[0].Text);
-                toolStripStatusLabelRun.Text = "Задача в процессе выполнения. Это может занять несколько минут...";
-                //заблокировать родительское поле
-                this.MdiParent.Enabled = false;
+                _taskId = Int32.Parse(item.SubItems[0].Text);
+                // this.MdiParent.Enabled = false;
                 _start = DateTime.Now;
-                //ПРОБЛЕМА!!!!                
-                CommandUsageMode mode = CommandUsageMode.LoopUsage;
-                mode = CommandUsageMode.TaskParallelUsage;
-                CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(taskId, mode);               
-                //подписываемся на событие о, том что задачи завершены
-                comm.taskCompleted += this.UnlockApplicationAfterComplete;
-                //вызываем задачу
-                comm.Dispatcher();
+                object result = WaitWindow.Show(CollectorMethod);
+                //укажем прогресс
+                TimeSpan diff = DateTime.Now - _start;
+                MessageBox.Show(string.Format("Task finished in {0} seconds", diff));
+                // разблокировать 
+                // this.MdiParent.Enabled = true;
+                toolStripStatusLabelRun.Text = string.Format("Task finished in {0} seconds", diff.ToString());
             }
         }
+
+        private void CollectorMethod(object sender, WaitWindowEventArgs e)
+        {
+            //заблокировать родительское поле
+           
+            //ПРОБЛЕМА!!!!                
+            CommandUsageMode mode = CommandUsageMode.TaskParallelUsage;
+            //mode = CommandUsageMode.TaskParallelUsage;
+            CommandUsage.CommandUsage comm = new CommandUsage.CommandUsage(_taskId, mode);
+            //подписываемся на событие о, том что задачи завершены
+            comm.taskCompleted += this.UnlockApplicationAfterComplete;
+            //вызываем задачу
+            comm.Dispatcher();
+            //запускаем ожидание пока не выполняться все задачи
+            waitHandle.Wait();
+        }
+
         //разблокировать родительское поле после завершения задачи
         private void UnlockApplicationAfterComplete()
         {
-            TimeSpan diff = DateTime.Now - _start;
-            MessageBox.Show(string.Format("Task finished in {0} seconds", diff));
-            // разблокировать 
-            this.MdiParent.Enabled = true;
-            toolStripStatusLabelRun.Text = string.Format("Task finished in {0} seconds", diff.ToString());
+            //разблокируем наше событие
+            waitHandle.Set();
         }
     }
 }
