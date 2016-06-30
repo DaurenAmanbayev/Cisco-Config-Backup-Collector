@@ -32,6 +32,7 @@ namespace RemoteWork
         public Rconfig()
         {
             InitializeComponent();
+            //мигрирует базу данных на самую последнюю миграцию
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RconfigContext, Access.Migrations.Configuration>());
             StartConfiguration();
             FirstInsert();
@@ -44,8 +45,7 @@ namespace RemoteWork
         private void StartConfiguration()
         {
             //контекстное меню категории           
-            addFavoriteToolStripMenuItem.Visible = false;      
-         
+            addFavoriteToolStripMenuItem.Visible = false;
         }
         //подгрузка данных о категории для отображения
         private async void LoadData()
