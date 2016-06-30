@@ -32,11 +32,12 @@ namespace RemoteWork
         public Rconfig()
         {
             InitializeComponent();
-            Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<RconfigContext, RemoteWork.Access.Migrations.Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<RconfigContext, Access.Migrations.Configuration>());
             StartConfiguration();
             FirstInsert();
             LoadData();         
         }
+
         //дополнительные методы используемые в форме
         #region CUSTOM METHODS
         //стартовые настройки интерфейса
