@@ -13,6 +13,7 @@ namespace RemoteWork.Expect
         public string username;
         public string password;
         public int port;
+        public int timeOut;
         //данные для привилегированного режима
         public bool enableMode;
         //анонимный вход в устройство
