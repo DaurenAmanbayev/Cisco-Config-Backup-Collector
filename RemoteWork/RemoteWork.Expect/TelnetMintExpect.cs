@@ -14,6 +14,7 @@ namespace RemoteWork.Expect
         TelnetMint _client;
         string _rcvStr;
         int _timeOut=1;//1 секунда таймаут
+        private int _advTimeOut = 2;//дополнительный таймаут
         //при авторизации запрос имени пользователя или логина
         //username string should be Username: or Login: not case sensitive
         Regex _regexUsername = new Regex("Username:|Login:", RegexOptions.IgnoreCase);
@@ -98,6 +99,14 @@ namespace RemoteWork.Expect
                  */
                 if (_client._isConnected)
                 {
+                    //проверить тайм аут для устройства, если соответсвует условию, изменить стандартный таймаут
+                    if (_host.timeOut > 0 && _host.timeOut < 6)
+                    {
+                        _timeOut = _host.timeOut;
+                        //если таймаут для устройства большой, увеличить таймаут для команд
+                        if (_host.timeOut > 3)
+                            _advTimeOut=4;
+                    }
                     //заменить на switch
                     //change Username and Password for regex pattern with login Login: and other modification---
                     //аутентификация
@@ -162,7 +171,7 @@ namespace RemoteWork.Expect
                     foreach (string command in commands)
                     {
                         _client.SendData(command);
-                        _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut + 2);//увеличил таймаут
+                        _rcvStr = _client.ReceiveDataWaitWord(regexUseMode, _timeOut +_advTimeOut);//увеличил таймаут _timeOut + 2
                         //попробовать увеличить таймаут, если строка не найдена
                         _listResult.Add(_rcvStr);
                     }
