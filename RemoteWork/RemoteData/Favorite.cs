@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace RemoteWork.Data
         public virtual Protocol Protocol {get; set;}     
         public virtual Location Location { get; set; }
         public DateTime? Date { get; set; }
+        [Required, DefaultValue(1)]
+        public int TimeOut { get; set; }
         public virtual Category Category { get; set; }
         [Required]
         public virtual Credential Credential { get; set; }
