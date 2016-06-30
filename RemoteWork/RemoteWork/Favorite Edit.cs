@@ -99,6 +99,7 @@ namespace RemoteWork
                     textBoxHostname.Text = prevFavName;
                     textBoxAddress.Text = queryPrevFavorite.Address;
                     numericUpDownPort.Value = queryPrevFavorite.Port;
+                    numericUpDownTimeOut.Value = queryPrevFavorite.TimeOut;
 
                     //проверить
                     var credential = queryPrevFavorite.Credential.CredentialName;
@@ -198,6 +199,7 @@ namespace RemoteWork
                 currentFavorite.Hostname = textBoxHostname.Text.Trim();
                 currentFavorite.Address = textBoxAddress.Text.Trim();
                 currentFavorite.Port = (int)numericUpDownPort.Value;
+                currentFavorite.TimeOut=(int)numericUpDownTimeOut.Value;
                 currentFavorite.Date = DateTime.UtcNow;
                 //данные по местоположению
                 string location = comboBoxLocation.SelectedValue.ToString();
@@ -226,7 +228,7 @@ namespace RemoteWork
                                      where c.CategoryName == category
                                      select c).FirstOrDefault();
                 currentFavorite.Category = queryCategory;
-              
+                
                 //добавляем избранное в базу данных
 
                 context.Favorites.Add(currentFavorite);
@@ -250,6 +252,7 @@ namespace RemoteWork
                 currentFavorite.Hostname = textBoxHostname.Text.Trim();
                 currentFavorite.Address = textBoxAddress.Text.Trim();
                 currentFavorite.Port = (int)numericUpDownPort.Value;
+                currentFavorite.TimeOut = (int) numericUpDownTimeOut.Value;
                 currentFavorite.Date = DateTime.UtcNow;
 
                 //данные по местоположению
