@@ -81,6 +81,14 @@
     <Compile Include="Migrations\201606290335455_anonymouslogin.Designer.cs">
       <DependentUpon>201606290335455_anonymouslogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606300613268_tiemout.cs" />
+    <Compile Include="Migrations\201606300613268_tiemout.Designer.cs">
+      <DependentUpon>201606300613268_tiemout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606300628210_tiemout2.cs" />
+    <Compile Include="Migrations\201606300628210_tiemout2.Designer.cs">
+      <DependentUpon>201606300628210_tiemout2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RconfigContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +128,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606290335455_anonymouslogin.resx">
       <DependentUpon>201606290335455_anonymouslogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606300613268_tiemout.resx">
+      <DependentUpon>201606300613268_tiemout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606300628210_tiemout2.resx">
+      <DependentUpon>201606300628210_tiemout2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
