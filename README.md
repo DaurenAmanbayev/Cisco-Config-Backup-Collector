@@ -44,7 +44,7 @@ Application has several benefits:
 * Customisable timeout for each device
 * Extended authorisation mode
 * Customisable command order
-* Multithreading connections
+* Multithreading connections (over 550 devices configuration backup in 3 minutes with 4 core CPU )
 * Differ tools for configurations
 
 
