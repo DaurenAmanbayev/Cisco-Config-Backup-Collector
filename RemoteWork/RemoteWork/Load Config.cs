@@ -175,7 +175,6 @@ namespace RemoteWork
         {
             try
             {
-
                 using (RconfigContext context = new RconfigContext())
                 {
                     var fav = (from c in context.Favorites
