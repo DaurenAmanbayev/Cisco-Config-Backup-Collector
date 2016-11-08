@@ -1,4 +1,4 @@
-# Welcome to the RemoteWork wiki!
+# Welcome to the Cisco Config Backup Collector / RemoteWork wiki!
 
 RemoteWork - Telnet and SSH auto command executor and configuration downloads. 
 Usage for Cisco, Juniper other network devices and UNIX-like machines for easy and fast device configuration backups and management.
